@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "fitBuddy",
+    "slug": "fitbuddy",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.dayadeepu.fitbuddy"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dayadeepu.fitbuddy"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "87c95553-3516-40c0-8a7f-d1eb03b9de0b"
+      }
+    },
+    "owner": "dayadeepu",
+    "updates": {
+      "url": "https://u.expo.dev/87c95553-3516-40c0-8a7f-d1eb03b9de0b"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
