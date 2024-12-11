@@ -1,74 +1,248 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useRef } from 'react';
+import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Swiper from 'react-native-swiper';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const AnimatedBtn=Animatable. createAnimatableComponent (TouchableOpacity)
+const HomeScreen = () => {
+  const swiperRef = useRef(null); // Create a ref to control Swiper
 
-export default function HomeScreen() {
+  const goToNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.scrollBy(1); // Move to the next slide
+    }
+  };
+  const goToPrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.scrollBy(-1); // Move to the next slide
+    }
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <Swiper
+      ref={swiperRef}
+      loop={false}
+      scrollEnabled={false}
+      showsPagination={false} // Hide indicators
+      
+    >
+      {/* Welcome Screen */}
+      <ImageBackground
+        source={require('./../../assets/images/welcomeScreen.jpg')}
+        style={styles.backgroundImage}
+      >
+        <View style={styles.container}>
+          <Animatable.Text style={styles.title} animation={'slideInUp'}>Welcome to FitLife!</Animatable.Text>
+          <Animatable.Text style={{ width:'80%',color:'#9e9e9e',fontSize:16,marginTop: 50,fontWeight:'600'}} animation={'slideInUp'}>Elevate Your Fitness with a Cutting Edge to Fuel Your Motivation & Crush your goal</Animatable.Text>
+          <AnimatedBtn style={styles.startButton} onPress={goToNextSlide} animation={'slideInUp'}>
+            <Text style={styles.buttonText}>Get Started!</Text>
+          </AnimatedBtn>
+        </View>
+      </ImageBackground>
+
+      {/* Gender Selection Screen */}
+      <View style={styles.genderContainer}>
+        <Text style={styles.title}>What's your gender?</Text>
+        <View style={styles.genderImagesContainer}>
+          {/* Male Image */}
+          <TouchableOpacity
+            style={styles.genderImageWrapper}
+            onPress={goToNextSlide}
+          >
+            <Image
+              source={require('./../../assets/images/male.jpg')}
+              style={styles.genderImage}
+            />
+            <Text style={styles.genderText}>Male</Text>
+          </TouchableOpacity>
+
+          {/* Female Image */}
+          <TouchableOpacity
+            style={styles.genderImageWrapper}
+            onPress={goToNextSlide}
+          >
+            <Image
+              source={require('./../../assets/images/female.jpg')}
+              style={styles.genderImage}
+            />
+            <Text style={styles.genderText}>Female</Text>
+          </TouchableOpacity>
+        </View>
+        {/* Next Screen (Example) */}
+        <TouchableOpacity style={styles.backButton} onPress={goToPrevSlide}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Goal Selection Screen */}
+      <ImageBackground
+        source={require('./../../assets/images/goal.jpeg')}
+        style={styles.backgroundImage}
+      >
+      <View style={styles.slide}>
+        <Text style={styles.title}>What’s Your Goal?</Text>
+        <TouchableOpacity style={styles.goalButton} onPress={goToNextSlide}>
+          <Image source={require('./../../assets/images/weight-loss.png')} style={styles.goalImage}/>
+          <Text style={styles.buttonText}>Lose Weight</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.goalButton} onPress={goToNextSlide}>
+          <Image source={require('./../../assets/images/muscular.jpg')} style={styles.goalImage}/>
+          <Text style={styles.buttonText}>Build Muscle</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.goalButton} onPress={goToNextSlide}>
+          <Image source={require('./../../assets/images/fit.jpg')} style={styles.goalImage}/>
+          <Text style={styles.buttonText}>Keep Fit</Text>
+        </TouchableOpacity>
+        {/* Next Screen (Example) */}
+        <TouchableOpacity style={styles.backButton} onPress={goToPrevSlide}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+      </ImageBackground>
+
+      {/* Body Parts Selection Screen */}
+      <View style={styles.slide}>
+        <Text style={styles.title}>Select Body Parts for Workout</Text>
+        <TouchableOpacity style={styles.button} onPress={goToNextSlide}>
+          <Text style={styles.buttonText}>Arms</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={goToNextSlide}>
+          <Text style={styles.buttonText}>Legs</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={goToNextSlide}>
+          <Text style={styles.buttonText}>Core</Text>
+        </TouchableOpacity>
+        {/* Next Screen (Example) */}
+        <TouchableOpacity style={styles.backButton} onPress={goToPrevSlide}>
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
+      </View>
+    </Swiper>
   );
-}
+};
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  backgroundImage: {
+    flex: 1,
+    height: 'auto',
+    width: 'auto',
+    resizeMode: 'cover',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  genderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
+  genderImagesContainer: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '80%',
+    marginTop: 20,
+  },
+  genderImageWrapper: {
+    alignItems: 'center',
+    marginHorizontal: 10,
+    padding:20
+  },
+  genderImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 75, // Circular image
+    borderWidth: 2,
+    borderColor: '#4CAF50',
+  },
+  genderText: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+  },
+  button: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+    width: 200,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  goalButton:{
+    backgroundColor: '#000',
+    // padding: 20,
+    marginBottom: 50,
+    borderRadius:15,
+    // justifyContent: 'space-around',
+    borderWidth:2,
+    borderColor:'#4CAF50',
+    // width: 200,
+    alignItems: 'center',
+    // alignSelf: 'center',
+  },
+  startButton: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    width: 200,
+    alignItems: 'center',
+    alignSelf: 'center',
     position: 'absolute',
+    bottom: 60,
   },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  loseWeight:{
+    backgroundImage:'../../assets/images/weight-loss.png'
+  },
+  startBtn: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    width: '90%',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 60,
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    backgroundColor: '#000',
+    padding: 10,
+    borderRadius: 5,
+  },
+  backButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  goalImage:{
+    width: 200,
+    height: 100,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius:15,
+  }
 });
