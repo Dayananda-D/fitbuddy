@@ -1,0 +1,43 @@
+{
+    "data": [
+        {
+            "title": "Bodyweight Squat",
+            "duration": "2Min",
+            "type": "Beginner",
+            "instruction": [
+                "Stand with feet shoulder-width apart",
+                "Keep your chest up and back straight",
+                "Lower your hips as if sitting in a chair",
+                "Push through your heels to stand back up",
+                "Repeat for the desired number of repetitions"
+            ],
+            "image": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif"
+        },
+        {
+            "title": "Wall Squat",
+            "duration": "2Min",
+            "type": "Beginner",
+            "instruction": [
+                "Stand with your back against a wall",
+                "Slide down into a squat until your knees are at a 90-degree angle",
+                "Hold the position while keeping your back flat against the wall",
+                "Push through your heels to stand back up",
+                "Repeat for the desired number of repetitions"
+            ],
+            "image": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif"
+        },
+        {
+            "title": "Sumo Squat",
+            "duration": "2Min",
+            "type": "Beginner",
+            "instruction": [
+                "Stand with feet wider than shoulder-width apart, toes pointed out",
+                "Lower your hips straight down while keeping your chest up",
+                "Push through your heels to return to standing",
+                "Squeeze your glutes at the top of the movement",
+                "Repeat for the desired number of repetitions"
+            ],
+            "image": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif"
+        }
+    ]
+}

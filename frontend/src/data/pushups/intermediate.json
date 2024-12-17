@@ -1,0 +1,53 @@
+{
+    "data": [
+      {
+        "title": "Standard Push-Up",
+        "duration": "2Min",
+        "type": "Intermediate",
+        "instruction": [
+          "Start in a plank position with your hands under your shoulders",
+          "Lower your chest to the floor while keeping your body straight",
+          "Push back up to the starting position",
+          "Repeat for the desired repetitions"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif"
+      },
+      {
+        "title": "Incline Push-Up",
+        "duration": "2Min",
+        "type": "Intermediate",
+        "instruction": [
+          "Place your hands on an elevated surface like a chair or bench",
+          "Keep your body in a straight line and lower your chest towards the surface",
+          "Push yourself back to the starting position",
+          "Repeat for the desired repetitions"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif"
+      },
+      {
+        "title": "Decline Push-Up",
+        "duration": "2Min",
+        "type": "Intermediate",
+        "instruction": [
+          "Place your feet on an elevated surface like a chair or bench",
+          "Keep your body in a straight line and lower your chest towards the floor",
+          "Push back up to the starting position",
+          "Repeat for the desired repetitions"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif"
+      },
+      {
+        "title": "Spider Crawl Push-Up",
+        "duration": "2Min",
+        "type": "Intermediate",
+        "instruction": [
+          "Start in a standard push-up position",
+          "As you lower your chest to the floor, bring one knee up towards your elbow",
+          "Push back up and alternate sides",
+          "Repeat for the desired repetitions"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif"
+      }
+    ]
+  }
+  
