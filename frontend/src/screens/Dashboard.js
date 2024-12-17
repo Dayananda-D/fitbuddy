@@ -31,6 +31,7 @@ const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const plus = require('../../assets/images/Plus.png');
+const workout = require('../data/workoutData.json');
 
 const Dashboard = () => {
     return (
@@ -47,7 +48,7 @@ const Dashboard = () => {
                     <Label>Your Activities</Label>
                     <View style={{ flexDirection: 'row' }}>
                         {data.map((item, index) => (
-                            <Card data={item} index={index} />
+                            <Card data={item} index={index} key={index} />
                         ))}
                     </View>
                     <View
@@ -68,13 +69,15 @@ const Dashboard = () => {
                             View All
                         </Text> */}
                     </View>
-                    <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
-                        {data.map((item, index) => (
-                            <VideoPlay
-                                index={index}
-                            />
-                        ))}
-                    </View>
+                    <ScrollView horizontal={true}>
+                        <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
+                            {workout.data.map((item, index) => (
+                                <VideoPlay
+                                    index={index} key={index} data={item}
+                                />
+                            ))}
+                        </View>
+                    </ScrollView>
                 </View>
             </SafeAreaView>
             <BottomTab />
@@ -153,10 +156,10 @@ const BottomButton = ({ image, style, imageStyle }) => (
     </>
 );
 
-const VideoPlay = () => {
+const VideoPlay = (data) => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { workOutData: data.data })}>
             <View
                 style={{
                     borderRadius: 15,
@@ -169,7 +172,7 @@ const VideoPlay = () => {
                 }}>
                 <View style={{ borderRadius: 10, overflow: 'hidden' }}>
                     <ImageBackground
-                        source={warmup1}
+                        source={{ uri: data.data.image }}
                         style={{
                             height: 150,
                             width: 300,
@@ -192,7 +195,7 @@ const VideoPlay = () => {
                             // fontFamily: 'Poppins-Regular',
                             color: '#fff',
                         }}>
-                        Warm-up
+                        {data.data.type}
                     </Text>
                     <View
                         style={{
@@ -222,14 +225,14 @@ const VideoPlay = () => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups")}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { workOutData: data.data })}>
                             <Image source={play} style={{ height: 10, width: 10 }} />
                         </TouchableOpacity>
                     </View>
                     <Text style={{
                         // fontFamily: 'Poppins-Regular' 
                     }}>
-                        Standing Hamstrings and Back Stretch
+                        {data.data.title}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{
@@ -245,7 +248,7 @@ const VideoPlay = () => {
                                 fontSize: 12,
                                 color: '#8860a2',
                             }}>
-                            2 Min
+                            {data.data.duration}
                         </Text>
                     </View>
                 </View>
@@ -347,7 +350,7 @@ const Header = () => {
                 <ImageContainer image={headerImage} />
             </TouchableOpacity>
             <HeaderTitle />
-            <ImageContainer image={notification} height={'50%'} width={'50%'} tintColor={'white'} />
+            <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
     );
 }
