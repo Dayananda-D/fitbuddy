@@ -9,6 +9,7 @@ import {
     Image,
     ImageBackground
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
@@ -17,6 +18,7 @@ const instagramLogo = require("../../assets/images/instagram.png");
 const LoginScreen = () => {
     const [emailOrNumber, setEmailOrNumber] = useState("");
     const [password, setPassword] = useState("");
+    const navigation = useNavigation();
 
     const handleLogin = () => {
         if (!emailOrNumber || !password) {
@@ -59,6 +61,14 @@ const LoginScreen = () => {
                 </TouchableOpacity>
 
                 <Text style={styles.orText}>OR</Text>
+
+                {/* Link to SignUp */}
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>Create accound?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+                        <Text style={styles.linkText}>SignUp</Text>
+                    </TouchableOpacity>
+                </View>
 
                 {/* Social Login Buttons */}
                 <View style={styles.socialLoginContainer}>
@@ -151,7 +161,6 @@ const styles = StyleSheet.create({
     socialIcon: {
         width: 20,
         height: 20,
-        // marginRight: 10,
     },
     socialButtonText: {
         fontSize: 16,
@@ -165,5 +174,19 @@ const styles = StyleSheet.create({
     instagramButton: {
         backgroundColor: "#E1306C",
         borderColor: "#E1306C",
+    },
+    footer: {
+        flexDirection: "row",
+        padding: 15
+    },
+    footerText: {
+        fontSize: 16,
+        color: "#666",
+    },
+    linkText: {
+        fontSize: 16,
+        color: "#4CAF50",
+        fontWeight: "bold",
+        marginLeft: 5,
     },
 });

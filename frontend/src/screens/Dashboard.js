@@ -13,13 +13,11 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
-import Warmups from './Warmups';
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
 const banner = require('../../assets/images/BG.png');
 const fire = require('../../assets/images/fire.png');
 const model = require('../../assets/images/model.png');
-const couple = require('../../assets/images/couple.jpg');
 const warmup1 = require('../../assets/workoutAnimations/warmup1.gif');
 const cycle = require('../../assets/images/cycle.png');
 const yoga = require('../../assets/images/yoga.png');
@@ -30,8 +28,7 @@ const star = require('../../assets/images/Star.png');
 const book = require('../../assets/images/Book.png');
 const home = require('../../assets/images/Home.png');
 const heart = require('../../assets/images/H.png');
-const dumbbell = require('../../assets/images/dumbbell.png')
-const calendar = require('../../assets/images/Calender.png');
+const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const plus = require('../../assets/images/Plus.png');
 
@@ -46,7 +43,7 @@ const Dashboard = () => {
                     <Header />
                     <Banner />
                 </View>
-                <View style={{ marginHorizontal: '3%' }}>
+                <View style={{ marginHorizontal: '3%', marginTop: 20 }}>
                     <Label>Your Activities</Label>
                     <View style={{ flexDirection: 'row' }}>
                         {data.map((item, index) => (
@@ -58,9 +55,10 @@ const Dashboard = () => {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
+                            marginTop: 20
                         }}>
                         <Label>Today's Warm-up</Label>
-                        <Text
+                        {/* <Text
                             style={{
                                 // fontFamily: 'Poppins-Regular',
                                 opacity: 0.5,
@@ -68,14 +66,14 @@ const Dashboard = () => {
                                 color: 'white'
                             }}>
                             View All
-                        </Text>
+                        </Text> */}
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
-                        {/* {data.map((item, index) => ( */}
-                        <VideoPlay
-                        // index={index} 
-                        />
-                        {/* ))} */}
+                    <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
+                        {data.map((item, index) => (
+                            <VideoPlay
+                                index={index}
+                            />
+                        ))}
                     </View>
                 </View>
             </SafeAreaView>
@@ -158,99 +156,101 @@ const BottomButton = ({ image, style, imageStyle }) => (
 const VideoPlay = () => {
     const navigation = useNavigation();
     return (
-        <View
-            style={{
-                borderRadius: 15,
-                marginHorizontal: 12,
-                shadowOffset: { width: -5, height: 3 },
-                shadowColor: 'grey',
-                shadowOpacity: 0.5,
-                shadowRadius: 3,
-                backgroundColor: '#fff',
-            }}>
-            <View style={{ borderRadius: 10, overflow: 'hidden' }}>
-                <ImageBackground
-                    source={warmup1}
-                    style={{
-                        height: 150,
-                        width: 300,
-                    }}>
-                    <LinearGradient
-                        locations={[0, 1.0]}
-                        colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.60)']}
-                        style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                        }}
-                    ></LinearGradient>
-                </ImageBackground>
-                <Text
-                    style={{
-                        position: 'absolute',
-                        bottom: 5,
-                        left: 10,
-                        // fontFamily: 'Poppins-Regular',
-                        color: '#fff',
-                    }}>
-                    Transformation
-                </Text>
-                <View
-                    style={{
-                        position: 'absolute',
-                        backgroundColor: '#fff',
-                        padding: 5,
-                        right: 10,
-                        top: 10,
-                        borderRadius: 5,
-                    }}>
-                    <Image source={star} style={{ height: 10, width: 10 }} />
-                </View>
-            </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups")}>
             <View
                 style={{
-                    backgroundColor: 'white',
-                    padding: 10,
                     borderRadius: 15,
+                    marginHorizontal: 12,
+                    shadowOffset: { width: -5, height: 3 },
+                    shadowColor: 'grey',
+                    shadowOpacity: 0.5,
+                    shadowRadius: 3,
+                    backgroundColor: '#fff',
                 }}>
-                <View
-                    style={{
-                        position: 'absolute',
-                        backgroundColor: '#8860a2',
-                        padding: 10,
-                        right: 25,
-                        top: -15,
-                        borderRadius: 15,
-                        zIndex: 3,
-                    }}>
-                    <TouchableOpacity onPress={() => navigation.navigate("Warmups")}>
-                        <Image source={play} style={{ height: 10, width: 10 }} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={{
-                    // fontFamily: 'Poppins-Regular' 
-                }}>
-                    2 Hour Bulking Trainer
-                </Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={{
-                        // fontFamily: 'Poppins-Regular',
-                        fontSize: 12
-                    }}>
-                        <Image source={book} style={{ height: 15, width: 15 }} />
-                        {'   Beginner'}
-                    </Text>
+                <View style={{ borderRadius: 10, overflow: 'hidden' }}>
+                    <ImageBackground
+                        source={warmup1}
+                        style={{
+                            height: 150,
+                            width: 300,
+                        }}>
+                        <LinearGradient
+                            locations={[0, 1.0]}
+                            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.60)']}
+                            style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        ></LinearGradient>
+                    </ImageBackground>
                     <Text
                         style={{
+                            position: 'absolute',
+                            bottom: 5,
+                            left: 10,
                             // fontFamily: 'Poppins-Regular',
-                            fontSize: 12,
-                            color: '#8860a2',
+                            color: '#fff',
                         }}>
-                        45 Min
+                        Warm-up
                     </Text>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            backgroundColor: '#fff',
+                            padding: 5,
+                            right: 10,
+                            top: 10,
+                            borderRadius: 5,
+                        }}>
+                        <Image source={star} style={{ height: 10, width: 10 }} />
+                    </View>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: 'white',
+                        padding: 10,
+                        borderRadius: 15,
+                    }}>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            backgroundColor: '#8860a2',
+                            padding: 10,
+                            right: 25,
+                            top: -15,
+                            borderRadius: 15,
+                            zIndex: 3,
+                        }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Warmups")}>
+                            <Image source={play} style={{ height: 10, width: 10 }} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={{
+                        // fontFamily: 'Poppins-Regular' 
+                    }}>
+                        Standing Hamstrings and Back Stretch
+                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{
+                            // fontFamily: 'Poppins-Regular',
+                            fontSize: 12
+                        }}>
+                            <Image source={book} style={{ height: 25, width: 25 }} />
+                            {'   Beginner'}
+                        </Text>
+                        <Text
+                            style={{
+                                // fontFamily: 'Poppins-Regular',
+                                fontSize: 12,
+                                color: '#8860a2',
+                            }}>
+                            2 Min
+                        </Text>
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 };
 
@@ -276,12 +276,12 @@ const Card = ({ data, index }) => {
                 <Progress.Circle
                     size={50}
                     progress={data.status / 100}
-                    showsText
+                    indeterminate={false}
+                    animated={true}
+                    showsText={true}
                     unfilledColor="#ededed"
                     borderColor="#ededed"
                     color={data.darkColor}
-                    direction="counter-clockwise"
-                    fill="white"
                     strokeCap="round"
                     thickness={5}
                     style={{
@@ -385,8 +385,8 @@ const ImageContainer = ({ image, height = '100%', width = '100%', tintColor }) =
 );
 const HeaderTitle = () => (
     <View style={styles.title}>
-        <Text style={styles.bigTitle}>Hi, XYZ</Text>
-        <Text style={styles.smallTitle}>Banglore</Text>
+        <Text style={styles.bigTitle}>Hi, Jane</Text>
+        <Text style={styles.smallTitle}>Beginer</Text>
     </View>
 );
 

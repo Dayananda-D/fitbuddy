@@ -1,10 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-const play = require('../../assets/images/play.png');
-const star = require('../../assets/images/Star.png');
-const book = require('../../assets/images/Book.png');
 const warmup1 = require('../../assets/workoutAnimations/warmup1.gif');
-
+const duration = '2 Mins';
+const workoutName = 'Standing Hamstrings and Back Stretch';
 const instructions = [
     "Stand tall with your feet hip-width apart",
     "Inhale and raise your arms overhead with palms facing inward",
@@ -13,12 +11,16 @@ const instructions = [
     "Slowly roll back up to standing position",
 ];
 
-const InstructionText = ({ index, instruction }) => {
-
+const InstructionText = ({ instructions, title }) => {
     return (
-        <View style={styles.bulletPointContainer}>
-            <Text style={styles.bulletPoint}>{index}.</Text>
-            <Text style={styles.instructionTxt}>{instruction}</Text>
+        <View>
+            {title}
+            {instructions.map((instruction, index) => (
+                <View key={index} style={styles.bulletPointContainer}>
+                    <Text style={styles.bulletPoint}>{index + 1}.</Text>
+                    <Text style={styles.instructionTxt}>{instruction}</Text>
+                </View>
+            ))}
         </View>
     );
 };
@@ -27,33 +29,25 @@ const Warmups = (navigation) => {
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
             {/* Back Button*/}
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigation.navigation.goBack()}
-            >
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigation.goBack()}>
                 <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
-            {/* Gif Image*/}
-            <View style={{ marginHorizontal: 12, shadowOffset: { width: -5, height: 3 }, shadowColor: 'grey', shadowOpacity: 0.5, shadowRadius: 3, backgroundColor: '#fff' }}>
 
-                <View style={{ borderRadius: 10, overflow: 'hidden' }}>
-                    <ImageBackground source={warmup1} style={{ height: 300, width: 400 }}></ImageBackground>
-                    <Text style={{ position: 'absolute', bottom: 5, left: 10, color: '#fff' }}>Transformation</Text>
+            {/* Gif Image*/}
+            <View style={styles.gifContainer}>
+                <View>
+                    <ImageBackground source={warmup1} style={styles.gifPlayer}></ImageBackground>
                 </View>
 
-                <View style={{ backgroundColor: 'white', padding: 10, borderRadius: 15 }}>
-                    <Text style={{ fontWeight: "bold" }}>Standing Hamstrings and Back Stretch</Text>
-                    <Text style={{ fontSize: 14, color: '#8860a2', }}> 2 Min </Text>
+                <View style={styles.gifDesc}>
+                    <Text style={{ fontWeight: "bold" }}>{workoutName}</Text>
+                    <Text style={{ fontSize: 14, color: '#8860a2', }}>{duration}</Text>
                 </View>
             </View>
             {/* Instructions*/}
             <View style={styles.instructionView}>
                 <Text style={styles.instructionHeader}>Instructions</Text>
-                <InstructionText index={'1'} instruction={'Stand tall with your feet hip-width apart'} />
-                <InstructionText index={'2'} instruction={'Inhale and raise your arms overhead with palms facing inward'} />
-                <InstructionText index={'3'} instruction={'Exhale and bend forward at the waist, allowing gravity to pull you towards the ground'} />
-                <InstructionText index={'4'} instruction={'Keep your knees slightly bent and hang your head and neck relaxed'} />
-                <InstructionText index={'5'} instruction={'Slowly roll back up to standing position'} />
+                <InstructionText instructions={instructions} />
             </View>
             <TouchableOpacity style={styles.startButton}>
                 <Text style={styles.buttonText}>Complete</Text>
@@ -92,7 +86,9 @@ const styles = StyleSheet.create({
     },
     instructionView: {
         width: '100%',
+        height: 300,
         padding: 20,
+        overflow: 'scroll'
     },
     bulletPointContainer: {
         flexDirection: "row",
@@ -118,6 +114,23 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
     },
+    gifContainer: {
+        marginHorizontal: 12,
+        shadowOffset: { width: -5, height: 3 },
+        shadowColor: 'grey',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        backgroundColor: '#fff'
+    },
+    gifPlayer: {
+        height: 300,
+        width: 400
+    },
+    gifDesc: {
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 15
+    }
 });
 
 export default Warmups
