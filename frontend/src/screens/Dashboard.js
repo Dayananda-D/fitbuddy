@@ -47,7 +47,7 @@ const Dashboard = () => {
                     <Label>Your Activities</Label>
                     <View style={{ flexDirection: 'row' }}>
                         {data.map((item, index) => (
-                            <Card data={item} index={index} />
+                            <Card data={item} index={index} key={index} />
                         ))}
                     </View>
                     <View
@@ -68,13 +68,15 @@ const Dashboard = () => {
                             View All
                         </Text> */}
                     </View>
-                    <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
-                        {data.map((item, index) => (
-                            <VideoPlay
-                                index={index}
-                            />
-                        ))}
-                    </View>
+                    <ScrollView horizontal={true}>
+                        <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
+                            {data.map((item, index) => (
+                                <VideoPlay
+                                    index={index} key={index}
+                                />
+                            ))}
+                        </View>
+                    </ScrollView>
                 </View>
             </SafeAreaView>
             <BottomTab />

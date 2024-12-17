@@ -34,13 +34,18 @@ const LoginScreen = () => {
 
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={{ width: '100%', height: '100%' }}>
+            {/* Back Button*/}
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+                <Text style={styles.backButtonText}>Back</Text>
+            </TouchableOpacity>
+
             <View style={styles.container}>
                 <Text style={styles.title}>Login</Text>
 
                 {/* Email or Number Input */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Email or Phone Number"
+                    placeholder="Username or Email"
                     keyboardType="email-address"
                     value={emailOrNumber}
                     onChangeText={setEmailOrNumber}
@@ -106,6 +111,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
+    },
+    backButton: {
+        position: "absolute",
+        top: 30,
+        left: 20,
+        backgroundColor: "#000",
+        padding: 10,
+        borderRadius: 5,
+    },
+    backButtonText: {
+        color: "#fff",
+        fontSize: 16,
     },
     title: {
         fontSize: 28,
