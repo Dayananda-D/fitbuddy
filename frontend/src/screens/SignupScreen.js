@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
+const calendar = require("../../assets/images/Calender.png");
 
 
 const SignupScreen = () => {
@@ -70,13 +71,15 @@ const SignupScreen = () => {
                 />
 
                 {/* Date of Birth Picker */}
-                <TouchableOpacity
-                    style={styles.dobButton}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Date of Birth"
+                    value={dob ? dob.toLocaleDateString() : "Select DOB"}
+                    inputMode="none"
                     onPress={() => setShowDatePicker(true)}
-                >
-                    <Text style={styles.dobText}>
-                        {dob ? dob.toLocaleDateString() : "Select DOB"}
-                    </Text>
+                />
+                <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                    <Image source={calendar} style={styles.dobCalender}></Image>
                 </TouchableOpacity>
 
                 {showDatePicker && (
@@ -88,6 +91,7 @@ const SignupScreen = () => {
                             setShowDatePicker(false);
                             if (selectedDate) setDob(selectedDate);
                         }}
+                        style={{ backgroundColor: 'rgba(233, 227, 230, 0.57)', borderRadius: 10, bottom: 20 }}
                     />
                 )}
 
@@ -182,9 +186,12 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#ccc",
     },
-    dobText: {
-        color: "#666",
-        fontSize: 16,
+    dobCalender: {
+        width: 25,
+        height: 25,
+        left: 150,
+        bottom: 55,
+        alignSelf: 'flex-end',
     },
     submitButton: {
         width: "100%",

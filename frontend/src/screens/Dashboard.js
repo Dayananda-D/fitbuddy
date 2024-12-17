@@ -349,7 +349,7 @@ const Header = () => {
                 <ImageContainer image={headerImage} />
             </TouchableOpacity>
             <HeaderTitle />
-            <ImageContainer image={notification} height={'50%'} width={'50%'} tintColor={'white'} />
+            <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
     );
 }
