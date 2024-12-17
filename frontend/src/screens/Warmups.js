@@ -25,29 +25,30 @@ const InstructionText = ({ instructions, title }) => {
     );
 };
 
-const Warmups = (navigation) => {
+const Warmups = ({ navigation, route }) => {
+    const { workOutData } = route.params;
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
             {/* Back Button*/}
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigation.goBack()}>
+            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
 
             {/* Gif Image*/}
             <View style={styles.gifContainer}>
                 <View>
-                    <ImageBackground source={warmup1} style={styles.gifPlayer}></ImageBackground>
+                    <ImageBackground source={{ uri: workOutData.image }} style={styles.gifPlayer}></ImageBackground>
                 </View>
 
                 <View style={styles.gifDesc}>
-                    <Text style={{ fontWeight: "bold" }}>{workoutName}</Text>
-                    <Text style={{ fontSize: 14, color: '#8860a2', }}>{duration}</Text>
+                    <Text style={{ fontWeight: "bold" }}>{workOutData.title}</Text>
+                    <Text style={{ fontSize: 14, color: '#8860a2', }}>{workOutData.duration}</Text>
                 </View>
             </View>
             {/* Instructions*/}
             <View style={styles.instructionView}>
                 <Text style={styles.instructionHeader}>Instructions</Text>
-                <InstructionText instructions={instructions} />
+                <InstructionText instructions={workOutData.instruction} />
             </View>
             <TouchableOpacity style={styles.startButton}>
                 <Text style={styles.buttonText}>Complete</Text>
