@@ -10,7 +10,10 @@ import {
     ImageBackground
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
 
+const { base_url } =  require("../../config");
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
@@ -21,11 +24,43 @@ const LoginScreen = () => {
     const navigation = useNavigation();
 
     const handleLogin = () => {
+        console.log(base_url);
         if (!emailOrNumber || !password) {
             Alert.alert("Error", "Please enter all fields!");
             return;
         }
-        Alert.alert("Success", "Logged in successfully!");
+        fetch(`${base_url}/login`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+                username: emailOrNumber,
+                password: password
+            }).toString()
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }).then(async data => {debugger
+            const { access_token, token_type } = data;
+            // Save the token and token_type in AsyncStorage
+            await AsyncStorage.setItem('auth_token', access_token);
+            await AsyncStorage.setItem('token_type', token_type);
+            const decodedToken = jwtDecode(access_token);
+            console.log(decodedToken)
+            await AsyncStorage.setItem('user_name', decodedToken.name|| "Jane");
+            await AsyncStorage.setItem('user_role', decodedToken.level || 'Beginner');
+            
+            navigation.navigate('Dashboard');
+            console.log('Success:', data);
+            Alert.alert("Success", "Logged in successfully!");
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+
     };
 
     const handleSocialLogin = (platform) => {

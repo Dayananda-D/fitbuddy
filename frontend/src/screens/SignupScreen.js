@@ -16,6 +16,7 @@ const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
 const calendar = require("../../assets/images/Calender.png");
+const { base_url } =  require("../../config");
 
 
 const SignupScreen = () => {
@@ -28,11 +29,35 @@ const SignupScreen = () => {
     const navigation = useNavigation();
     const handleSubmit = () => {
         // Basic validation
+        console.log(base_url);
         if (!username || !email || !password) {
             Alert.alert("Error", "All fields are required!");
             return;
         }
-        Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+        fetch(`${base_url}/user/signup`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: username,
+                email: email,
+                password: password
+            })
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }).then(data => {
+            navigation.navigate('Login');
+            console.log('Success:', data);
+            Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+          
     };
 
     return (
