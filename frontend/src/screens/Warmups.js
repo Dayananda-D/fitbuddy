@@ -1,15 +1,13 @@
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
-const warmup1 = require('../../assets/workoutAnimations/warmup1.gif');
-const duration = '2 Mins';
-const workoutName = 'Standing Hamstrings and Back Stretch';
-const instructions = [
-    "Stand tall with your feet hip-width apart",
-    "Inhale and raise your arms overhead with palms facing inward",
-    "Exhale and bend forward at the waist, allowing gravity to pull you towards the ground",
-    "Keep your knees slightly bent and hang your head and neck relaxed",
-    "Slowly roll back up to standing position",
-];
+import React, { useState, useRef, useEffect } from "react";
+import {
+    View,
+    Text,
+    StyleSheet,
+    ImageBackground,
+    Image,
+    TouchableOpacity,
+    Animated,
+} from "react-native";
 
 const InstructionText = ({ instructions, title }) => {
     return (
@@ -27,35 +25,118 @@ const InstructionText = ({ instructions, title }) => {
 
 const Warmups = ({ navigation, route }) => {
     const { workOutData } = route.params;
+
+    const [timer, setTimer] = useState("00:00");
+    const [isRunning, setIsRunning] = useState(false);
+    const [completed, setCompleted] = useState(false); // Track if progress is complete
+    const progress = useRef(new Animated.Value(0)).current;
+
+    // Timer Logic
+    useEffect(() => {
+        let interval;
+        if (isRunning) {
+            let seconds = 0;
+            interval = setInterval(() => {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                setTimer(
+                    `${minutes.toString().padStart(2, "0")}:${secs
+                        .toString()
+                        .padStart(2, "0")}`
+                );
+
+                if (seconds >= 120) {
+                    clearInterval(interval); // Stop after 2 minutes
+                    setIsRunning(false);
+                    setCompleted(true); // Mark progress as completed
+                }
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+    // Start Progress Animation
+    const startAnimation = () => {
+        setIsRunning(true);
+        Animated.timing(progress, {
+            toValue: 1,
+            duration: 120000, // 2 minutes in milliseconds
+            useNativeDriver: false,
+        }).start();
+    };
+
+    // Interpolated Width for Progress Bar
+    const progressWidth = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0%", "100%"], // Gradual width change
+    });
+
+    const handleClick = () => {
+        if (!isRunning && !completed) {
+            startAnimation(); // Start only if not running and not completed
+        } else if (completed) {
+            navigation.goBack(); // Navigate to Dashboard
+        }
+    }
+
     return (
-        <ImageBackground source={require('../../assets/images/background.png')} style={styles.container}>
-            {/* Back Button*/}
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <ImageBackground
+            source={require("../../assets/images/background.png")}
+            style={styles.container}
+        >
+            {/* Back Button */}
+            <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => navigation.goBack()}
+            >
                 <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
 
-            {/* Gif Image*/}
+            {/* Gif Image */}
             <View style={styles.gifContainer}>
                 <View>
-                    <ImageBackground source={{ uri: workOutData.image }} style={styles.gifPlayer}></ImageBackground>
+                    <ImageBackground
+                        source={{ uri: workOutData.image }}
+                        style={styles.gifPlayer}
+                    ></ImageBackground>
                 </View>
 
                 <View style={styles.gifDesc}>
                     <Text style={{ fontWeight: "bold" }}>{workOutData.title}</Text>
-                    <Text style={{ fontSize: 14, color: '#8860a2', }}>{workOutData.duration}</Text>
+                    <Text style={{ fontSize: 14, color: "#8860a2" }}>
+                        {workOutData.duration}
+                    </Text>
                 </View>
             </View>
-            {/* Instructions*/}
+
+            {/* Instructions */}
             <View style={styles.instructionView}>
                 <Text style={styles.instructionHeader}>Instructions</Text>
                 <InstructionText instructions={workOutData.instruction} />
             </View>
-            <TouchableOpacity style={styles.startButton}>
-                <Text style={styles.buttonText}>Complete</Text>
-            </TouchableOpacity>
+
+            {/* Animated Progress Bar */}
+            <View style={styles.progressBarContainer}>
+                <Animated.View
+                    style={[
+                        styles.progressBar,
+                        {
+                            backgroundColor: completed ? "#4CAF50" : "#9bde9e", // Change to green at the end
+                            width: progressWidth, // Progress updates dynamically
+                        },
+                    ]}
+                />
+                <TouchableOpacity
+                    style={styles.progressButton}
+                    onPress={() => handleClick()} // Prevent multiple presses
+                >
+                    <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>{isRunning ? timer : completed ? "Next" : "Start"}</Text>
+                </TouchableOpacity>
+            </View>
         </ImageBackground>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -76,20 +157,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     instructionTxt: {
-        color: 'white'
+        color: "white",
     },
     instructionHeader: {
-        textAlign: 'center',
+        textAlign: "center",
         fontSize: 18,
         fontWeight: "bold",
-        color: '#4CAF50',
-        padding: 10
+        color: "#4CAF50",
+        padding: 10,
     },
     instructionView: {
-        width: '100%',
+        width: "100%",
         height: 300,
         padding: 20,
-        overflow: 'scroll'
+        overflow: "scroll",
     },
     bulletPointContainer: {
         flexDirection: "row",
@@ -100,38 +181,47 @@ const styles = StyleSheet.create({
         color: "white",
         marginRight: 5,
     },
-    startButton: {
-        backgroundColor: "#4CAF50",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 10,
-        width: 200,
-        alignItems: "center",
-        position: "absolute",
-        bottom: 25,
-    },
-    buttonText: {
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "bold",
-    },
     gifContainer: {
         marginHorizontal: 12,
         shadowOffset: { width: -5, height: 3 },
-        shadowColor: 'grey',
+        shadowColor: "grey",
         shadowOpacity: 0.5,
         shadowRadius: 3,
-        backgroundColor: '#fff'
+        backgroundColor: "#fff",
     },
     gifPlayer: {
         height: 300,
-        width: 400
+        width: 400,
     },
     gifDesc: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         padding: 10,
-        borderRadius: 15
-    }
+        borderRadius: 15,
+    },
+    progressBarContainer: {
+        width: "50%",
+        height: 50,
+        position: "absolute",
+        bottom: 25,
+        backgroundColor: "#e0e0e0",
+        borderRadius: 10,
+        overflow: "hidden",
+    },
+    progressBar: {
+        height: "100%",
+        position: "absolute",
+    },
+    progressButton: {
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    buttonText: {
+        fontSize: 18,
+        fontWeight: "bold",
+    },
 });
 
-export default Warmups
+export default Warmups;
