@@ -9,6 +9,7 @@ import Dashboard from "./src/screens/Dashboard";
 import Warmups from "./src/screens/Warmups";
 import Login from "./src/screens/LoginScreen";
 import SignUp from "./src/screens/SignupScreen";
+import WorkoutsTab from "./src/screens/WorkoutsTab";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="Warmups" component={Warmups} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
       </Stack.Navigator>
     </NavigationContainer>
   );
