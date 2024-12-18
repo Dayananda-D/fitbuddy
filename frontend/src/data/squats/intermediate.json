@@ -11,7 +11,9 @@
                 "Keep your core engaged throughout the movement",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/5992/jump-squats-bodyweight.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/5992/jump-squats-bodyweight.gif",
+            "caloriesBurnedPerRepMen": "1.2",
+            "caloriesBurnedPerRepWomen": "0.9"
         },
         {
             "title": "Pulse Squat",
@@ -24,7 +26,9 @@
                 "Push through your heels to return to standing",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/3921/633712-bodyweight-pulse-squat-male.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/3921/633712-bodyweight-pulse-squat-male.gif",
+            "caloriesBurnedPerRepMen": "0.7",
+            "caloriesBurnedPerRepWomen": "0.5"
         },
         {
             "title": "Bulgarian Split Squat",
@@ -37,7 +41,9 @@
                 "Push through the front heel to return to standing",
                 "Switch legs and repeat"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+            "caloriesBurnedPerRepMen": "1.0",
+            "caloriesBurnedPerRepWomen": "0.8"
         },
         {
             "title": "Goblet Squat",
@@ -50,7 +56,9 @@
                 "Push through your heels to stand back up",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+            "caloriesBurnedPerRepMen": "1.5",
+            "caloriesBurnedPerRepWomen": "1.2"
         }
     ]
 }

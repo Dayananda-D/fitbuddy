@@ -11,7 +11,9 @@
           "Hold briefly, then return to the starting position.",
           "Repeat for the desired repetitions."
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/1638/294412-seal-push-up.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/1638/294412-seal-push-up.gif",
+        "caloriesBurnedPerRepMen" : "0.3",
+        "caloriesBurnedPerRepWomen" : "0.2"
       },
       {
         "title": "Kneeling Push-Up",
@@ -24,7 +26,9 @@
           "Push yourself back up to the starting position.",
           "Repeat for the desired repetitions."
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/1762/321112-kneeling-push-up-male.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/1762/321112-kneeling-push-up-male.gif",
+        "caloriesBurnedPerRepMen" : "0.3",
+        "caloriesBurnedPerRepWomen" : "0.2"
       },
       {
         "title": "Standard Push-Up",
@@ -36,7 +40,9 @@
           "Push back up to the starting position.",
           "Repeat for the desired repetitions."
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+        "caloriesBurnedPerRepMen" : "0.8",
+        "caloriesBurnedPerRepWomen" : "0.5"
       }
     ]
   }

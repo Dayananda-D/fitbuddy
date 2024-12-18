@@ -10,7 +10,9 @@
           "Push back up to the starting position",
           "Repeat for the desired repetitions"
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+        "caloriesBurnedPerRepMen" : "0.8",
+        "caloriesBurnedPerRepWomen" : "0.5"
       },
       {
         "title": "Incline Push-Up",
@@ -22,7 +24,9 @@
           "Push yourself back to the starting position",
           "Repeat for the desired repetitions"
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif",
+        "caloriesBurnedPerRepMen": "0.5",
+        "caloriesBurnedPerRepWomen": "0.3"
       },
       {
         "title": "Decline Push-Up",
@@ -34,7 +38,9 @@
           "Push back up to the starting position",
           "Repeat for the desired repetitions"
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif",
+        "caloriesBurnedPerRepMen": "1.0",
+        "caloriesBurnedPerRepWomen": "0.7"
       },
       {
         "title": "Spider Crawl Push-Up",
@@ -46,7 +52,9 @@
           "Push back up and alternate sides",
           "Repeat for the desired repetitions"
         ],
-        "image": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif"
+        "image": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif",
+        "caloriesBurnedPerRepMen": "1.2",
+        "caloriesBurnedPerRepWomen": "0.9"
       }
     ]
   }

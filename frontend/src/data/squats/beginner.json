@@ -11,7 +11,9 @@
                 "Push through your heels to stand back up",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif",
+            "caloriesBurnedPerRepMen": "0.3",
+            "caloriesBurnedPerRepWomen": "0.2"
         },
         {
             "title": "Wall Squat",
@@ -24,7 +26,9 @@
                 "Push through your heels to stand back up",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif",
+            "caloriesBurnedPerRepMen": "0.4",
+            "caloriesBurnedPerRepWomen": "0.3"
         },
         {
             "title": "Sumo Squat",
@@ -37,7 +41,9 @@
                 "Squeeze your glutes at the top of the movement",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif",
+            "caloriesBurnedPerRepMen": "0.5",
+            "caloriesBurnedPerRepWomen": "0.4"
         }
     ]
 }

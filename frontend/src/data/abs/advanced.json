@@ -1,0 +1,31 @@
+{
+    "data": [
+        {
+            "title": "crunch straight leg up",
+            "duration": "2Min",
+            "type": "Advanced",
+            "instruction": [
+                "Lie down on your back with your legs perpendicular to the floor and arms extended over your shoulders.",
+                "Raise your torso off the floor and take your hands towards your feet.",
+                "Hold for a while, then slowly return to the starting position and repeat."
+            ],
+            "image": "https://svc.heygainz.com/storage/exercises/5394/crunch-straight-leg-up.gif",
+            "caloriesBurnedPerRepMen": "1.2",
+            "caloriesBurnedPerRepWomen": "1.0"
+        },
+        {
+            "title": "Dragon Flag",
+            "duration": "2Min",
+            "type": "Advanced",
+            "instruction": [
+                "Lie on a bench or flat surface and grab the edge with both hands above your head",
+                "Lift your legs and hips off the bench, keeping your body straight",
+                "Slowly lower your legs back down without touching the surface",
+                "Maintain control throughout the movement"
+            ],
+            "image": "https://svc.heygainz.com/storage/exercises/2259/405812-leg-raise-dragon-flag.gif",
+            "caloriesBurnedPerRepMen": "2.0",
+            "caloriesBurnedPerRepWomen": "1.6"
+        }
+    ]
+}

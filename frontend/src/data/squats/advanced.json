@@ -1,5 +1,6 @@
 {
-    "data": [{
+    "data": [
+        {
             "title": "Bulgarian Split Squat",
             "duration": "2Min",
             "type": "Intermediate",
@@ -10,7 +11,9 @@
                 "Push through the front heel to return to standing",
                 "Switch legs and repeat"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+            "caloriesBurnedPerRepMen": "1.0",
+            "caloriesBurnedPerRepWomen": "0.8"
         },
         {
             "title": "Goblet Squat",
@@ -23,7 +26,9 @@
                 "Push through your heels to stand back up",
                 "Repeat for the desired number of repetitions"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+            "caloriesBurnedPerRepMen": "1.5",
+            "caloriesBurnedPerRepWomen": "1.2"
         },
         {
             "title": "Pistol Squat",
@@ -36,7 +41,9 @@
                 "Push through your heel to stand back up",
                 "Repeat on the other leg"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/1080/175912-single-leg-squat-pistol.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/1080/175912-single-leg-squat-pistol.gif",
+            "caloriesBurnedPerRepMen": "2.0",
+            "caloriesBurnedPerRepWomen": "1.6"
         },
         {
             "title": "Cossack Squat",
@@ -49,7 +56,9 @@
                 "Push through the bent leg to return to standing",
                 "Alternate sides and repeat"
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/2532/463212-cossack-squat.gif"
+            "image": "https://svc.heygainz.com/storage/exercises/2532/463212-cossack-squat.gif",
+            "caloriesBurnedPerRepMen": "1.8",
+            "caloriesBurnedPerRepWomen": "1.4"
         }
     ]
 }

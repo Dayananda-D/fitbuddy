@@ -1,0 +1,32 @@
+{
+"data": [
+    {
+        "title": "Basic Crunch",
+        "duration": "2Min",
+        "type": "Beginner",
+        "instruction": [
+            "Lie on your back with knees bent and feet flat on the ground",
+            "Place your hands streteched over your head",
+            "Lift your head, neck, and shoulders off the ground",
+            "Lower back down slowly and repeat"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/188/026712-crunch-hands-overhead.gif",
+        "caloriesBurnedPerRepMen": "0.5",
+        "caloriesBurnedPerRepWomen": "0.3"
+    },
+    {
+        "title": "Plank",
+        "duration": "1Min",
+        "type": "Beginner",
+        "instruction": [
+            "Start in a push-up position with your elbows bent and forearms on the ground",
+            "Keep your body in a straight line from head to heels",
+            "Hold the position while engaging your core",
+            "Avoid letting your hips sag or rise too high"
+        ],
+        "image": "https://svc.heygainz.com/storage/exercises/344/046312-front-plank-male.gif",
+        "caloriesBurnedPerRepMen": "1.0",
+        "caloriesBurnedPerRepWomen": "0.8"
+    }
+]
+}
