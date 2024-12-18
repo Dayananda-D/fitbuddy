@@ -1,43 +1,558 @@
 {
-    "data": [
-        {
-            "title": "Cat Cow Stretch",
-            "duration": "2Min",
-            "type": "Warm-up",
-            "instruction": [
-                "Start on all fours, with knees under hips and wrists under shoulders",
-                "Take a deep breath in and as you do, lower your belly towards the floor and lift your chest and eyes towards the ceiling",
-                "Breathe out slowly through your mouth, round your spine towards the ceiling, tuck your tailbone under and drop your head",
-                "Breathe in and return to the starting position",
-                "Repeat this sequence for your intended sets"
+    "exercises": {
+        "chest": {
+            "warmup": [
+                {
+                    "title": "Cat-Cow Stretch",
+                    "duration": "2Min",
+                    "type": "Warmup",
+                    "instruction": [
+                        "Start on all fours with hands under shoulders and knees under hips",
+                        "Arch your back, lifting your head and tailbone towards the ceiling (Cow)",
+                        "Round your spine, tucking your chin and tailbone towards your chest (Cat)",
+                        "Alternate between the two positions in a slow and controlled manner"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1158/210712-cow-stretch.gif",
+                    "caloriesBurnedPerRepMen": "0.2",
+                    "caloriesBurnedPerRepWomen": "0.1"
+                },
+                {
+                    "title": "Dead Bug",
+                    "duration": "2Min",
+                    "type": "Warmup",
+                    "instruction": [
+                        "Lie on your back with arms extended towards the ceiling and knees bent at 90 degrees",
+                        "Lower one arm and the opposite leg towards the floor while keeping your core engaged",
+                        "Return to the starting position and alternate sides",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/196/027612-dead-bug.gif",
+                    "caloriesBurnedPerRepMen": "0.3",
+                    "caloriesBurnedPerRepWomen": "0.2"
+                }
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/2502/458012-cat-cow-stretch.gif"
+            "beginner": [
+                {
+                    "title": "Basic Crunch",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Lie on your back with knees bent and feet flat on the ground",
+                        "Place your hands streteched over your head",
+                        "Lift your head, neck, and shoulders off the ground",
+                        "Lower back down slowly and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/188/026712-crunch-hands-overhead.gif",
+                    "caloriesBurnedPerRepMen": "0.5",
+                    "caloriesBurnedPerRepWomen": "0.3"
+                },
+                {
+                    "title": "Plank",
+                    "duration": "1Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Start in a push-up position with your elbows bent and forearms on the ground",
+                        "Keep your body in a straight line from head to heels",
+                        "Hold the position while engaging your core",
+                        "Avoid letting your hips sag or rise too high"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/344/046312-front-plank-male.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Bicycle Crunch",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Lie on your back with your hands behind your head",
+                        "Lift your shoulders off the ground and bring one elbow towards the opposite knee",
+                        "Switch sides, mimicking a pedaling motion",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/5374/bicycles-crunches.gif",
+                    "caloriesBurnedPerRepMen": "0.7",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Mountain Climbers",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a push-up position with your hands under your shoulders",
+                        "Bring one knee towards your chest and quickly switch legs",
+                        "Keep your core engaged and back straight",
+                        "Repeat for the desired time or repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/459/063012-mountain-climber.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "crunch straight leg up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie down on your back with your legs perpendicular to the floor and arms extended over your shoulders.",
+                        "Raise your torso off the floor and take your hands towards your feet.",
+                        "Hold for a while, then slowly return to the starting position and repeat."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/5394/crunch-straight-leg-up.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                },
+                {
+                    "title": "Dragon Flag",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on a bench or flat surface and grab the edge with both hands above your head",
+                        "Lift your legs and hips off the bench, keeping your body straight",
+                        "Slowly lower your legs back down without touching the surface",
+                        "Maintain control throughout the movement"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2259/405812-leg-raise-dragon-flag.gif",
+                    "caloriesBurnedPerRepMen": "2.0",
+                    "caloriesBurnedPerRepWomen": "1.6"
+                }
+            ]
         },
-        {
-            "title": "Push-up (wall)",
-            "duration": "2Min",
-            "type": "Warm-up",
-            "instruction": [
-                "Stand facing the wall, extend your arms in front of you and place your palms flat on the wall at shoulder height and shoulder-width apart",
-                "Bend your elbows and bring your body towards the wall",
-                "Press your palms into the wall to push your body back to the starting position",
-                "Keep your body in a straight line throughout the movement",
-                "Repeat the movement for the desired number of repetitions"
+        "abdominal": {
+            "warmup": [
+                {
+                    "title": "Cat Cow Stretch",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Start on all fours, with knees under hips and wrists under shoulders",
+                        "Take a deep breath in and as you do, lower your belly towards the floor and lift your chest and eyes towards the ceiling",
+                        "Breathe out slowly through your mouth, round your spine towards the ceiling, tuck your tailbone under and drop your head",
+                        "Breathe in and return to the starting position",
+                        "Repeat this sequence for your intended sets"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2502/458012-cat-cow-stretch.gif"
+                },
+                {
+                    "title": "Push-up (wall)",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Stand facing the wall, extend your arms in front of you and place your palms flat on the wall at shoulder height and shoulder-width apart",
+                        "Bend your elbows and bring your body towards the wall",
+                        "Press your palms into the wall to push your body back to the starting position",
+                        "Keep your body in a straight line throughout the movement",
+                        "Repeat the movement for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/474/065812-push-up-wall.gif"
+                },
+                {
+                    "title": "Roll Pec Foam Rolling",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Lie face down and position the foam roller underneath your chest",
+                        "Position your hands above your head, at shoulder width",
+                        "Roll up and down from your lower sternum to your armpits",
+                        "Repeat the motions for a specific period or reps",
+                        "Relax your body weight onto the foam roller for more intensity, if needed"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1640/294812-roll-pec-foam-rolling.gif"
+                }
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/474/065812-push-up-wall.gif"
+            "beginner": [
+                {
+                    "title": "Seal Push-Up",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Start in a plank position with your hands under your shoulders and legs extended behind you.",
+                        "Lower your body to the ground while keeping your elbows tucked close to your sides.",
+                        "Push your upper body up while keeping your hips and legs relaxed on the ground.",
+                        "Hold briefly, then return to the starting position.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1638/294412-seal-push-up.gif",
+                    "caloriesBurnedPerRepMen": "0.3",
+                    "caloriesBurnedPerRepWomen": "0.2"
+                },
+                {
+                    "title": "Kneeling Push-Up",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Start in a kneeling position with your hands flat on the floor, shoulder-width apart.",
+                        "Keep your knees on the ground and your body in a straight line from head to knees.",
+                        "Lower your chest towards the floor by bending your elbows.",
+                        "Push yourself back up to the starting position.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1762/321112-kneeling-push-up-male.gif",
+                    "caloriesBurnedPerRepMen": "0.3",
+                    "caloriesBurnedPerRepWomen": "0.2"
+                },
+                {
+                    "title": "Standard Push-Up",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Start in a plank position with your hands under your shoulders and feet together.",
+                        "Lower your body towards the floor by bending your elbows while keeping your body straight.",
+                        "Push back up to the starting position.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Standard Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a plank position with your hands under your shoulders",
+                        "Lower your chest to the floor while keeping your body straight",
+                        "Push back up to the starting position",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Incline Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Place your hands on an elevated surface like a chair or bench",
+                        "Keep your body in a straight line and lower your chest towards the surface",
+                        "Push yourself back to the starting position",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif",
+                    "caloriesBurnedPerRepMen": "0.5",
+                    "caloriesBurnedPerRepWomen": "0.3"
+                },
+                {
+                    "title": "Decline Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Place your feet on an elevated surface like a chair or bench",
+                        "Keep your body in a straight line and lower your chest towards the floor",
+                        "Push back up to the starting position",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                },
+                {
+                    "title": "Spider Crawl Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a standard push-up position",
+                        "As you lower your chest to the floor, bring one knee up towards your elbow",
+                        "Push back up and alternate sides",
+                        "Repeat for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "0.9"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Clock Push-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a standard push-up position with your hands under your shoulders",
+                        "Move one hand slightly forward (like moving around a clock) and perform a push-up",
+                        "Alternate hand positions, moving clockwise after each push-up",
+                        "Complete for the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/183/025812-clock-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.4",
+                    "caloriesBurnedPerRepWomen": "1.1"
+                },
+                {
+                    "title": "Clap Push-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a plank position with hands under your shoulders",
+                        "Lower your chest to the floor and explosively push yourself up",
+                        "Clap your hands together before landing back into the starting position",
+                        "Repeat for desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/845/127312-clap-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.3"
+                },
+                {
+                    "title": "Archer Push-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a wide push-up position with hands slightly wider than shoulder-width",
+                        "Lower your chest toward one hand while keeping the other arm extended",
+                        "Push back up to the starting position and alternate sides",
+                        "Repeat for desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                },
+                {
+                    "title": "Single Arm Push-Up on Knees",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a kneeling push-up position with your knees on the ground",
+                        "Place one hand behind your back and the other under your shoulder",
+                        "Lower your chest toward the floor and push back up",
+                        "Switch sides after the desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1677/300212-single-arm-push-up-on-knees.gif",
+                    "caloriesBurnedPerRepMen": "1.6",
+                    "caloriesBurnedPerRepWomen": "1.3"
+                }
+            ]
         },
-        {
-            "title": "Roll Pec Foam Rolling",
-            "duration": "2Min",
-            "type": "Warm-up",
-            "instruction": [
-                "Lie face down and position the foam roller underneath your chest",
-                "Position your hands above your head, at shoulder width",
-                "Roll up and down from your lower sternum to your armpits",
-                "Repeat the motions for a specific period or reps",
-                "Relax your body weight onto the foam roller for more intensity, if needed"
+        "calves": {
+            "warmup": [
+                {
+                    "title": "High Knees",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Stand straight with feet hip-width apart",
+                        "Lift your knees to your chest while jogging in place",
+                        "Keep your back straight and core engaged",
+                        "Pump your arms to maintain balance and rhythm",
+                        "Repeat for the set duration"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1719/309112-high-knee-skips-male.gif"
+                },
+                {
+                    "title": "Butt Kicks",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Stand straight with feet shoulder-width apart",
+                        "Jog in place while kicking your heels up to touch your glutes",
+                        "Keep your arms bent and swing them naturally",
+                        "Maintain a steady pace throughout the movement",
+                        "Repeat for the set duration"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2534/463412-high-knee-to-butt-kick.gif"
+                },
+                {
+                    "title": "Jogging in Place",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Stand tall with feet hip-width apart",
+                        "Begin jogging in place with light, quick steps",
+                        "Keep your shoulders relaxed and swing your arms naturally",
+                        "Focus on warming up your legs and increasing your heart rate",
+                        "Repeat for the set duration"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2227/400412-place-jog-male.gif"
+                },
+                {
+                    "title": "Side Lunges",
+                    "duration": "2Min",
+                    "type": "Warm-up",
+                    "instruction": [
+                        "Stand tall with feet hip-width apart and hands at your chest or hips.",
+                        "Take a big step to the right, shifting your weight onto your right leg.",
+                        "Bend your right knee while keeping your left leg straight and your back flat.",
+                        "Push your hips back and lower until your right thigh is parallel to the floor.",
+                        "Push off your right foot to return to the starting position.",
+                        "Alternate sides and repeat for the desired duration or repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/6021/side-lunges-bodyweight.gif"
+                }
             ],
-            "image": "https://svc.heygainz.com/storage/exercises/1640/294812-roll-pec-foam-rolling.gif"
+            "beginner": [
+                {
+                    "title": "Bodyweight Squat",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand with feet shoulder-width apart",
+                        "Keep your chest up and back straight",
+                        "Lower your hips as if sitting in a chair",
+                        "Push through your heels to stand back up",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif",
+                    "caloriesBurnedPerRepMen": "0.3",
+                    "caloriesBurnedPerRepWomen": "0.2"
+                },
+                {
+                    "title": "Wall Squat",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand with your back against a wall",
+                        "Slide down into a squat until your knees are at a 90-degree angle",
+                        "Hold the position while keeping your back flat against the wall",
+                        "Push through your heels to stand back up",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif",
+                    "caloriesBurnedPerRepMen": "0.4",
+                    "caloriesBurnedPerRepWomen": "0.3"
+                },
+                {
+                    "title": "Sumo Squat",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand with feet wider than shoulder-width apart, toes pointed out",
+                        "Lower your hips straight down while keeping your chest up",
+                        "Push through your heels to return to standing",
+                        "Squeeze your glutes at the top of the movement",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif",
+                    "caloriesBurnedPerRepMen": "0.5",
+                    "caloriesBurnedPerRepWomen": "0.4"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Jump Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a squat position with feet shoulder-width apart",
+                        "Lower your hips and explode upwards into a jump",
+                        "Land softly back into a squat position",
+                        "Keep your core engaged throughout the movement",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/5992/jump-squats-bodyweight.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "0.9"
+                },
+                {
+                    "title": "Pulse Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a squat position with feet shoulder-width apart",
+                        "Lower into the squat and pulse up and down a few inches",
+                        "Keep your back straight and core tight",
+                        "Push through your heels to return to standing",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/3921/633712-bodyweight-pulse-squat-male.gif",
+                    "caloriesBurnedPerRepMen": "0.7",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Bulgarian Split Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Stand in front of a bench or chair",
+                        "Place one foot on the bench behind you",
+                        "Lower your hips until your front thigh is parallel to the ground",
+                        "Push through the front heel to return to standing",
+                        "Switch legs and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                },
+                {
+                    "title": "Goblet Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold a weight close to your chest with both hands",
+                        "Stand with feet shoulder-width apart",
+                        "Lower into a squat, keeping the weight close to your chest",
+                        "Push through your heels to stand back up",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Bulgarian Split Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Stand in front of a bench or chair",
+                        "Place one foot on the bench behind you",
+                        "Lower your hips until your front thigh is parallel to the ground",
+                        "Push through the front heel to return to standing",
+                        "Switch legs and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                },
+                {
+                    "title": "Goblet Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold a weight close to your chest with both hands",
+                        "Stand with feet shoulder-width apart",
+                        "Lower into a squat, keeping the weight close to your chest",
+                        "Push through your heels to stand back up",
+                        "Repeat for the desired number of repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                },
+                {
+                    "title": "Pistol Squat",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Stand on one leg with the other leg extended straight in front of you",
+                        "Lower into a squat on the supporting leg",
+                        "Keep your core engaged and chest up",
+                        "Push through your heel to stand back up",
+                        "Repeat on the other leg"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1080/175912-single-leg-squat-pistol.gif",
+                    "caloriesBurnedPerRepMen": "2.0",
+                    "caloriesBurnedPerRepWomen": "1.6"
+                },
+                {
+                    "title": "Cossack Squat",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Stand with feet wide apart",
+                        "Shift your weight to one leg and lower into a side squat",
+                        "Keep the other leg extended straight with the toes pointing up",
+                        "Push through the bent leg to return to standing",
+                        "Alternate sides and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2532/463212-cossack-squat.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.4"
+                }
+            ]
         }
-    ]
+    }
 }

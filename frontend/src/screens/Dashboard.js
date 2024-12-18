@@ -31,9 +31,9 @@ const home = require('../../assets/images/Home.png');
 const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
-const plus = require('../../assets/images/Plus.png');
 const workout = require('../data/workoutData.json');
-const pushups = require("../data/pushups/beginner.json");
+const category = 'chest';
+const level = 'advanced';
 
 const Dashboard = ({ route }) => {
     const UserData = route?.params?.UserData || {};
@@ -62,7 +62,7 @@ const Dashboard = ({ route }) => {
                     </View>
                     <ScrollView horizontal={true}>
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
-                            {workout.data.map((item, index) => (
+                            {workout.exercises[category].warmup.map((item, index) => (
                                 <VideoPlay
                                     index={index} key={index} data={item}
                                 />
@@ -75,7 +75,7 @@ const Dashboard = ({ route }) => {
                     </View>
                     <ScrollView horizontal={true}>
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
-                            {pushups.data.map((item, index) => (
+                            {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
                                     index={index} key={index} data={item}
                                 />
@@ -96,7 +96,7 @@ const BottomTab = () => (
     <View
         style={{
             position: 'absolute',
-            bottom: 10,
+            bottom: 30,
             margin: 10,
             marginHorizontal: 25,
             borderRadius: 20,
@@ -105,9 +105,10 @@ const BottomTab = () => (
             backgroundColor: '#EDEDED',
             flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'space-around'
         }}>
-        <BottomButton image={home} />
-        <BottomButton image={dumbbell} />
+        <BottomButton image={home} navigate={"Dashboard"} />
+        <BottomButton image={dumbbell} navigate={"WorkoutsTab"} />
         {/* <BottomButton
             image={plus}
             style={{
@@ -124,42 +125,47 @@ const BottomTab = () => (
         <BottomButton image={profile} />
     </View>
 );
-const BottomButton = ({ image, style, imageStyle }) => (
-    <>
-        <View
-            style={[
-                {
-                    flex: 1,
-                    alignSelf: 'center',
-                    alignItems: 'center',
-                },
-                style,
-            ]}>
-            <Image
-                source={image}
-                style={[
-                    {
-                        height: image === plus ? 40 : 20,
-                        width: image === plus ? 40 : 20,
-                    },
-                    imageStyle,
-                ]}
-            />
-        </View>
-        {image === home && (
-            <View
-                style={{
-                    width: '10%',
-                    position: 'absolute',
-                    height: 2,
-                    backgroundColor: '#8860a2',
-                    bottom: 0,
-                    left: 25,
-                }}
-            />
-        )}
-    </>
-);
+const BottomButton = ({ image, style, imageStyle, navigate }) => {
+    const navigation = useNavigation();
+    return (
+        <>
+            <TouchableOpacity onPress={() => navigation.navigate(navigate)}>
+                <View
+                    style={[
+                        {
+                            flex: 1,
+                            alignSelf: 'center',
+                            alignItems: 'center',
+                        },
+                        style,
+                    ]}>
+                    <Image
+                        source={image}
+                        style={[
+                            {
+                                height: image === dumbbell ? 25 : 20,
+                                width: image === dumbbell ? 25 : 20,
+                            },
+                            imageStyle,
+                        ]}
+                    />
+                </View>
+            </TouchableOpacity>
+            {image === home && (
+                <View
+                    style={{
+                        width: '10%',
+                        position: 'absolute',
+                        height: 3,
+                        backgroundColor: '#8860a2',
+                        bottom: 0,
+                        left: 32,
+                    }}
+                />
+            )}
+        </>
+    )
+};
 
 const VideoPlay = (data) => {
     const navigation = useNavigation();
@@ -245,7 +251,7 @@ const VideoPlay = (data) => {
                             fontSize: 12
                         }}>
                             <Image source={book} style={{ height: 25, width: 25 }} />
-                            {'   Beginner'}
+                            {'    ' + data.data.type}
                         </Text>
                         <Text
                             style={{
@@ -475,7 +481,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    screen: { margin: '3%' },
+    screen: { marginTop: 50 },
     offer: {
         color: 'white',
         // fontFamily: 'Poppins-Regular', 
