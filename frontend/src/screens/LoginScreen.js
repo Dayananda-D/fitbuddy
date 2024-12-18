@@ -13,12 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 
-const { base_url } =  require("../../config");
+const { base_url } = require("../../config");
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
 
-const LoginScreen = () => {
+const LoginScreen = ({ route }) => {
+    const UserData = route?.params?.UserData || {};
     const [emailOrNumber, setEmailOrNumber] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
@@ -44,16 +45,16 @@ const LoginScreen = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             return response.json();
-        }).then(async data => {debugger
+        }).then(async data => {
             const { access_token, token_type } = data;
             // Save the token and token_type in AsyncStorage
             await AsyncStorage.setItem('auth_token', access_token);
             await AsyncStorage.setItem('token_type', token_type);
             const decodedToken = jwtDecode(access_token);
             console.log(decodedToken)
-            await AsyncStorage.setItem('user_name', decodedToken.name|| "Jane");
+            await AsyncStorage.setItem('user_name', decodedToken.name || "Jane");
             await AsyncStorage.setItem('user_role', decodedToken.level || 'Beginner');
-            
+
             navigation.navigate('Dashboard');
             console.log('Success:', data);
             Alert.alert("Success", "Logged in successfully!");

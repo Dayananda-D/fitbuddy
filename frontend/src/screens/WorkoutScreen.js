@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
-import SVGComponent from "../components/svgComponent"; // Import your SVG component here
+import SVGComponent from "../components/svgComponent";
 
-const WorkoutScreen = ({ navigation }) => {
+const WorkoutScreen = ({ navigation, route }) => {
+    const { UserData } = route.params;
+    const [selectedIds, setSelectedIds] = useState([]);
 
+    const handleSelectionChange = (ids) => {
+        setSelectedIds(ids);
+    };
+
+    const inputAccumulator = () => {
+        const updatedUserData = {
+            ...UserData,
+            selectedBodyParts: selectedIds
+        };
+        navigation.navigate("Dashboard", { UserData: updatedUserData });
+    };
     return (
         <ImageBackground
             source={require("../../assets/images/background.png")}
@@ -11,7 +24,7 @@ const WorkoutScreen = ({ navigation }) => {
         >
             <View style={styles.container}>
                 <Text style={styles.title}>What do you want to workout?</Text>
-                <SVGComponent width={"60%"} height={"70%"} /> {/* Add your SVGComponent here */}
+                <SVGComponent onSelectionChange={handleSelectionChange} />
                 <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}
@@ -20,7 +33,7 @@ const WorkoutScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.startButton}
-                    onPress={() => navigation.navigate("Dashboard")} // Move to Dashboard
+                    onPress={() => inputAccumulator()}
                 >
                     <Text style={styles.buttonText}>Let’s Begin</Text>
                 </TouchableOpacity>

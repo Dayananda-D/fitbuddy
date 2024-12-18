@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from "react-native";
 
 const GenderScreen = ({ navigation }) => {
+    const [gender, setGender] = useState("");
+    const UserData = {};
+
+    const inputAccumulator = (value) => {
+        setGender(value);
+        UserData.gender = value,
+            navigation.navigate("Goal", { UserData });
+    };
+
     return (
         <ImageBackground
             source={require("../../assets/images/background.png")}
@@ -12,7 +21,7 @@ const GenderScreen = ({ navigation }) => {
                 <View style={styles.genderImagesContainer}>
                     <TouchableOpacity
                         style={styles.genderImageWrapper}
-                        onPress={() => navigation.navigate("Goal")}
+                        onPress={() => inputAccumulator("Male")}
                     >
                         <Image
                             source={require("../../assets/images/male.jpg")}
@@ -23,7 +32,7 @@ const GenderScreen = ({ navigation }) => {
 
                     <TouchableOpacity
                         style={styles.genderImageWrapper}
-                        onPress={() => navigation.navigate("Goal")}
+                        onPress={() => inputAccumulator("Female")}
                     >
                         <Image
                             source={require("../../assets/images/female.jpg")}

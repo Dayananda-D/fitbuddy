@@ -1,7 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from "react-native";
 
-const GoalScreen = ({ navigation }) => {
+const GoalScreen = ({ navigation, route }) => {
+    const { UserData } = route.params;
+
+    const inputAccumulator = (goal) => {
+        const updatedUserData = {
+            ...UserData,
+            goal,
+        };
+        navigation.navigate("Workout", { UserData: updatedUserData });
+    };
     return (
         <ImageBackground
             source={require("../../assets/images/background.png")}
@@ -11,7 +20,7 @@ const GoalScreen = ({ navigation }) => {
                 <Text style={styles.title}>What’s Your Goal?</Text>
                 <TouchableOpacity
                     style={styles.goalButton}
-                    onPress={() => navigation.navigate("Workout")}
+                    onPress={() => inputAccumulator("weightLoss")}
                 >
                     <Image
                         source={require("../../assets/images/weight-loss.png")}
@@ -21,7 +30,7 @@ const GoalScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.goalButton}
-                    onPress={() => navigation.navigate("Workout")}
+                    onPress={() => inputAccumulator("muscle")}
                 >
                     <Image
                         source={require("../../assets/images/muscular.jpg")}
@@ -31,7 +40,7 @@ const GoalScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.goalButton}
-                    onPress={() => navigation.navigate("Workout")}
+                    onPress={() => inputAccumulator("fit")}
                 >
                     <Image
                         source={require("../../assets/images/fit.jpg")}

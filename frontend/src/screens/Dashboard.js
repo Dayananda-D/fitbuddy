@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Button,
     Image,
@@ -20,7 +20,6 @@ const notification = require('../../assets/images/Notification.png');
 const banner = require('../../assets/images/bg.png');
 const fire = require('../../assets/images/fire.png');
 const model = require('../../assets/images/model.png');
-const warmup1 = require('../../assets/workoutAnimations/warmup1.gif');
 const cycle = require('../../assets/images/cycle.png');
 const yoga = require('../../assets/images/yoga.png');
 const walk = require('../../assets/images/walk.png');
@@ -34,14 +33,18 @@ const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const plus = require('../../assets/images/Plus.png');
 const workout = require('../data/workoutData.json');
+const pushups = require("../data/pushups/beginner.json");
 
-const Dashboard = () => {
+const Dashboard = ({ route }) => {
+    const UserData = route?.params?.UserData || {};
     return (
+
         <ImageBackground
             source={require('../../assets/images/background.png')}
             style={styles.container}
         >
-            <SafeAreaView>
+            {/* <SafeAreaView> */}
+            <ScrollView>
                 <View style={styles.screen}>
                     <Header />
                     <Banner />
@@ -53,23 +56,9 @@ const Dashboard = () => {
                             <Card data={item} index={index} key={index} />
                         ))}
                     </View>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginTop: 20
-                        }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
                         <Label>Today's Warm-up</Label>
-                        {/* <Text
-                            style={{
-                                // fontFamily: 'Poppins-Regular',
-                                opacity: 0.5,
-                                fontSize: 12,
-                                color: 'white'
-                            }}>
-                            View All
-                        </Text> */}
+                        {/* <Text style={{ opacity: 0.5, fontSize: 12, color: 'white' }}> View All</Text> */}
                     </View>
                     <ScrollView horizontal={true}>
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
@@ -80,8 +69,22 @@ const Dashboard = () => {
                             ))}
                         </View>
                     </ScrollView>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
+                        <Label>Today's Workout</Label>
+                        {/* <Text style={{ opacity: 0.5, fontSize: 12, color: 'white' }}> View All</Text> */}
+                    </View>
+                    <ScrollView horizontal={true}>
+                        <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
+                            {pushups.data.map((item, index) => (
+                                <VideoPlay
+                                    index={index} key={index} data={item}
+                                />
+                            ))}
+                        </View>
+                    </ScrollView>
                 </View>
-            </SafeAreaView>
+            </ScrollView>
+            {/* </SafeAreaView> */}
             <BottomTab />
         </ImageBackground>
     );
