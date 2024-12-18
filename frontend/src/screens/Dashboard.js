@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import {
     Button,
     Image,
@@ -13,9 +13,11 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
-const banner = require('../../assets/images/BG.png');
+const banner = require('../../assets/images/bg.png');
 const fire = require('../../assets/images/fire.png');
 const model = require('../../assets/images/model.png');
 const warmup1 = require('../../assets/workoutAnimations/warmup1.gif');
@@ -386,12 +388,34 @@ const ImageContainer = ({ image, height = '100%', width = '100%', tintColor }) =
         <Image source={image} style={[{ height, width, tintColor }]} />
     </View>
 );
-const HeaderTitle = () => (
-    <View style={styles.title}>
-        <Text style={styles.bigTitle}>Hi, Jane</Text>
-        <Text style={styles.smallTitle}>Beginer</Text>
-    </View>
-);
+
+const HeaderTitle = () => {
+    const [userName, setUserName] = useState('Jane');
+    const [userRole, setUserRole] = useState('Beginner');
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const storedName = await AsyncStorage.getItem('user_name');
+                const storedRole = await AsyncStorage.getItem('user_role');
+
+                if (storedName) setUserName(storedName);
+                if (storedRole) setUserRole(storedRole);
+            } catch (error) {
+                console.error('Error fetching user details', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+
+    return (
+        <View style={styles.title}>
+            <Text style={styles.bigTitle}>Hi, {userName}</Text>
+            <Text style={styles.smallTitle}>{userRole}</Text>
+        </View>
+    );
+};
 
 const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
 const styles = StyleSheet.create({
