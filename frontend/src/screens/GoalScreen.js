@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: "absolute",
-        top: 30,
+        top: 50,
         left: 20,
         backgroundColor: "#000",
         padding: 10,

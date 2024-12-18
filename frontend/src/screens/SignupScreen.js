@@ -16,7 +16,7 @@ const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
 const calendar = require("../../assets/images/Calender.png");
-const { base_url } =  require("../../config");
+const { base_url } = require("../../config");
 
 
 const SignupScreen = () => {
@@ -57,7 +57,7 @@ const SignupScreen = () => {
         }).catch(error => {
             console.error('Error:', error);
         });
-          
+
     };
 
     return (
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: "absolute",
-        top: 30,
+        top: 50,
         left: 20,
         backgroundColor: "#000",
         padding: 10,
