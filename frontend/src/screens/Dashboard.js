@@ -64,7 +64,7 @@ const Dashboard = ({ route }) => {
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category].warmup.map((item, index) => (
                                 <VideoPlay
-                                    index={index} key={index} data={item}
+                                    index={index} key={index} data={workout}
                                 />
                             ))}
                         </View>
@@ -77,7 +77,7 @@ const Dashboard = ({ route }) => {
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
-                                    index={index} key={index} data={item}
+                                    index={index} key={index} data={workout}
                                 />
                             ))}
                         </View>
@@ -169,8 +169,12 @@ const BottomButton = ({ image, style, imageStyle, navigate }) => {
 
 const VideoPlay = (data) => {
     const navigation = useNavigation();
+    const currentIndex = data.index;
+    const currentExercise = data.data.exercises[category].warmup[currentIndex];
+    const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
+    const allExercises = data.data.exercises[category].warmup;
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { workOutData: data.data })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
             <View
                 style={{
                     borderRadius: 15,
@@ -183,7 +187,7 @@ const VideoPlay = (data) => {
                 }}>
                 <View style={{ borderRadius: 10, overflow: 'hidden' }}>
                     <ImageBackground
-                        source={{ uri: data.data.image }}
+                        source={{ uri: currentExercise.image }}
                         style={{
                             height: 150,
                             width: 300,
@@ -206,7 +210,7 @@ const VideoPlay = (data) => {
                             // fontFamily: 'Poppins-Regular',
                             color: '#fff',
                         }}>
-                        {data.data.type}
+                        {currentExercise.type}
                     </Text>
                     <View
                         style={{
@@ -236,14 +240,14 @@ const VideoPlay = (data) => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { workOutData: data.data })}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
                             <Image source={play} style={{ height: 10, width: 10 }} />
                         </TouchableOpacity>
                     </View>
                     <Text style={{
                         // fontFamily: 'Poppins-Regular' 
                     }}>
-                        {data.data.title}
+                        {currentExercise.title}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{
@@ -251,7 +255,7 @@ const VideoPlay = (data) => {
                             fontSize: 12
                         }}>
                             <Image source={book} style={{ height: 25, width: 25 }} />
-                            {'    ' + data.data.type}
+                            {'    ' + currentExercise.type}
                         </Text>
                         <Text
                             style={{
@@ -259,7 +263,7 @@ const VideoPlay = (data) => {
                                 fontSize: 12,
                                 color: '#8860a2',
                             }}>
-                            {data.data.duration}
+                            {currentExercise.duration}
                         </Text>
                     </View>
                 </View>
