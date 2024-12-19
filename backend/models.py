@@ -1,29 +1,6 @@
-from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Text, JSON
+from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Text, JSON, Boolean
 from .database import Base
 from datetime import datetime
-# from sqlalchemy.orm import relationship
-
-
-# class Blog(Base):
-#     __tablename__ = 'blogs'
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     title = Column(String)
-#     body = Column(String)
-#     user_id = Column(Integer, ForeignKey('users.id'))
-
-#     creator = relationship("User", back_populates="blogs")
-
-
-# class User(Base):
-#     __tablename__ = 'users'
-
-#     id = Column(Integer, primary_key=True, index=True)
-#     name = Column(String)
-#     email = Column(String)
-#     password = Column(String)
-
-#     blogs = relationship('Blog', back_populates="creator")
 
 class User(Base):
     __tablename__ = 'users'
@@ -55,3 +32,22 @@ class Exercise(Base):
     level = Column(String(50))
     rating = Column(Float)
     rating_description = Column(Text)
+
+class UserWorkout(Base):
+    __tablename__= 'user_workout'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    email = Column(String, index=True, nullable=False)
+    workoutName = Column(String, nullable=True)
+    workoutGIF = Column(String, nullable=True)
+    workoutDuration = Column(String, nullable=True)
+    targettedBodyPart = Column(String, nullable=True)
+    equipment = Column(String, nullable=True)
+    level = Column(String, nullable=True)
+    suitableFor = Column(String, nullable=True)
+    isCompleted = Column(Boolean, default=False, nullable=False)
+    isSkipped = Column(Boolean, nullable=True)
+    totalCalBurnt = Column(Integer, nullable=True)
+    calBurnPerRep = Column(Integer, nullable=True)
+    date = Column(DateTime, default=datetime.utcnow, nullable=False)
