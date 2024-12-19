@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import SVGComponent from "../components/svgComponent";
 
-const WorkoutScreen = ({ navigation, route }) => {
+const TargetAreaScreen = ({ navigation, route }) => {
     const { UserData } = route.params;
     const [selectedIds, setSelectedIds] = useState([]);
 
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default WorkoutScreen;
+export default TargetAreaScreen;
