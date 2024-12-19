@@ -25,7 +25,8 @@ const yoga = require('../../assets/images/yoga.png');
 const walk = require('../../assets/images/walk.png');
 const next = require('../../assets/images/next.png');
 const play = require('../../assets/images/play.png');
-const star = require('../../assets/images/Star.png');
+const disapprove = require('../../assets/images/disapprove.png');
+const verify = require('../../assets/images/verify.png');
 const book = require('../../assets/images/Book.png');
 const home = require('../../assets/images/Home.png');
 const heart = require('../../assets/images/H.png');
@@ -37,6 +38,11 @@ const level = 'advanced';
 
 const Dashboard = ({ route }) => {
     const UserData = route?.params?.UserData || {};
+    const [warmupCompleted, setWarmupCompleted] = useState(false);
+    const [workoutCompleted, setWorkoutCompleted] = useState(false);
+
+    const onWarmupComplete = () => { setWarmupCompleted(true) };
+    const onWorkoutComplete = () => { setWorkoutCompleted(true) };
     return (
 
         <ImageBackground
@@ -63,8 +69,8 @@ const Dashboard = ({ route }) => {
                     <ScrollView horizontal={true}>
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category].warmup.map((item, index) => (
-                                <VideoPlay
-                                    index={index} key={index} data={workout}
+                                <VideoPlayWarmup
+                                    index={index} key={index} data={workout} warmupCompleted={warmupCompleted} onWarmupComplete={onWarmupComplete}
                                 />
                             ))}
                         </View>
@@ -77,7 +83,7 @@ const Dashboard = ({ route }) => {
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
-                                    index={index} key={index} data={workout}
+                                    index={index} key={index} data={workout} workoutCompleted={workoutCompleted} warmupCompleted={warmupCompleted} onWorkoutComplete={onWorkoutComplete}
                                 />
                             ))}
                         </View>
@@ -170,11 +176,41 @@ const BottomButton = ({ image, style, imageStyle, navigate }) => {
 const VideoPlay = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
-    const currentExercise = data.data.exercises[category].warmup[currentIndex];
-    const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
-    const allExercises = data.data.exercises[category].warmup;
+    const isLastExercise = currentIndex === data.data.exercises[category][level].length - 1;
+    const allExercises = data.data.exercises[category][level];
+    const warmupCompleted = data.warmupCompleted;
+    const exerciseComplete = data.workoutCompleted;
+    const currentExercise = data.data.exercises[category][level][currentIndex];
+    const onWorkoutComplete = data.onWorkoutComplete;
+
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })}>
+            {!warmupCompleted && (
+                <View
+                    style={{
+                        position: 'absolute',
+                        width: '93%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0,0,0,0.7)',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 2,
+                        marginLeft: 12,
+                        borderRadius: 10,
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: '#fff',
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                        }}
+                    >
+                        Complete the warmups to unlock workout
+                    </Text>
+                </View>
+            )}
             <View
                 style={{
                     borderRadius: 15,
@@ -221,7 +257,7 @@ const VideoPlay = (data) => {
                             top: 10,
                             borderRadius: 5,
                         }}>
-                        <Image source={star} style={{ height: 10, width: 10 }} />
+                        <Image source={exerciseComplete ? verify : disapprove} style={{ height: 10, width: 10 }} />
                     </View>
                 </View>
                 <View
@@ -240,7 +276,7 @@ const VideoPlay = (data) => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })}>
                             <Image source={play} style={{ height: 10, width: 10 }} />
                         </TouchableOpacity>
                     </View>
@@ -272,6 +308,114 @@ const VideoPlay = (data) => {
     )
 };
 
+const VideoPlayWarmup = (data) => {
+    const navigation = useNavigation();
+    const currentIndex = data.index;
+    const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
+    const allExercises = data.data.exercises[category].warmup;
+    const warmupCompleted = data.warmupCompleted;
+    const exerciseComplete = data.workoutCompleted;
+    const currentExercise = data.data.exercises[category].warmup[currentIndex];
+    const onWarmupComplete = data.onWarmupComplete;
+
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWarmupComplete: onWarmupComplete })}>
+            <View
+                style={{
+                    borderRadius: 15,
+                    marginHorizontal: 12,
+                    shadowOffset: { width: -5, height: 3 },
+                    shadowColor: 'grey',
+                    shadowOpacity: 0.5,
+                    shadowRadius: 3,
+                    backgroundColor: '#fff',
+                }}>
+                <View style={{ borderRadius: 10, overflow: 'hidden' }}>
+                    <ImageBackground
+                        source={{ uri: currentExercise.image }}
+                        style={{
+                            height: 150,
+                            width: 300,
+                        }}>
+                        <LinearGradient
+                            locations={[0, 1.0]}
+                            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.60)']}
+                            style={{
+                                position: 'absolute',
+                                width: '100%',
+                                height: '100%',
+                            }}
+                        ></LinearGradient>
+                    </ImageBackground>
+                    <Text
+                        style={{
+                            position: 'absolute',
+                            bottom: 5,
+                            left: 10,
+                            // fontFamily: 'Poppins-Regular',
+                            color: '#fff',
+                        }}>
+                        {currentExercise.type}
+                    </Text>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            backgroundColor: '#fff',
+                            padding: 5,
+                            right: 10,
+                            top: 10,
+                            borderRadius: 5,
+                        }}>
+                        <Image source={warmupCompleted ? verify : disapprove} style={{ height: 10, width: 10 }} />
+                    </View>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: 'white',
+                        padding: 10,
+                        borderRadius: 15,
+                    }}>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            backgroundColor: '#8860a2',
+                            padding: 10,
+                            right: 25,
+                            top: -15,
+                            borderRadius: 15,
+                            zIndex: 3,
+                        }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWarmupComplete: onWarmupComplete })}>
+                            <Image source={play} style={{ height: 10, width: 10 }} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={{
+                        // fontFamily: 'Poppins-Regular' 
+                    }}>
+                        {currentExercise.title}
+                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{
+                            // fontFamily: 'Poppins-Regular',
+                            fontSize: 12
+                        }}>
+                            <Image source={book} style={{ height: 25, width: 25 }} />
+                            {'    ' + currentExercise.type}
+                        </Text>
+                        <Text
+                            style={{
+                                // fontFamily: 'Poppins-Regular',
+                                fontSize: 12,
+                                color: '#8860a2',
+                            }}>
+                            {currentExercise.duration}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+};
 const Card = ({ data, index }) => {
     return (
         <View
