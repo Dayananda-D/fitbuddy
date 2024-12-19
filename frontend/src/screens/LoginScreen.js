@@ -53,7 +53,8 @@ const LoginScreen = ({ route }) => {
             const decodedToken = jwtDecode(access_token);
             console.log(decodedToken)
             await AsyncStorage.setItem('user_name', decodedToken.name || "Jane");
-            await AsyncStorage.setItem('user_role', decodedToken.level || 'Beginner');
+            await AsyncStorage.setItem('user_level', decodedToken.level || 'Beginner');
+            await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
 
             navigation.navigate('Dashboard');
             console.log('Success:', data);
@@ -71,9 +72,9 @@ const LoginScreen = ({ route }) => {
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={{ width: '100%', height: '100%' }}>
             {/* Back Button*/}
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            {/* <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.backButtonText}>Back</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <View style={styles.container}>
                 <Text style={styles.title}>Login</Text>

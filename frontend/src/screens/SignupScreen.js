@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
@@ -24,6 +26,13 @@ const SignupScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState(new Date());
+    const [level, setLevel] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [items, setItems] = useState([
+      { label: 'Beginner', value: 'beginner' },
+      { label: 'Intermediate', value: 'intermediate' },
+      { label: 'Advanced', value: 'advanced' },
+    ]);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const navigation = useNavigation();
@@ -43,7 +52,9 @@ const SignupScreen = () => {
             body: JSON.stringify({
                 name: username,
                 email: email,
-                password: password
+                password: password,
+                dateOfBirth: dob,
+                level: level
             })
         }).then(response => {
             if (!response.ok) {
@@ -51,9 +62,36 @@ const SignupScreen = () => {
             }
             return response.json();
         }).then(data => {
-            navigation.navigate('Login');
             console.log('Success:', data);
-            Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+            fetch(`${base_url}/login`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    username: email,
+                    password: password
+                }).toString()
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            }).then(async data => {
+                const { access_token, token_type } = data;
+                await AsyncStorage.setItem('auth_token', access_token);
+                await AsyncStorage.setItem('token_type', token_type);
+                await AsyncStorage.setItem('email', email);
+                await AsyncStorage.setItem('user_name', username);
+                await AsyncStorage.setItem('user_level', level);
+
+                navigation.navigate('Gender', {access_token});
+                Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+            
         }).catch(error => {
             console.error('Error:', error);
         });
@@ -63,9 +101,9 @@ const SignupScreen = () => {
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={{ width: '100%', height: '100%' }}>
             {/* Back Button*/}
-            <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            {/* <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <Text style={styles.backButtonText}>Back</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={styles.container}>
                 <Text style={styles.title}>Sign Up</Text>
 
@@ -93,6 +131,19 @@ const SignupScreen = () => {
                     secureTextEntry
                     value={password}
                     onChangeText={setPassword}
+                />
+
+                {/* Level Dropdown */}
+                <DropDownPicker
+                    open={open}
+                    value={level}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setLevel}
+                    setItems={setItems}
+                    style={styles.dropdown}
+                    dropDownContainerStyle={styles.dropdownContainer}
+                    placeholder="Select Level"
                 />
 
                 {/* Date of Birth Picker */}
@@ -199,6 +250,18 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderWidth: 1,
         borderColor: "#ccc",
+    },
+    dropdown: {
+        width: '100%',
+        height: 50,
+        borderColor: '#ccc',
+        borderRadius: 10,
+        marginBottom: 15,
+        backgroundColor: "#fff",
+    },
+    dropdownContainer: {
+        width: '100%',
+        borderColor: '#ccc',
     },
     dobButton: {
         width: "100%",
