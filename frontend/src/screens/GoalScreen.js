@@ -9,7 +9,7 @@ const GoalScreen = ({ navigation, route }) => {
             ...UserData,
             goal,
         };
-        navigation.navigate("Workout", { UserData: updatedUserData });
+        navigation.navigate("TargetAreaScreen", { UserData: updatedUserData });
     };
     return (
         <ImageBackground
