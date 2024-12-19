@@ -4,7 +4,7 @@
             "warmup": [
                 {
                     "title": "Cat-Cow Stretch",
-                    "duration": "2Min",
+                    "duration": "10sec",
                     "type": "Warmup",
                     "instruction": [
                         "Start on all fours with hands under shoulders and knees under hips",
@@ -18,7 +18,7 @@
                 },
                 {
                     "title": "Dead Bug",
-                    "duration": "2Min",
+                    "duration": "1Min",
                     "type": "Warmup",
                     "instruction": [
                         "Lie on your back with arms extended towards the ceiling and knees bent at 90 degrees",

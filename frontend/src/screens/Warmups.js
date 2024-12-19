@@ -26,60 +26,6 @@ const InstructionText = ({ instructions, title }) => {
 const Warmups = ({ navigation, route }) => {
     const { workOutData } = route.params;
 
-    const [timer, setTimer] = useState("00:00");
-    const [isRunning, setIsRunning] = useState(false);
-    const [completed, setCompleted] = useState(false); // Track if progress is complete
-    const progress = useRef(new Animated.Value(0)).current;
-
-    // Timer Logic
-    useEffect(() => {
-        let interval;
-        if (isRunning) {
-            let seconds = 0;
-            interval = setInterval(() => {
-                seconds++;
-                const minutes = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                setTimer(
-                    `${minutes.toString().padStart(2, "0")}:${secs
-                        .toString()
-                        .padStart(2, "0")}`
-                );
-
-                if (seconds >= 120) {
-                    clearInterval(interval); // Stop after 2 minutes
-                    setIsRunning(false);
-                    setCompleted(true); // Mark progress as completed
-                }
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [isRunning]);
-
-    // Start Progress Animation
-    const startAnimation = () => {
-        setIsRunning(true);
-        Animated.timing(progress, {
-            toValue: 1,
-            duration: 120000, // 2 minutes in milliseconds
-            useNativeDriver: false,
-        }).start();
-    };
-
-    // Interpolated Width for Progress Bar
-    const progressWidth = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0%", "100%"], // Gradual width change
-    });
-
-    const handleClick = () => {
-        if (!isRunning && !completed) {
-            startAnimation(); // Start only if not running and not completed
-        } else if (completed) {
-            navigation.goBack(); // Navigate to Dashboard
-        }
-    }
-
     return (
         <ImageBackground
             source={require("../../assets/images/background.png")}
@@ -117,25 +63,94 @@ const Warmups = ({ navigation, route }) => {
             </View>
 
             {/* Animated Progress Bar */}
-            <View style={styles.progressBarContainer}>
-                <Animated.View
-                    style={[
-                        styles.progressBar,
-                        {
-                            backgroundColor: completed ? "#4CAF50" : "#9bde9e", // Change to green at the end
-                            width: progressWidth, // Progress updates dynamically
-                        },
-                    ]}
-                />
-                <TouchableOpacity
-                    style={styles.progressButton}
-                    onPress={() => handleClick()} // Prevent multiple presses
-                >
-                    <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>{isRunning ? timer : completed ? "Next" : "Start"}</Text>
-                </TouchableOpacity>
-            </View>
+            <TimerButton duration={workOutData.duration} />
         </ImageBackground>
     );
+};
+
+const TimerButton = ({ duration }) => {
+    const numericDuration = parseInt(duration.match(/\d+/)[0]);
+    let durationInSeconds;
+
+    if (duration.toLowerCase().includes("min")) {
+        durationInSeconds = numericDuration * 60;
+    } else if (duration.toLowerCase().includes("sec")) {
+        durationInSeconds = numericDuration;
+    }
+
+    const durationInMilliseconds = durationInSeconds * 1000;
+    const [timer, setTimer] = useState("00:00");
+    const [isRunning, setIsRunning] = useState(false);
+    const [completed, setCompleted] = useState(false); // Track if progress is complete
+    const progress = useRef(new Animated.Value(0)).current;
+
+    // Timer Logic
+    useEffect(() => {
+        let interval;
+        if (isRunning) {
+            let seconds = 0;
+            interval = setInterval(() => {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                setTimer(
+                    `${minutes.toString().padStart(2, "0")}:${secs
+                        .toString()
+                        .padStart(2, "0")}`
+                );
+
+                if (seconds >= durationInSeconds) {
+                    clearInterval(interval); // Stop after 2 minutes
+                    setIsRunning(false);
+                    setCompleted(true); // Mark progress as completed
+                }
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isRunning]);
+
+    // Start Progress Animation
+    const startAnimation = () => {
+        setIsRunning(true);
+        Animated.timing(progress, {
+            toValue: 1,
+            duration: durationInMilliseconds, // 2 minutes in milliseconds
+            useNativeDriver: false,
+        }).start();
+    };
+
+    // Interpolated Width for Progress Bar
+    const progressWidth = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0%", "100%"], // Gradual width change
+    });
+
+    const handleClick = () => {
+        if (!isRunning && !completed) {
+            startAnimation(); // Start only if not running and not completed
+        } else if (completed) {
+            navigation.goBack(); // Navigate to Dashboard
+        }
+    }
+    return (
+        <View style={styles.progressBarContainer}>
+            <Animated.View
+                style={[
+                    styles.progressBar,
+                    {
+                        backgroundColor: completed ? "#4CAF50" : "#9bde9e", // Change to green at the end
+                        width: progressWidth, // Progress updates dynamically
+                    },
+                ]}
+            />
+            <TouchableOpacity
+                style={styles.progressButton}
+                onPress={() => handleClick()} // Prevent multiple presses
+            >
+                <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>{isRunning ? timer : completed ? "Next" : "Start"}</Text>
+            </TouchableOpacity>
+        </View>
+    )
 };
 
 const styles = StyleSheet.create({

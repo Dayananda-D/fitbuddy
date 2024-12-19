@@ -380,16 +380,16 @@ const Banner = () => (
                         />
                     </View>
                 </View>
-                <OfferText>Day - 1</OfferText>
-                <OfferText>Legs workout</OfferText>
+                <BannerText>Day - 1</BannerText>
+                <BannerText>{category + "  workout"}</BannerText>
             </View>
         </ImageBackground>
         <Image source={model} style={styles.model} resizeMode="contain" />
     </>
 );
 
-const OfferText = ({ children }) => (
-    <Text style={styles.offerText}>{children}</Text>
+const BannerText = ({ children }) => (
+    <Text style={styles.bannerText}>{children}</Text>
 );
 
 const ImageContainer = ({ image, height = '100%', width = '100%', tintColor }) => (
@@ -487,7 +487,7 @@ const styles = StyleSheet.create({
         // fontFamily: 'Poppins-Regular', 
         fontSize: 10
     },
-    offerText: {
+    bannerText: {
         color: 'white', fontSize: 16,
         //  fontFamily: 'Poppins-Regular' 
     },

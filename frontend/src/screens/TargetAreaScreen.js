@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { base_url } = require("../../config");
 
-const WorkoutScreen = ({ navigation, route }) => {
+const TargetAreaScreen = ({ navigation, route }) => {
     const { UserData } = route.params;
     const [selectedIds, setSelectedIds] = useState([]);
     const [userEmail, setUserEmail] = useState();
@@ -132,4 +132,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default WorkoutScreen;
+export default TargetAreaScreen;
