@@ -24,7 +24,7 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex, isLastExercise } = route.params;
+    const { allExercises, currentExercise, currentIndex, isLastExercise, onWarmupComplete, onWorkoutComplete } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
@@ -37,7 +37,8 @@ const Warmups = ({ navigation, route }) => {
             setCurrentExerciseData(allExercises[nextIndex]);
             setIsLast(nextIndex === allExercises.length - 1);
         } else {
-            navigation.navigate("Dashboard");
+            onWarmupComplete ? onWarmupComplete() : onWorkoutComplete();
+            navigation.goBack();
         }
     };
 
