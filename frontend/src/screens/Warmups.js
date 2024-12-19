@@ -24,7 +24,23 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
-    const { workOutData } = route.params;
+    const { allExercises, currentExercise, currentIndex, isLastExercise, onWarmupComplete, onWorkoutComplete } = route.params;
+
+    const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
+    const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
+    const [isLast, setIsLast] = useState(isLastExercise);
+
+    const moveToNextExercise = () => {
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            onWarmupComplete ? onWarmupComplete() : onWorkoutComplete();
+            navigation.goBack();
+        }
+    };
 
     return (
         <ImageBackground
@@ -41,17 +57,14 @@ const Warmups = ({ navigation, route }) => {
 
             {/* Gif Image */}
             <View style={styles.gifContainer}>
-                <View>
-                    <ImageBackground
-                        source={{ uri: workOutData.image }}
-                        style={styles.gifPlayer}
-                    ></ImageBackground>
-                </View>
-
+                <ImageBackground
+                    source={{ uri: currentExerciseData.image }}
+                    style={styles.gifPlayer}
+                ></ImageBackground>
                 <View style={styles.gifDesc}>
-                    <Text style={{ fontWeight: "bold" }}>{workOutData.title}</Text>
+                    <Text style={{ fontWeight: "bold" }}>{currentExerciseData.title}</Text>
                     <Text style={{ fontSize: 14, color: "#8860a2" }}>
-                        {workOutData.duration}
+                        {currentExerciseData.duration}
                     </Text>
                 </View>
             </View>
@@ -59,16 +72,21 @@ const Warmups = ({ navigation, route }) => {
             {/* Instructions */}
             <View style={styles.instructionView}>
                 <Text style={styles.instructionHeader}>Instructions</Text>
-                <InstructionText instructions={workOutData.instruction} />
+                <InstructionText instructions={currentExerciseData.instruction} />
             </View>
 
             {/* Animated Progress Bar */}
-            <TimerButton duration={workOutData.duration} />
+            <TimerButton
+                key={currentExerciseIndex} // Reset TimerButton when exercise changes
+                duration={currentExerciseData.duration}
+                onComplete={moveToNextExercise} // Callback when timer completes
+                isLast={isLast}
+            />
         </ImageBackground>
     );
 };
 
-const TimerButton = ({ duration }) => {
+const TimerButton = ({ duration, onComplete, isLast }) => {
     const numericDuration = parseInt(duration.match(/\d+/)[0]);
     let durationInSeconds;
 
@@ -81,10 +99,9 @@ const TimerButton = ({ duration }) => {
     const durationInMilliseconds = durationInSeconds * 1000;
     const [timer, setTimer] = useState("00:00");
     const [isRunning, setIsRunning] = useState(false);
-    const [completed, setCompleted] = useState(false); // Track if progress is complete
+    const [completed, setCompleted] = useState(false);
     const progress = useRef(new Animated.Value(0)).current;
 
-    // Timer Logic
     useEffect(() => {
         let interval;
         if (isRunning) {
@@ -100,57 +117,58 @@ const TimerButton = ({ duration }) => {
                 );
 
                 if (seconds >= durationInSeconds) {
-                    clearInterval(interval); // Stop after 2 minutes
+                    clearInterval(interval);
                     setIsRunning(false);
-                    setCompleted(true); // Mark progress as completed
+                    setCompleted(true);
                 }
             }, 1000);
         }
         return () => clearInterval(interval);
     }, [isRunning]);
 
-    // Start Progress Animation
     const startAnimation = () => {
         setIsRunning(true);
         Animated.timing(progress, {
             toValue: 1,
-            duration: durationInMilliseconds, // 2 minutes in milliseconds
+            duration: durationInMilliseconds,
             useNativeDriver: false,
         }).start();
     };
 
-    // Interpolated Width for Progress Bar
     const progressWidth = progress.interpolate({
         inputRange: [0, 1],
-        outputRange: ["0%", "100%"], // Gradual width change
+        outputRange: ["0%", "100%"],
     });
 
     const handleClick = () => {
         if (!isRunning && !completed) {
-            startAnimation(); // Start only if not running and not completed
+            startAnimation();
         } else if (completed) {
-            navigation.goBack(); // Navigate to Dashboard
+            onComplete(); // Move to next exercise or navigate
         }
-    }
+    };
+
     return (
         <View style={styles.progressBarContainer}>
             <Animated.View
                 style={[
                     styles.progressBar,
                     {
-                        backgroundColor: completed ? "#4CAF50" : "#9bde9e", // Change to green at the end
-                        width: progressWidth, // Progress updates dynamically
+                        backgroundColor: completed ? "#4CAF50" : "#9bde9e",
+                        width: progressWidth,
                     },
                 ]}
             />
             <TouchableOpacity
                 style={styles.progressButton}
-                onPress={() => handleClick()} // Prevent multiple presses
+                onPress={handleClick}
             >
-                <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>{isRunning ? timer : completed ? "Next" : "Start"}</Text>
+                <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>
+                    {isRunning ? timer : completed ? (isLast ? "Complete" : "Next") : "Start"}
+                </Text>
             </TouchableOpacity>
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({

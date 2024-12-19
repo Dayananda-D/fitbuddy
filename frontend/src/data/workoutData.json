@@ -18,7 +18,7 @@
                 },
                 {
                     "title": "Dead Bug",
-                    "duration": "1Min",
+                    "duration": "10sec",
                     "type": "Warmup",
                     "instruction": [
                         "Lie on your back with arms extended towards the ceiling and knees bent at 90 degrees",
@@ -94,7 +94,7 @@
             "advanced": [
                 {
                     "title": "crunch straight leg up",
-                    "duration": "2Min",
+                    "duration": "5sec",
                     "type": "Advanced",
                     "instruction": [
                         "Lie down on your back with your legs perpendicular to the floor and arms extended over your shoulders.",
@@ -107,7 +107,7 @@
                 },
                 {
                     "title": "Dragon Flag",
-                    "duration": "2Min",
+                    "duration": "5sec",
                     "type": "Advanced",
                     "instruction": [
                         "Lie on a bench or flat surface and grab the edge with both hands above your head",

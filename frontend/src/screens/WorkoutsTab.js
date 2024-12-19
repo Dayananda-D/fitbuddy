@@ -116,7 +116,7 @@ const BottomTab = () => (
             alignItems: 'center',
             justifyContent: 'space-around'
         }}>
-        <BottomButton image={home} navigate={"Dashboard"} />
+        <BottomButton image={home} />
         <BottomButton image={dumbbell} navigate={"WorkoutsTab"} />
         {/* <BottomButton
             image={plus}
@@ -134,11 +134,11 @@ const BottomTab = () => (
         <BottomButton image={profile} />
     </View>
 );
-const BottomButton = ({ image, style, imageStyle, navigate }) => {
+const BottomButton = ({ image, style, imageStyle }) => {
     const navigation = useNavigation();
     return (
         <>
-            <TouchableOpacity onPress={() => navigation.navigate(navigate)}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
                 <View
                     style={[
                         {
