@@ -10,6 +10,7 @@ import Warmups from "./src/screens/Warmups";
 import Login from "./src/screens/LoginScreen";
 import SignUp from "./src/screens/SignupScreen";
 import WorkoutsTab from "./src/screens/WorkoutsTab";
+import LoadingScreen from "./src/screens/LoadingScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -43,7 +44,7 @@ export default function App() {
 
   if (loading) {
     // Display a loading indicator while fetching user details
-    return <LoadingIndicator />;
+    return <LoadingScreen message="Loading your activities..." />;
   }
   
   const landingPage = token ?  (workoutFlag ? "Dashboard": "Gender") : "Welcome";
@@ -68,8 +69,4 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
-
-function LoadingIndicator() {
-  return <div>Loading...</div>;
 }

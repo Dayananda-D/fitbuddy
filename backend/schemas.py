@@ -28,8 +28,20 @@ class UserDetails(BaseModel):
     level:str
 
 class ShowUser(BaseModel):
-    name:str
-    email:str
+    name:str | None = None
+    email:str| None = None
+    dateOfBirth: str| None = None
+    weight: str| None = None
+    height:str| None = None
+    gender:str| None = None
+    level:str| None = None
+    created_at: datetime | None = None  # Allow datetime type
+    selectedBodyParts: list| None = None
+    goal:str| None = None
+
+    class Config:
+        orm_mode = True
+
     # blogs : List[Blog] =[]
     # class Config():
     #     orm_mode = True
