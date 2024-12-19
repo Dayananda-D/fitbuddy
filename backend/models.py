@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Text
+from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Text, JSON
 from .database import Base
 from datetime import datetime
 # from sqlalchemy.orm import relationship
@@ -33,12 +33,14 @@ class User(Base):
     password = Column(String, nullable=False)
     reset_token = Column(String, nullable=True)
     reset_token_expires = Column(DateTime, nullable=True)
-    dateOfBirth = Column(Date, nullable=True)  # Date type for date of birth
+    dateOfBirth = Column(String, nullable=True)  # Date type for date of birth
     weight = Column(Float, nullable=True)  # Float type for weight
     height = Column(Float, nullable=True)  # Float type for height
     gender = Column(String(50), nullable=True)  # String for gender
     level = Column(String(50), nullable=True)  # Existing level column
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    selectedBodyParts = Column(JSON, nullable=True)
+    goal = Column(String, nullable=True)
 
 
 class Exercise(Base):

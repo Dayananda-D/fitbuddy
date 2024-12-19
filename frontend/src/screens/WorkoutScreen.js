@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import SVGComponent from "../components/svgComponent";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const { base_url } = require("../../config");
 
 const WorkoutScreen = ({ navigation, route }) => {
     const { UserData } = route.params;
     const [selectedIds, setSelectedIds] = useState([]);
+    const [userEmail, setUserEmail] = useState();
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const email = await AsyncStorage.getItem('email');
+
+                if (email) setUserEmail(email);
+            } catch (error) {
+                console.error('Error fetching user details', error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const handleSelectionChange = (ids) => {
         setSelectedIds(ids);
@@ -15,7 +33,33 @@ const WorkoutScreen = ({ navigation, route }) => {
             ...UserData,
             selectedBodyParts: selectedIds
         };
-        navigation.navigate("Dashboard", { UserData: updatedUserData });
+        if (userEmail) {
+            fetch(`${base_url}/user/${userEmail}`, {
+              method: "PUT",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updatedUserData),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  // Handle HTTP errors
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Parse JSON response
+              })
+              .then(async (data) => {
+                console.log("Response:", data); // Handle successful response
+                await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
+                navigation.navigate("Dashboard", { UserData: updatedUserData });
+              })
+              .catch((error) => {
+                console.error("Error updating user:", error); // Handle errors
+              });
+        } else {
+            navigation.navigate("Login");
+        }
     };
     return (
         <ImageBackground

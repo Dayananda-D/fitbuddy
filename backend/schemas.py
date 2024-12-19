@@ -14,6 +14,13 @@ class User(BaseModel):
     name:str
     email:str
     password:str
+    dateOfBirth: str
+    level:str
+
+class UpdateUser(BaseModel):
+    selectedBodyParts:list
+    goal:str
+    gender:str
 
 class UserDetails(BaseModel):
     name:str
