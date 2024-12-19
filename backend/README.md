@@ -14,6 +14,12 @@ pip install -r requirements.txt
 To run the app 
 ```
 uvicorn backend.main:app --reload
+
+```
+or 
+```
+cd backend
+fastapi run main.py
 ```
 download the https://www.sqlite.org/2024/sqlite-tools-win-x64-3470200.zip 
 and run the sqlite3

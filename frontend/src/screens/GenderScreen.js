@@ -41,12 +41,12 @@ const GenderScreen = ({ navigation }) => {
                         <Text style={styles.genderText}>Female</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={styles.backButton}
                     onPress={() => navigation.goBack()}
                 >
                     <Text style={styles.backButtonText}>Back</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </ImageBackground>
     );

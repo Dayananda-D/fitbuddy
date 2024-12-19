@@ -357,9 +357,9 @@ const Header = () => {
     const navigation = useNavigation();
     return (
         <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("SignUp")}> */}
                 <ImageContainer image={headerImage} />
-            </TouchableOpacity>
+            {/* </TouchableOpacity> */}
             <HeaderTitle />
             <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
