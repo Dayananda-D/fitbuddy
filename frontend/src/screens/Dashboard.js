@@ -185,7 +185,7 @@ const BottomTab = () => (
         />
         <BottomButton /> */}
         <BottomButton image={heart} />
-        <BottomButton image={profile} />
+        <BottomButton image={profile} navigate={"ProfileScreen"}/>
     </View>
 );
 const BottomButton = ({ image, style, imageStyle, navigate }) => {

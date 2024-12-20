@@ -11,7 +11,7 @@ import Login from "./src/screens/LoginScreen";
 import SignUp from "./src/screens/SignupScreen";
 import WorkoutsTab from "./src/screens/WorkoutsTab";
 import LoadingScreen from "./src/screens/LoadingScreen";
-import profile from "./src/screens/ProfileScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -67,7 +67,7 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
-        <Stack.Screen name="profile" component={profile} />
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
