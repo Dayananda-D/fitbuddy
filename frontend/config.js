@@ -1,1 +1,1 @@
-export const base_url = process.env.base_url || 'http://localhost:8000'
+export const base_url = process.env.base_url || 'http://10.10.30.74:8000/'

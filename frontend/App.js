@@ -11,6 +11,8 @@ import Login from "./src/screens/LoginScreen";
 import SignUp from "./src/screens/SignupScreen";
 import WorkoutsTab from "./src/screens/WorkoutsTab";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import Workouts from "./src/components/WorkoutScreen";
+import Reports from "./src/screens/Reports";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -46,13 +48,13 @@ export default function App() {
     // Display a loading indicator while fetching user details
     return <LoadingScreen message="Loading your activities..." />;
   }
-  
-  const landingPage = token ?  (workoutFlag ? "Dashboard": "Gender") : "Welcome";
-  
+
+  const landingPage = token ? (workoutFlag ? "Dashboard" : "Gender") : "Welcome";
+
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName= {landingPage}
+        initialRouteName={landingPage}
         screenOptions={{
           headerShown: false, // Hide the header for a fullscreen experience
         }}
@@ -66,6 +68,8 @@ export default function App() {
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
+        <Stack.Screen name="Reports" component={Reports} />
+        <Stack.Screen name="Workouts" component={Workouts} />
       </Stack.Navigator>
     </NavigationContainer>
   );
