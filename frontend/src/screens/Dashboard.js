@@ -14,6 +14,10 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
+import { useFormState } from 'react-dom';
+const { base_url } = require("../../config");
+import LoadingScreen from './LoadingScreen';
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
@@ -43,6 +47,65 @@ const Dashboard = ({ route }) => {
 
     const onWarmupComplete = () => { setWarmupCompleted(true) };
     const onWorkoutComplete = () => { setWorkoutCompleted(true) };
+    const [userData, setUserData] = useState({});
+    const [token, setToken] = useState();
+    const [loading, setLoading] = useState(true); // Add a loading state
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("@MyApp_user");
+                const decodedToken = jwtDecode(token);
+
+                if (data) {
+                    setToken(token);
+                    setUserData(JSON.parse(data));
+                    return;
+                }
+
+                if (token && decodedToken.email) {
+                    setToken(token);
+                    await fetch(`${base_url}/user/${decodedToken.email}`, {
+                        method: "GET",
+                        headers: {
+                            accept: "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+
+                            return response.json();
+                        })
+                        .then(async (data) => {
+                            await AsyncStorage.setItem("@MyApp_user", JSON.stringify(data));
+                            setUserData(data);
+                            console.log(data);
+                        })
+                        .catch(async (error) => {
+                            await AsyncStorage.clear();
+                            navigation.navigate("Login");
+                            console.error("Error:", error);
+                        });
+                }
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+
+    if (loading) {
+        // Display a loading indicator while fetching user details
+        return <LoadingScreen message="Loading your activities..." />;
+    }
+
     return (
 
         <ImageBackground
@@ -52,8 +115,8 @@ const Dashboard = ({ route }) => {
             {/* <SafeAreaView> */}
             <ScrollView>
                 <View style={styles.screen}>
-                    <Header />
-                    <Banner />
+                    <Header data={userData} />
+                    <Banner data={userData} />
                 </View>
                 <View style={{ marginHorizontal: '3%', marginTop: 20 }}>
                     <Label>Your Activities</Label>
@@ -501,20 +564,20 @@ const Card = ({ data, index }) => {
         </View>
     );
 };
-const Header = () => {
+const Header = ({ data }) => {
     const navigation = useNavigation();
     return (
         <View style={styles.header}>
             {/* <TouchableOpacity onPress={() => navigation.navigate("SignUp")}> */}
-                <ImageContainer image={headerImage} />
+            <ImageContainer image={headerImage} />
             {/* </TouchableOpacity> */}
-            <HeaderTitle />
+            <HeaderTitle data={data} />
             <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
     );
 }
 
-const Banner = () => (
+const Banner = ({ data }) => (
     <>
         <ImageBackground style={styles.banner} source={banner}>
             <View style={styles.bannerContainer}>
@@ -529,7 +592,7 @@ const Banner = () => (
                     </View>
                 </View>
                 <BannerText>Day - 1</BannerText>
-                <BannerText>{category + "  workout"}</BannerText>
+                <BannerText>{data.selectedBodyParts + "  workout"}</BannerText>
             </View>
         </ImageBackground>
         <Image source={model} style={styles.model} resizeMode="contain" />
@@ -546,30 +609,11 @@ const ImageContainer = ({ image, height = '100%', width = '100%', tintColor }) =
     </View>
 );
 
-const HeaderTitle = () => {
-    const [userName, setUserName] = useState('Jane');
-    const [userRole, setUserRole] = useState('Beginner');
-
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const storedName = await AsyncStorage.getItem('user_name');
-                const storedRole = await AsyncStorage.getItem('user_role');
-
-                if (storedName) setUserName(storedName);
-                if (storedRole) setUserRole(storedRole);
-            } catch (error) {
-                console.error('Error fetching user details', error);
-            }
-        };
-
-        fetchUserDetails();
-    }, []);
-
+const HeaderTitle = ({ data }) => {
     return (
         <View style={styles.title}>
-            <Text style={styles.bigTitle}>Hi, {userName}</Text>
-            <Text style={styles.smallTitle}>{userRole}</Text>
+            <Text style={styles.bigTitle}>Hi, {data.name}</Text>
+            <Text style={styles.smallTitle}>{data.level}</Text>
         </View>
     );
 };
