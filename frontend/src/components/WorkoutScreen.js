@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Animated,
 } from "react-native";
+import Counter from "../components/Counter";
 
 const InstructionText = ({ instructions, title }) => {
     return (
@@ -23,7 +24,7 @@ const InstructionText = ({ instructions, title }) => {
     );
 };
 
-const Warmups = ({ navigation, route }) => {
+const Workouts = ({ navigation, route }) => {
     const { allExercises, currentExercise, currentIndex, isLastExercise, onWarmupComplete, onWorkoutComplete } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
@@ -41,6 +42,9 @@ const Warmups = ({ navigation, route }) => {
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
             navigation.goBack();
         }
+    };
+    const handleCountChange = (newCount) => {
+        console.log("Current Count:", newCount); // Handle count changes as needed
     };
 
     return (
@@ -76,101 +80,21 @@ const Warmups = ({ navigation, route }) => {
                 <InstructionText instructions={currentExerciseData.instruction} />
             </View>
 
-            {/* Animated Progress Bar */}
-            <TimerButton
-                key={currentExerciseIndex} // Reset TimerButton when exercise changes
-                duration={currentExerciseData.duration}
-                onComplete={moveToNextExercise} // Callback when timer completes
-                isLast={isLast}
-            />
+            {/* Counter */}
+            <Counter initialCount={0} onCountChange={handleCountChange} />
+
+            {/* Next Button */}
+            <TouchableOpacity
+                style={styles.nextButton}
+                onPress={moveToNextExercise}
+            >
+                <Text style={styles.nextButtonText}>{isLast ? "Complete" : "Next"}</Text>
+            </TouchableOpacity>
+
         </ImageBackground>
     );
 };
 
-const TimerButton = ({ duration, onComplete, isLast }) => {
-    const numericDuration = parseInt(duration.match(/\d+/)[0]);
-    let durationInSeconds;
-
-    if (duration.toLowerCase().includes("min")) {
-        durationInSeconds = numericDuration * 60;
-    } else if (duration.toLowerCase().includes("sec")) {
-        durationInSeconds = numericDuration;
-    }
-
-    const durationInMilliseconds = durationInSeconds * 1000;
-    const [timer, setTimer] = useState("00:00");
-    const [isRunning, setIsRunning] = useState(false);
-    const [completed, setCompleted] = useState(false);
-    const progress = useRef(new Animated.Value(0)).current;
-
-    useEffect(() => {
-        let interval;
-        if (isRunning) {
-            let seconds = 0;
-            interval = setInterval(() => {
-                seconds++;
-                const minutes = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                setTimer(
-                    `${minutes.toString().padStart(2, "0")}:${secs
-                        .toString()
-                        .padStart(2, "0")}`
-                );
-
-                if (seconds >= durationInSeconds) {
-                    clearInterval(interval);
-                    setIsRunning(false);
-                    setCompleted(true);
-                }
-            }, 1000);
-        }
-        return () => clearInterval(interval);
-    }, [isRunning]);
-
-    const startAnimation = () => {
-        setIsRunning(true);
-        Animated.timing(progress, {
-            toValue: 1,
-            duration: durationInMilliseconds,
-            useNativeDriver: false,
-        }).start();
-    };
-
-    const progressWidth = progress.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0%", "100%"],
-    });
-
-    const handleClick = () => {
-        if (!isRunning && !completed) {
-            startAnimation();
-        } else if (completed) {
-            onComplete();
-        }
-    };
-
-    return (
-        <View style={styles.progressBarContainer}>
-            <Animated.View
-                style={[
-                    styles.progressBar,
-                    {
-                        backgroundColor: completed ? "#4CAF50" : "#9bde9e",
-                        width: progressWidth,
-                    },
-                ]}
-            />
-            <TouchableOpacity
-                style={styles.progressButton}
-                onPress={handleClick}
-            >
-                <Text style={[styles.buttonText, { color: completed ? "#fff" : "#525453" }]}>
-                    {isRunning ? timer : completed ? (isLast ? "Complete" : "Next") : "Start"}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
 
 const styles = StyleSheet.create({
     container: {
@@ -232,30 +156,20 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 15,
     },
-    progressBarContainer: {
-        width: "50%",
-        height: 50,
+    nextButton: {
         position: "absolute",
-        bottom: 25,
-        backgroundColor: "#e0e0e0",
+        bottom: 70,
+        right: 20,
+        alignItems: "flex-end",
+        backgroundColor: "#4CAF50",
+        padding: 10,
         borderRadius: 10,
-        overflow: "hidden",
     },
-    progressBar: {
-        height: "100%",
-        position: "absolute",
-    },
-    progressButton: {
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    buttonText: {
+    nextButtonText: {
         fontSize: 18,
         fontWeight: "bold",
+        color: "#fff",
     },
 });
 
-export default Warmups;
+export default Workouts;

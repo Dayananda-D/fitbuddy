@@ -42,14 +42,23 @@ const level = 'advanced';
 
 const Dashboard = ({ route }) => {
     const UserData = route?.params?.UserData || {};
-    const [warmupCompleted, setWarmupCompleted] = useState(false);
-    const [workoutCompleted, setWorkoutCompleted] = useState(false);
-
-    const onWarmupComplete = () => { setWarmupCompleted(true) };
-    const onWorkoutComplete = () => { setWorkoutCompleted(true) };
+    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
+    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
-    const [loading, setLoading] = useState(true); // Add a loading state
+    const [loading, setLoading] = useState(true);
+
+    const onWarmupComplete = (index) => {
+        const updatedWarmupCompleted = [...warmupCompleted];
+        updatedWarmupCompleted[index] = true;
+        setWarmupCompleted(updatedWarmupCompleted);
+    };
+
+    const onWorkoutComplete = (index) => {
+        const updatedWorkoutCompleted = [...workoutCompleted];
+        updatedWorkoutCompleted[index] = true;
+        setWorkoutCompleted(updatedWorkoutCompleted);
+    };
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -133,7 +142,11 @@ const Dashboard = ({ route }) => {
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category].warmup.map((item, index) => (
                                 <VideoPlayWarmup
-                                    index={index} key={index} data={workout} warmupCompleted={warmupCompleted} onWarmupComplete={onWarmupComplete}
+                                    index={index}
+                                    key={index}
+                                    data={workout}
+                                    warmupCompleted={warmupCompleted}
+                                    onWarmupComplete={onWarmupComplete}
                                 />
                             ))}
                         </View>
@@ -146,7 +159,12 @@ const Dashboard = ({ route }) => {
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
-                                    index={index} key={index} data={workout} workoutCompleted={workoutCompleted} warmupCompleted={warmupCompleted} onWorkoutComplete={onWorkoutComplete}
+                                    index={index}
+                                    key={index}
+                                    data={workout}
+                                    workoutCompleted={workoutCompleted}
+                                    warmupCompleted={warmupCompleted}
+                                    onWorkoutComplete={onWorkoutComplete}
                                 />
                             ))}
                         </View>
@@ -190,7 +208,7 @@ const BottomTab = () => (
             }}
         />
         <BottomButton /> */}
-        <BottomButton image={heart} />
+        <BottomButton image={heart} navigate={"Reports"} />
         <BottomButton image={profile} navigate={"ProfileScreen"}/>
     </View>
 );
@@ -240,15 +258,16 @@ const VideoPlay = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
     const isLastExercise = currentIndex === data.data.exercises[category][level].length - 1;
+    const lastIndex = data.data.exercises[category][level].length - 1;
     const allExercises = data.data.exercises[category][level];
     const warmupCompleted = data.warmupCompleted;
-    const exerciseComplete = data.workoutCompleted;
+    const workoutCompleted = data.workoutCompleted;
     const currentExercise = data.data.exercises[category][level][currentIndex];
     const onWorkoutComplete = data.onWorkoutComplete;
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted}>
-            {!warmupCompleted && (
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
+            {!warmupCompleted[lastIndex] && (
                 <View
                     style={{
                         position: 'absolute',
@@ -320,7 +339,7 @@ const VideoPlay = (data) => {
                             top: 10,
                             borderRadius: 5,
                         }}>
-                        <Image source={exerciseComplete ? verify : disapprove} style={{ height: 10, width: 10 }} />
+                        <Image source={workoutCompleted[currentIndex] ? verify : disapprove} style={{ height: 15, width: 15 }} />
                     </View>
                 </View>
                 <View
@@ -429,7 +448,7 @@ const VideoPlayWarmup = (data) => {
                             top: 10,
                             borderRadius: 5,
                         }}>
-                        <Image source={warmupCompleted ? verify : disapprove} style={{ height: 10, width: 10 }} />
+                        <Image source={warmupCompleted[currentIndex] ? verify : disapprove} style={{ height: 15, width: 15 }} />
                     </View>
                 </View>
                 <View
