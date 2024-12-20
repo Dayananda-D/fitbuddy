@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Profiler } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WelcomeScreen from "./src/screens/welcomeScreen";
@@ -13,6 +13,7 @@ import WorkoutsTab from "./src/screens/WorkoutsTab";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import Workouts from "./src/components/WorkoutScreen";
 import Reports from "./src/screens/Reports";
+import profile from "./src/screens/ProfileScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -49,7 +50,7 @@ export default function App() {
     return <LoadingScreen message="Loading your activities..." />;
   }
 
-  const landingPage = token ? (workoutFlag ? "Dashboard" : "Gender") : "Welcome";
+  const landingPage = token ? (workoutFlag ? "Dashboard" : "Welcome") : "Welcome";
 
   return (
     <NavigationContainer>
@@ -70,6 +71,7 @@ export default function App() {
         <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
         <Stack.Screen name="Reports" component={Reports} />
         <Stack.Screen name="Workouts" component={Workouts} />
+        <Stack.Screen name="profile" component={profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
