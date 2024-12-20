@@ -7,60 +7,126 @@ const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
+const verify = require('../../assets/images/verify.png');
+const disapprove = require('../../assets/images/disapprove.png');
 const category = 'chest';
 const level = 'advanced';
 
-const WarmupTab = () => (
-    <ScrollView>
-        {workout.exercises[category].warmup.map((item, index) => (
-            <View style={styles.scene} key={index}>
-                {/* <Text style={styles.header}>Warm-up Exercises</Text> */}
-                <View style={styles.card}>
-                    <View style={{}}>
-                        <Image
-                            source={{ uri: item.image }}
-                            style={styles.image}
-                        />
-                        <Text style={styles.title}>{item.title}</Text>
-                        <Text style={styles.time}>Duration: {item.duration}</Text>
-                    </View>
-                    <View style={{ justifyContent: 'space-around' }}>
-                        <TouchableOpacity style={styles.startButton}>
-                            <Text style={styles.buttonText}>Start</Text>
-                        </TouchableOpacity>
-                        <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
-                    </View>
-                </View>
-            </View>
-        ))}
-    </ScrollView>
-);
+const WarmupTab = () => {
+    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
+    const [index, setIndex] = useState(0);
+    const navigation = useNavigation();
+    const navigateWarmup = (item, index) => {
+        navigation.navigate("Warmups", {
+            allExercises: workout.exercises[category][level],
+            currentExercise: item,
+            currentIndex: index,
+            isLastExercise: index === workout.exercises[category][level].length - 1,
+            onWarmupComplete: handleWarmupComplete
+        });
 
-const WorkoutTab = () => (
-    <ScrollView>
-        {workout.exercises[category][level].map((item, index) => (
-            <View style={styles.scene} key={index}>
-                {/* <Text style={styles.header}>Workout Exercises</Text> */}
-                <View style={styles.card}>
-                    <View style={{}}>
-                        <Image
-                            source={{ uri: item.image }}
-                            style={styles.image}
-                        />
-                        <Text style={styles.title}>{item.title}</Text>
-                        <Text style={styles.time}>Duration: {item.duration}</Text>
-                    </View>
-                    <View style={{ justifyContent: 'space-around' }}>
-                        <TouchableOpacity style={styles.startButton}>
-                            <Text style={styles.buttonText}>Start</Text>
-                        </TouchableOpacity>
-                        <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+    };
+    const handleWarmupComplete = (index) => {
+        const updatedWarmupCompleted = [...warmupCompleted];
+        updatedWarmupCompleted[index] = true;
+        setWarmupCompleted(updatedWarmupCompleted);
+        setIndex(index);
+    };
+    return (
+        <ScrollView>
+            {workout.exercises[category].warmup.map((item, index) => (
+                <View style={styles.scene} key={index}>
+                    {/* <Text style={styles.header}>Warm-up Exercises</Text> */}
+                    <View style={styles.card}>
+                        <View style={{}}>
+                            <Image
+                                source={{ uri: item.image }}
+                                style={styles.image}
+                            />
+                            <Text style={styles.title}>{item.title}</Text>
+                            <Text style={styles.time}>Duration: {item.duration}</Text>
+                        </View>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                backgroundColor: '#fff',
+                                padding: 5,
+                                right: 10,
+                                top: 10,
+                                borderRadius: 5,
+                            }}>
+                            <Image source={warmupCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
+                        </View>
+                        <View style={{ justifyContent: 'space-around' }}>
+                            <TouchableOpacity style={styles.startButton} onPress={() => navigateWarmup(item, index)}>
+                                <Text style={styles.buttonText}>Start</Text>
+                            </TouchableOpacity>
+                            <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
-        ))}
-    </ScrollView>
-);
+            ))}
+        </ScrollView>
+    )
+};
+
+const WorkoutTab = () => {
+    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
+    const [index, setIndex] = useState(0);
+    const navigation = useNavigation();
+    const navigateWorkout = (item, index) => {
+        navigation.navigate("Workouts", {
+            allExercises: workout.exercises[category][level],
+            currentExercise: item,
+            currentIndex: index,
+            isLastExercise: index === workout.exercises[category][level].length - 1,
+            onWorkoutComplete: handleWorkoutComplete,
+        });
+
+    };
+    const handleWorkoutComplete = (index) => {
+        const updatedWorkoutCompleted = [...workoutCompleted];
+        updatedWorkoutCompleted[index] = true;
+        setWorkoutCompleted(updatedWorkoutCompleted);
+        setIndex(index);
+    };
+    return (
+        <ScrollView>
+            {workout.exercises[category][level].map((item, index) => (
+                <View style={styles.scene} key={index}>
+                    {/* <Text style={styles.header}>Workout Exercises</Text> */}
+                    <View style={styles.card}>
+                        <View style={{}}>
+                            <Image
+                                source={{ uri: item.image }}
+                                style={styles.image}
+                            />
+                            <Text style={styles.title}>{item.title}</Text>
+                            <Text style={styles.time}>Duration: {item.duration}</Text>
+                        </View>
+                        <View
+                            style={{
+                                position: 'absolute',
+                                backgroundColor: '#fff',
+                                padding: 5,
+                                right: 10,
+                                top: 10,
+                                borderRadius: 5,
+                            }}>
+                            <Image source={workoutCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
+                        </View>
+                        <View style={{ justifyContent: 'space-around' }}>
+                            <TouchableOpacity style={styles.startButton} onPress={() => navigateWorkout(item, index)}>
+                                <Text style={styles.buttonText}>Start</Text>
+                            </TouchableOpacity>
+                            <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+                        </View>
+                    </View>
+                </View>
+            ))}
+        </ScrollView>
+    )
+};
 
 const initialLayout = { width: Dimensions.get("window").width };
 
