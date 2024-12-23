@@ -81,7 +81,7 @@ const Workouts = ({ navigation, route }) => {
             </View>
 
             {/* Counter */}
-            <Counter initialCount={0} onCountChange={handleCountChange} />
+            <Counter onCountChange={handleCountChange} />
 
             {/* Next Button */}
             <TouchableOpacity
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: "absolute",
-        top: 50,
+        top: 40,
         left: 20,
         backgroundColor: "#000",
         padding: 10,
@@ -159,14 +159,15 @@ const styles = StyleSheet.create({
     nextButton: {
         position: "absolute",
         bottom: 70,
-        right: 20,
+        right: 5,
         alignItems: "flex-end",
         backgroundColor: "#4CAF50",
         padding: 10,
-        borderRadius: 10,
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10
     },
     nextButtonText: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "bold",
         color: "#fff",
     },

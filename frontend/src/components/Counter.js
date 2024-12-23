@@ -1,19 +1,23 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import React, { useState } from 'react';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Keyboard,
+} from 'react-native';
 
-const Counter = ({ initialCount = 0, onCountChange }) => {
-    const [count, setCount] = useState(initialCount);
+export default function Counter({ onCountChange }) {
+    const [count, setCount] = useState(0);
 
-    const increment = () => {
-        const newCount = count + 1;
-        setCount(newCount);
-        onCountChange(newCount);
-    };
-
-    const decrement = () => {
-        const newCount = count > 0 ? count - 1 : 0;
-        setCount(newCount);
-        onCountChange(newCount);
+    const increment = () => setCount((prevCount) => Math.min(prevCount + 1, 100)); // Limit to 999
+    const decrement = () => setCount((prevCount) => Math.max(prevCount - 1, 0)); // No negative numbers
+    const handleInputChange = (text) => {
+        // Ensure only numeric input
+        const numericValue = text.replace(/[^0-9]/g, '');
+        onCountChange(numericValue);
+        setCount(numericValue ? parseInt(numericValue, 10) : 0); // Default to 0 if empty
     };
 
     return (
@@ -21,13 +25,21 @@ const Counter = ({ initialCount = 0, onCountChange }) => {
             <TouchableOpacity style={styles.button} onPress={decrement}>
                 <Text style={styles.buttonText}>-</Text>
             </TouchableOpacity>
-            <TextInput style={styles.counterText} value={count} maxLength={3} inputMode="numeric" onChange={(val) => setCount(eval(val.nativeEvent.text))} />
+            <TextInput
+                style={styles.counterText}
+                value={count.toString()} // Convert count to string for display
+                maxLength={3}
+                keyboardType="numeric" // Use numeric keyboard
+                returnKeyType="done"
+                onChangeText={handleInputChange} // Use onChangeText for updates
+                onBlur={Keyboard.dismiss} // Hide keyboard on blur
+            />
             <TouchableOpacity style={styles.button} onPress={increment}>
                 <Text style={styles.buttonText}>+</Text>
             </TouchableOpacity>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     counterContainer: {
@@ -49,7 +61,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40,
         borderRadius: 10,
-        padding: 20,
+        // padding: 20,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -68,4 +80,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Counter;
