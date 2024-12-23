@@ -108,14 +108,14 @@ export default function App() {
         <Stack.Screen name="Goal" component={GoalScreen} />
         <Stack.Screen name="TargetAreaScreen" component={TargetAreaScreen} />
         <Stack.Screen name="Main" component={MyTabs} />
-        {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
+        <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="Warmups" component={Warmups} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
-        {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
-        {/* <Stack.Screen name="Reports" component={Reports} /> */}
+        <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
+        <Stack.Screen name="Reports" component={Reports} />
         <Stack.Screen name="Workouts" component={Workouts} />
-        {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
+        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
         {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
@@ -127,9 +127,7 @@ export default function App() {
 const styles = StyleSheet.create({
   tabBar: {
     position: "absolute",
-    bottom: 16,
-    left: 16,
-    right: 16,
+    bottom: 35,
     height: 40,
     backgroundColor: "#fff",
     borderRadius: 30,
