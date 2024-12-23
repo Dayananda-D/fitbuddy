@@ -68,7 +68,8 @@ export default function ProfileScreen() {
   return (
     <ImageBackground
       source={require("../../assets/images/background.png")}
-      style={styles.maincontainer}
+      // style={styles.maincontainer}
+      style={{ width: '100%', height: '100%' }}
     >
       <View style={styles.container}>
         {/* Profile Image */}
@@ -225,11 +226,11 @@ const BottomButton = ({ image, style, imageStyle, navigate }) => {
 };
 
 const styles = StyleSheet.create({
-  maincontainer: {
-    flex: 1,
-    height: "100%",
-    width: "100%",
-  },
+  // maincontainer: {
+  //   flex: 1,
+  //   height: "100%",
+  //   width: "100%",
+  // },
   // image: { height: '100%', width: '100%' },
   container: {
     flex: 1,

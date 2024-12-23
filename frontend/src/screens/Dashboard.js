@@ -644,6 +644,8 @@ const styles = StyleSheet.create({
     },
     header: {
         paddingHorizontal: 5,
+        marginHorizontal: 15,
+        marginTop:10,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -663,6 +665,7 @@ const styles = StyleSheet.create({
     fireImage: { height: 15, width: 15, alignSelf: 'center', margin: 5 },
     banner: {
         marginTop: 20,
+        marginHorizontal:15,
         padding: 30,
         resizeMode: 'contain',
         borderRadius: 20,
