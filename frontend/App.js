@@ -14,6 +14,9 @@ import LoadingScreen from "./src/screens/LoadingScreen";
 import Workouts from "./src/components/WorkoutScreen";
 import Reports from "./src/screens/Reports";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
+// import EnterCodeScreen from './src/screens/EnterCodeScreen';
+import NewPasswordScreen from './src/screens/NewPasswordScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -55,7 +58,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={landingPage}
+        initialRouteName= "Gender" //{landingPage}
         screenOptions={{
           headerShown: false, // Hide the header for a fullscreen experience
         }}
@@ -72,6 +75,9 @@ export default function App() {
         <Stack.Screen name="Reports" component={Reports} />
         <Stack.Screen name="Workouts" component={Workouts} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+        {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
+        <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

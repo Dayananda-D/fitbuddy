@@ -111,6 +111,13 @@ const LoginScreen = ({ route }) => {
                         <Text style={styles.linkText}>SignUp</Text>
                     </TouchableOpacity>
                 </View>
+                {/* Link to Reset password */}
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}></Text>
+                    <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
+                        <Text style={styles.linkText}>forgot password</Text>
+                    </TouchableOpacity>
+                </View>
 
                 {/* Social Login Buttons */}
                 <View style={styles.socialLoginContainer}>
