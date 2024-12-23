@@ -58,7 +58,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName= "Gender" //{landingPage}
+        initialRouteName= {landingPage}
         screenOptions={{
           headerShown: false, // Hide the header for a fullscreen experience
         }}
