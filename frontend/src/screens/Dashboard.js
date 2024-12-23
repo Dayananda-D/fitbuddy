@@ -209,7 +209,7 @@ const BottomTab = () => (
         />
         <BottomButton /> */}
         <BottomButton image={heart} navigate={"Reports"} />
-        <BottomButton image={profile} />
+        <BottomButton image={profile} navigate={"ProfileScreen"}/>
     </View>
 );
 const BottomButton = ({ image, style, imageStyle, navigate }) => {
