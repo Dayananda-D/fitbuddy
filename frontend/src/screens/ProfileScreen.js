@@ -33,7 +33,7 @@ export default function ProfileScreen() {
 
         if (token) setToken(token);
         if (userData) setUserData(JSON.parse(userData));
-        
+
       } catch (error) {
         console.error("Error fetching user details", error);
       }
@@ -85,7 +85,7 @@ export default function ProfileScreen() {
 
         {/* User Information */}
         <Text style={styles.userName}>Hi, {userData.name || "Jane"}</Text>
-        <Text style={styles.userLevel}>{ userData.level || "Beginner"}</Text>
+        <Text style={styles.userLevel}>{userData.level || "Beginner"}</Text>
 
         {/* Menu Items */}
         {/* <View style={styles.menu}>
@@ -142,87 +142,9 @@ export default function ProfileScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <BottomTab />
     </ImageBackground>
   );
 }
-
-const BottomTab = () => (
-  <View
-    style={{
-      position: "absolute",
-      bottom: 30,
-      margin: 10,
-      marginHorizontal: 25,
-      borderRadius: 20,
-      padding: 10,
-      width: "90%",
-      backgroundColor: "#EDEDED",
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-around",
-    }}
-  >
-    <BottomButton image={home} navigate={"Dashboard"} />
-    <BottomButton image={dumbbell} navigate={"WorkoutsTab"} />
-    {/* <BottomButton
-                image={plus}
-                style={{
-                    position: 'absolute',
-                    left: '43%',
-                    top: -25,
-                    backgroundColor: '#fff',
-                    padding: 8,
-                    borderRadius: 20,
-                }}
-            />
-            <BottomButton /> */}
-    <BottomButton image={heart} />
-    <BottomButton image={profile} navigate={"profile"} />
-  </View>
-);
-const BottomButton = ({ image, style, imageStyle, navigate }) => {
-  const navigation = useNavigation();
-  return (
-    <>
-      <TouchableOpacity onPress={() => navigation.navigate(navigate)}>
-        <View
-          style={[
-            {
-              flex: 1,
-              alignSelf: "center",
-              alignItems: "center",
-            },
-            style,
-          ]}
-        >
-          <Image
-            source={image}
-            style={[
-              {
-                height: image === dumbbell ? 25 : 20,
-                width: image === dumbbell ? 25 : 20,
-              },
-              imageStyle,
-            ]}
-          />
-        </View>
-      </TouchableOpacity>
-      {image === profile && (
-        <View
-          style={{
-            width: "10%",
-            position: "absolute",
-            height: 3,
-            backgroundColor: "#8860a2",
-            bottom: 0,
-            left: 32,
-          }}
-        />
-      )}
-    </>
-  );
-};
 
 const styles = StyleSheet.create({
   maincontainer: {

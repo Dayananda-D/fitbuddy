@@ -11,6 +11,7 @@ const verify = require('../../assets/images/verify.png');
 const disapprove = require('../../assets/images/disapprove.png');
 const category = 'chest';
 const level = 'advanced';
+var allWarmupsCompleted = false;
 
 const WarmupTab = () => {
     const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
@@ -24,6 +25,9 @@ const WarmupTab = () => {
             isLastExercise: index === workout.exercises[category][level].length - 1,
             onWarmupComplete: handleWarmupComplete
         });
+        if (index === workout.exercises[category].warmup.length - 1) {
+            allWarmupsCompleted = true;
+        }
 
     };
     const handleWarmupComplete = (index) => {
@@ -94,6 +98,32 @@ const WorkoutTab = () => {
         <ScrollView>
             {workout.exercises[category][level].map((item, index) => (
                 <View style={styles.scene} key={index}>
+                    {!allWarmupsCompleted && (
+                        <View
+                            style={{
+                                position: 'absolute',
+                                width: '93%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0,0,0,0.7)',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                zIndex: 2,
+                                marginLeft: 12,
+                                borderRadius: 10,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: '#fff',
+                                    fontSize: 16,
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                }}
+                            >
+                                Complete the warmups to unlock workout
+                            </Text>
+                        </View>
+                    )}
                     {/* <Text style={styles.header}>Workout Exercises</Text> */}
                     <View style={styles.card}>
                         <View style={{}}>
@@ -161,86 +191,11 @@ const WorkoutTabs = () => {
                     />
                 )}
             />
-            <BottomTab />
         </ImageBackground>
     );
 }
 
 export default WorkoutTabs;
-const BottomTab = () => (
-    <View
-        style={{
-            position: 'absolute',
-            bottom: 30,
-            margin: 10,
-            marginHorizontal: 25,
-            borderRadius: 20,
-            padding: 10,
-            width: '90%',
-            backgroundColor: '#EDEDED',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around'
-        }}>
-        <BottomButton image={home} />
-        <BottomButton image={dumbbell} navigate={"WorkoutsTab"} />
-        {/* <BottomButton
-            image={plus}
-            style={{
-                position: 'absolute',
-                left: '43%',
-                top: -25,
-                backgroundColor: '#fff',
-                padding: 8,
-                borderRadius: 20,
-            }}
-        />
-        <BottomButton /> */}
-        <BottomButton image={heart} />
-        <BottomButton image={profile} navigate={"ProfileScreen"} />
-    </View>
-);
-const BottomButton = ({ image, style, imageStyle }) => {
-    const navigation = useNavigation();
-    return (
-        <>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <View
-                    style={[
-                        {
-                            flex: 1,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                        },
-                        style,
-                    ]}>
-                    <Image
-                        source={image}
-                        style={[
-                            {
-                                height: image === dumbbell ? 25 : 20,
-                                width: image === dumbbell ? 25 : 20,
-                            },
-                            imageStyle,
-                        ]}
-                    />
-                </View>
-            </TouchableOpacity>
-            {image === home && (
-                <View
-                    style={{
-                        width: '10%',
-                        position: 'absolute',
-                        height: 3,
-                        backgroundColor: '#8860a2',
-                        bottom: 0,
-                        left: 118,
-                    }}
-                />
-            )}
-        </>
-    )
-};
 
 const styles = StyleSheet.create({
     scene: {

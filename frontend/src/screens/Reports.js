@@ -114,87 +114,12 @@ const Reports = () => {
                         </TouchableOpacity>
                     </View> */}
                 </View>
-                <BottomTab />
             </ImageBackground>
         </SafeAreaView>
     );
 }
 
 export default Reports;
-const BottomTab = () => (
-    <View
-        style={{
-            position: 'absolute',
-            bottom: 30,
-            margin: 10,
-            marginHorizontal: 25,
-            borderRadius: 20,
-            padding: 10,
-            width: '90%',
-            backgroundColor: '#EDEDED',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around'
-        }}>
-        <BottomButton image={home} />
-        <BottomButton image={dumbbell} navigate={"WorkoutsTab"} />
-        {/* <BottomButton
-            image={plus}
-            style={{
-                position: 'absolute',
-                left: '43%',
-                top: -25,
-                backgroundColor: '#fff',
-                padding: 8,
-                borderRadius: 20,
-            }}
-        />
-        <BottomButton /> */}
-        <BottomButton image={heart} />
-        <BottomButton image={profile} />
-    </View>
-);
-const BottomButton = ({ image, style, imageStyle }) => {
-    const navigation = useNavigation();
-    return (
-        <>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <View
-                    style={[
-                        {
-                            flex: 1,
-                            alignSelf: 'center',
-                            alignItems: 'center',
-                        },
-                        style,
-                    ]}>
-                    <Image
-                        source={image}
-                        style={[
-                            {
-                                height: image === dumbbell ? 25 : 20,
-                                width: image === dumbbell ? 25 : 20,
-                            },
-                            imageStyle,
-                        ]}
-                    />
-                </View>
-            </TouchableOpacity>
-            {image === home && (
-                <View
-                    style={{
-                        width: '10%',
-                        position: 'absolute',
-                        height: 3,
-                        backgroundColor: '#8860a2',
-                        bottom: 0,
-                        left: 118,
-                    }}
-                />
-            )}
-        </>
-    )
-};
 
 const styles = StyleSheet.create({
     container: {

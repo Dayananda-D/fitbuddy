@@ -15,6 +15,46 @@ import Workouts from "./src/components/WorkoutScreen";
 import Reports from "./src/screens/Reports";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from "@expo/vector-icons";
+import { View, Text, StyleSheet } from "react-native";
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarStyle: styles.tabBar,
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === "Dashboard") {
+            iconName = focused ? "home" : "home-outline";
+          } else if (route.name === "WorkoutsTab") {
+            iconName = focused ? "barbell" : "barbell-outline";
+          } else if (route.name === "Reports") {
+            iconName = focused ? "pulse" : "pulse-outline";
+          } else if (route.name === "ProfileScreen") {
+            iconName = focused ? "person" : "person-outline";
+          }
+          return <Ionicons name={iconName} size={24} color={color} />;
+        },
+        tabBarActiveTintColor: "#4CAF50",
+        tabBarInactiveTintColor: "gray",
+        headerShown: false,
+        tabBarLabel: ({ focused }) => {
+          // Optionally hide the text for a cleaner UI
+          // return focused ? <Text style={styles.tabLabel}>{route.name}</Text> : null;
+        },
+      })}
+    >
+      <Tab.Screen name="Dashboard" component={Dashboard} />
+      <Tab.Screen name="WorkoutsTab" component={WorkoutsTab} />
+      <Tab.Screen name="Reports" component={Reports} />
+      <Tab.Screen name="ProfileScreen" component={ProfileScreen} />
+    </Tab.Navigator>
+  );
+}
 
 const Stack = createNativeStackNavigator();
 
@@ -50,7 +90,7 @@ export default function App() {
     return <LoadingScreen message="Loading your activities..." />;
   }
 
-  const landingPage = token ? (workoutFlag ? "Dashboard" : "Welcome") : "Welcome";
+  const landingPage = token ? (workoutFlag ? "Main" : "Welcome") : "Welcome";
 
   return (
     <NavigationContainer>
@@ -64,15 +104,39 @@ export default function App() {
         <Stack.Screen name="Gender" component={GenderScreen} />
         <Stack.Screen name="Goal" component={GoalScreen} />
         <Stack.Screen name="TargetAreaScreen" component={TargetAreaScreen} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen name="Main" component={MyTabs} />
+        {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
         <Stack.Screen name="Warmups" component={Warmups} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
-        <Stack.Screen name="Reports" component={Reports} />
+        {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
+        {/* <Stack.Screen name="Reports" component={Reports} /> */}
         <Stack.Screen name="Workouts" component={Workouts} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    position: "absolute",
+    bottom: 16,
+    left: 16,
+    right: 16,
+    height: 40,
+    backgroundColor: "#fff",
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  tabLabel: {
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 4,
+  },
+});
