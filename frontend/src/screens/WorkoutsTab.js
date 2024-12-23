@@ -11,7 +11,7 @@ const verify = require('../../assets/images/verify.png');
 const disapprove = require('../../assets/images/disapprove.png');
 const category = 'chest';
 const level = 'advanced';
-var allWarmupsCompleted = false;
+let allWarmupsCompleted = true;
 
 const WarmupTab = () => {
     const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
@@ -25,7 +25,7 @@ const WarmupTab = () => {
             isLastExercise: index === workout.exercises[category][level].length - 1,
             onWarmupComplete: handleWarmupComplete
         });
-        if (index === workout.exercises[category].warmup.length - 1) {
+        if (index == workout.exercises[category].warmup.length - 1) {
             allWarmupsCompleted = true;
         }
 
