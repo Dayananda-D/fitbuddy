@@ -19,10 +19,10 @@ const WarmupTab = () => {
     const navigation = useNavigation();
     const navigateWarmup = (item, index) => {
         navigation.navigate("Warmups", {
-            allExercises: workout.exercises[category][level],
+            allExercises: workout.exercises[category].warmup,
             currentExercise: item,
             currentIndex: index,
-            isLastExercise: index === workout.exercises[category][level].length - 1,
+            isLastExercise: index === workout.exercises[category].warmup.length - 1,
             onWarmupComplete: handleWarmupComplete
         });
         if (index == workout.exercises[category].warmup.length - 1) {
