@@ -1,7 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableOpacity, ScrollView } from "react-native";
+import {
+    View,
+    Text,
+    StyleSheet,
+    Image,
+    Dimensions,
+    ImageBackground,
+    TouchableOpacity,
+    ScrollView,
+} from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+
 const home = require('../../assets/images/Home.png');
 const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
@@ -11,42 +21,40 @@ const verify = require('../../assets/images/verify.png');
 const disapprove = require('../../assets/images/disapprove.png');
 const category = 'chest';
 const level = 'advanced';
-let allWarmupsCompleted = true;
 
-const WarmupTab = () => {
-    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
-    const [index, setIndex] = useState(0);
+const WarmupTab = ({ allWarmupsCompleted, setAllWarmupsCompleted }) => {
     const navigation = useNavigation();
+    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
+
     const navigateWarmup = (item, index) => {
         navigation.navigate("Warmups", {
-            allExercises: workout.exercises[category][level],
+            allExercises: workout.exercises[category].warmup,
             currentExercise: item,
             currentIndex: index,
-            isLastExercise: index === workout.exercises[category][level].length - 1,
-            onWarmupComplete: handleWarmupComplete
+            isLastExercise: index === workout.exercises[category].warmup.length - 1,
+            onWarmupComplete: () => handleWarmupComplete(),
         });
-        if (index == workout.exercises[category].warmup.length - 1) {
-            allWarmupsCompleted = true;
-        }
 
+        if (index === workout.exercises[category].warmup.length - 1) {
+            setAllWarmupsCompleted(true); // Update the state in the parent component
+        }
     };
+
     const handleWarmupComplete = (index) => {
-        const updatedWarmupCompleted = [...warmupCompleted];
-        updatedWarmupCompleted[index] = true;
-        setWarmupCompleted(updatedWarmupCompleted);
-        setIndex(index);
+        setWarmupCompleted((prev) => {
+            const updatedWarmupCompleted = [...prev];
+            updatedWarmupCompleted[index] = true;
+            return updatedWarmupCompleted;
+        });
     };
+
     return (
         <ScrollView>
             {workout.exercises[category].warmup.map((item, index) => (
                 <View style={styles.scene} key={index}>
-                    {/* <Text style={styles.header}>Warm-up Exercises</Text> */}
                     <View style={styles.card}>
-                        <View style={{}}>
-                            <Image
-                                source={{ uri: item.image }}
-                                style={styles.image}
-                            />
+                        <View>
+                            <Image source={{ uri: item.image }} style={styles.image} />
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.time}>Duration: {item.duration}</Text>
                         </View>
@@ -58,42 +66,44 @@ const WarmupTab = () => {
                                 right: 10,
                                 top: 10,
                                 borderRadius: 5,
-                            }}>
+                            }}
+                        >
                             <Image source={warmupCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
                         </View>
                         <View style={{ justifyContent: 'space-around' }}>
-                            <TouchableOpacity style={styles.startButton} onPress={() => navigateWarmup(item, index)}>
+                            <TouchableOpacity
+                                style={styles.startButton}
+                                onPress={() => navigateWarmup(item, index)}
+                            >
                                 <Text style={styles.buttonText}>Start</Text>
                             </TouchableOpacity>
-                            <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+                            <Text>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
                         </View>
                     </View>
                 </View>
             ))}
         </ScrollView>
-    )
+    );
 };
 
-const WorkoutTab = () => {
-    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
-    const [index, setIndex] = useState(0);
-    const navigation = useNavigation();
-    const navigateWorkout = (item, index) => {
-        navigation.navigate("Workouts", {
-            allExercises: workout.exercises[category][level],
-            currentExercise: item,
-            currentIndex: index,
-            isLastExercise: index === workout.exercises[category][level].length - 1,
-            onWorkoutComplete: handleWorkoutComplete,
-        });
 
+const WorkoutTab = ({ allWarmupsCompleted }) => {
+    const [workoutCompleted, setWorkoutCompleted] = useState(
+        Array(workout.exercises[category][level].length).fill(false)
+    );
+    const navigation = useNavigation();
+
+    const navigateWorkout = (item, index) => {
+        if (allWarmupsCompleted) {
+            navigation.navigate("Workouts", {
+                allExercises: workout.exercises[category][level],
+                currentExercise: item,
+                currentIndex: index,
+                isLastExercise: index === workout.exercises[category][level].length - 1,
+            });
+        }
     };
-    const handleWorkoutComplete = (index) => {
-        const updatedWorkoutCompleted = [...workoutCompleted];
-        updatedWorkoutCompleted[index] = true;
-        setWorkoutCompleted(updatedWorkoutCompleted);
-        setIndex(index);
-    };
+
     return (
         <ScrollView>
             {workout.exercises[category][level].map((item, index) => (
@@ -102,13 +112,14 @@ const WorkoutTab = () => {
                         <View
                             style={{
                                 position: 'absolute',
-                                width: '93%',
-                                height: '100%',
+                                marginVertical: 10,
+                                width: '90%',
+                                height: '89%',
                                 backgroundColor: 'rgba(0,0,0,0.7)',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 zIndex: 2,
-                                marginLeft: 12,
+                                // marginLeft: 12,
                                 borderRadius: 10,
                             }}
                         >
@@ -124,13 +135,9 @@ const WorkoutTab = () => {
                             </Text>
                         </View>
                     )}
-                    {/* <Text style={styles.header}>Workout Exercises</Text> */}
                     <View style={styles.card}>
-                        <View style={{}}>
-                            <Image
-                                source={{ uri: item.image }}
-                                style={styles.image}
-                            />
+                        <View>
+                            <Image source={{ uri: item.image }} style={styles.image} />
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.time}>Duration: {item.duration}</Text>
                         </View>
@@ -142,34 +149,34 @@ const WorkoutTab = () => {
                                 right: 10,
                                 top: 10,
                                 borderRadius: 5,
-                            }}>
+                            }}
+                        >
                             <Image source={workoutCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
                         </View>
                         <View style={{ justifyContent: 'space-around' }}>
-                            <TouchableOpacity style={styles.startButton} onPress={() => navigateWorkout(item, index)}>
+                            <TouchableOpacity
+                                style={styles.startButton}
+                                onPress={() => navigateWorkout(item, index)}
+                            >
                                 <Text style={styles.buttonText}>Start</Text>
                             </TouchableOpacity>
-                            <Text style={{}}>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+                            <Text>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
                         </View>
                     </View>
                 </View>
             ))}
         </ScrollView>
-    )
+    );
 };
 
 const initialLayout = { width: Dimensions.get("window").width };
 
 const WorkoutTabs = () => {
-    const [index, setIndex] = useState(0);
-    const [routes] = useState([
-        { key: "warmup", title: "Warm-Up" },
-        { key: "workouts", title: "Workouts" },
-    ]);
+    const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
 
     const renderScene = SceneMap({
-        warmup: WarmupTab,
-        workouts: WorkoutTab,
+        warmup: () => <WarmupTab allWarmupsCompleted={allWarmupsCompleted} setAllWarmupsCompleted={setAllWarmupsCompleted} />,
+        workouts: () => <WorkoutTab allWarmupsCompleted={allWarmupsCompleted} />,
     });
 
     return (
@@ -178,9 +185,15 @@ const WorkoutTabs = () => {
             style={styles.container}
         >
             <TabView
-                navigationState={{ index, routes }}
+                navigationState={{
+                    index: 0,
+                    routes: [
+                        { key: "warmup", title: "Warm-Up" },
+                        { key: "workouts", title: "Workouts" },
+                    ],
+                }}
                 renderScene={renderScene}
-                onIndexChange={setIndex}
+                onIndexChange={() => { }}
                 initialLayout={initialLayout}
                 renderTabBar={(props) => (
                     <TabBar
@@ -193,7 +206,7 @@ const WorkoutTabs = () => {
             />
         </ImageBackground>
     );
-}
+};
 
 export default WorkoutTabs;
 

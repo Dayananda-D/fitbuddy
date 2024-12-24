@@ -40,8 +40,7 @@ const workout = require('../data/workoutData.json');
 const category = 'chest';
 const level = 'advanced';
 
-const Dashboard = ({ route }) => {
-    const UserData = route?.params?.UserData || {};
+const Dashboard = () => {
     const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
     const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
     const [userData, setUserData] = useState({});
@@ -190,7 +189,7 @@ const VideoPlay = (data) => {
     const onWorkoutComplete = data.onWorkoutComplete;
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
+        <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
             {!warmupCompleted[lastIndex] && (
                 <View
                     style={{
@@ -282,7 +281,7 @@ const VideoPlay = (data) => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })}>
                             <Image source={play} style={{ height: 10, width: 10 }} />
                         </TouchableOpacity>
                     </View>
@@ -423,97 +422,97 @@ const VideoPlayWarmup = (data) => {
     )
 };
 const Card = ({ data, index }) => {
+    const navigation = useNavigation();
     return (
-        <View
-            style={{
-                flex: 1,
-                height: 150,
-                padding: 10,
-                alignSelf: 'center',
-                backgroundColor: data.color,
-                justifyContent: 'space-between',
-                marginHorizontal: 8,
-                borderRadius: 10,
-                shadowColor: 'lightgrey',
-                shadowOffset: { width: -5, height: 5 },
-                shadowOpacity: 0.5,
-                shadowRadius: 2,
-            }}>
-            <Image source={data.image} style={{ height: 25, width: 25 }} />
-            <View style={{ alignSelf: 'center', margin: 5 }}>
-                <Progress.Circle
-                    size={50}
-                    progress={data.status / 100}
-                    indeterminate={false}
-                    animated={true}
-                    showsText={true}
-                    unfilledColor="#ededed"
-                    borderColor="#ededed"
-                    color={data.darkColor}
-                    strokeCap="round"
-                    thickness={5}
-                    style={{
-                        shadowColor: 'grey',
-                        shadowOffset: { width: 2, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 1,
-                    }}
-                    textStyle={{
-                        fontSize: 16,
-                        // fontFamily: 'Poppins-Bold',
-                        fontWeight: 'bold',
-                    }}
-                />
-            </View>
-            <View>
-                <Text style={{
-                    fontSize: 10,
-                    // fontFamily: 'Poppins-Light' 
-                }}>
-                    {'Day     1'}
-                </Text>
-                <Text style={{
-                    fontSize: 10,
-                    // fontFamily: 'Poppins-Light' 
-                }}>
-                    {'Time   20 min'}
-                </Text>
-            </View>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('Activities')}>
             <View
                 style={{
-                    flexDirection: 'row',
+                    flex: 1,
+                    height: 150,
+                    padding: 10,
+                    alignSelf: 'center',
+                    backgroundColor: data.color,
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    marginHorizontal: 8,
+                    borderRadius: 10,
+                    shadowColor: 'lightgrey',
+                    shadowOffset: { width: -5, height: 5 },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 2,
                 }}>
-                <Text style={{
-                    // fontFamily: 'Poppins-Regular' 
-                }}>{data.name}</Text>
-                <View
-                    style={{
-                        backgroundColor: data.lightColor,
-                        padding: 2,
-                        borderRadius: 10,
-                    }}>
-                    <Image
-                        source={next}
+                <Image source={data.image} style={{ height: 25, width: 25 }} />
+                <View style={{ alignSelf: 'center', margin: 5 }}>
+                    <Progress.Circle
+                        size={50}
+                        progress={data.status / 100}
+                        indeterminate={false}
+                        animated={true}
+                        showsText={true}
+                        unfilledColor="#ededed"
+                        borderColor="#ededed"
+                        color={data.darkColor}
+                        strokeCap="round"
+                        thickness={5}
                         style={{
-                            height: 12,
-                            width: 12,
-                            resizeMode: 'contain',
+                            shadowColor: 'grey',
+                            shadowOffset: { width: 2, height: 2 },
+                            shadowOpacity: 0.1,
+                            shadowRadius: 1,
+                        }}
+                        textStyle={{
+                            fontSize: 16,
+                            // fontFamily: 'Poppins-Bold',
+                            fontWeight: 'bold',
                         }}
                     />
                 </View>
+                <View>
+                    <Text style={{
+                        fontSize: 10,
+                        // fontFamily: 'Poppins-Light' 
+                    }}>
+                        {'Day     0'}
+                    </Text>
+                    <Text style={{
+                        fontSize: 10,
+                        // fontFamily: 'Poppins-Light' 
+                    }}>
+                        {'Time   0 min'}
+                    </Text>
+                </View>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                    <Text style={{
+                        // fontFamily: 'Poppins-Regular' 
+                    }}>{data.name}</Text>
+                    <View
+                        style={{
+                            backgroundColor: data.lightColor,
+                            padding: 2,
+                            borderRadius: 10,
+                        }}>
+                        <Image
+                            source={next}
+                            style={{
+                                height: 12,
+                                width: 12,
+                                resizeMode: 'contain',
+                            }}
+                        />
+                    </View>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 const Header = ({ data }) => {
-    const navigation = useNavigation();
     return (
         <View style={styles.header}>
-            {/* <TouchableOpacity onPress={() => navigation.navigate("SignUp")}> */}
             <ImageContainer image={headerImage} />
-            {/* </TouchableOpacity> */}
             <HeaderTitle data={data} />
             <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
@@ -569,7 +568,7 @@ const styles = StyleSheet.create({
     header: {
         paddingHorizontal: 5,
         marginHorizontal: 15,
-        marginTop:10,
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -589,7 +588,7 @@ const styles = StyleSheet.create({
     fireImage: { height: 15, width: 15, alignSelf: 'center', margin: 5 },
     banner: {
         marginTop: 20,
-        marginHorizontal:15,
+        marginHorizontal: 15,
         padding: 30,
         resizeMode: 'contain',
         borderRadius: 20,
@@ -643,7 +642,7 @@ const styles = StyleSheet.create({
 const data = [
     {
         name: 'Cycling',
-        status: 85,
+        status: 0,
         image: cycle,
         lightColor: '#f8e4d9',
         color: '#fcf1ea',
@@ -651,7 +650,7 @@ const data = [
     },
     {
         name: 'Walking',
-        status: 25,
+        status: 0,
         image: walk,
         lightColor: '#d7f0f7',
         color: '#e8f7fc',
@@ -659,7 +658,7 @@ const data = [
     },
     {
         name: 'Yoga',
-        status: 85,
+        status: 0,
         image: yoga,
         lightColor: '#dad5fe',
         color: '#e7e3ff',

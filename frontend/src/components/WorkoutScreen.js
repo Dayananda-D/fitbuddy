@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         position: "absolute",
-        bottom: 70,
+        bottom: 80,
         right: 5,
         alignItems: "flex-end",
         backgroundColor: "#4CAF50",

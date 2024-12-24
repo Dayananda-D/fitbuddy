@@ -9,13 +9,13 @@ const bodyParts = [
     { name: "Abdominals", key: "abdominals" },
     { name: "Chest", key: "chest" },
     { name: "Calves", key: "calves" },
+    { name: "Front Shoulders", key: "frontShoulders" },
     { name: "Hands", key: "hands" },
     { name: "Quads", key: "quads" },
     { name: "Obliques", key: "obliques" },
     { name: "Traps", key: "traps" },
     { name: "Forearms", key: "forearms" },
     { name: "Biceps", key: "biceps" },
-    { name: "Front Shoulders", key: "frontShoulders" },
 ];
 
 const TargetAreaScreen = ({ navigation, route }) => {
@@ -67,7 +67,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                 .then(async (data) => {
                     console.log("Response:", data); // Handle successful response
                     await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
-                    navigation.navigate("Dashboard", { UserData: updatedUserData });
+                    navigation.navigate("Main", { UserData: updatedUserData });
                 })
                 .catch((error) => {
                     console.error("Error updating user:", error); // Handle errors

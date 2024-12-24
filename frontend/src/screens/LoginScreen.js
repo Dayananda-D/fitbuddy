@@ -56,7 +56,7 @@ const LoginScreen = ({ route }) => {
             await AsyncStorage.setItem('user_level', decodedToken.level || 'Beginner');
             await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
 
-            navigation.navigate('Dashboard');
+            navigation.navigate('Main');
             console.log('Success:', data);
             Alert.alert("Success", "Logged in successfully!");
         }).catch(error => {

@@ -553,6 +553,131 @@
                     "caloriesBurnedPerRepWomen": "1.4"
                 }
             ]
+        },
+        "frontShoulders": {
+            "warmup": [
+                {
+                    "title": "Arm Circles",
+                    "duration": "1Min",
+                    "type": "Warmup",
+                    "instruction": [
+                        "Stand with your feet shoulder-width apart",
+                        "Extend your arms out to your sides at shoulder height",
+                        "Rotate your arms forward in small circles for 30 seconds",
+                        "Reverse the direction and rotate backward for another 30 seconds"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2166/390512-arm-circles.gif",
+                    "caloriesBurnedPerRepMen": "0.2",
+                    "caloriesBurnedPerRepWomen": "0.1"
+                },
+                {
+                    "title": "Chest-and-Front-of-Shoulder Stretch",
+                    "duration": "1Min",
+                    "type": "Warmup",
+                    "instruction": [
+                        "Stand with your feet shoulder-width apart near a doorway or wall corner",
+                        "Place your forearm against the wall with your elbow bent at a 90-degree angle",
+                        "Gently turn your body away from the wall until you feel a stretch in your chest and the front of your shoulder",
+                        "Hold the stretch for 15–30 seconds, then switch sides",
+                        "Breathe deeply and avoid overstretching"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/844/127112-chest-and-front-of-shoulder-stretch.gif",
+                    "caloriesBurnedPerRepMen": "0.2",
+                    "caloriesBurnedPerRepWomen": "0.1"
+                }
+            ],
+            "beginner": [
+                {
+                    "title": "Front Arm Raises",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand with your feet shoulder-width apart",
+                        "Hold a light object or bottle in each hand",
+                        "Raise your arms straight out in front of you to shoulder height",
+                        "Lower them back down slowly and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2174/391312-dumbbell-one-arm-front-raise.gif",
+                    "caloriesBurnedPerRepMen": "0.4",
+                    "caloriesBurnedPerRepWomen": "0.3"
+                },
+                {
+                    "title": "Side Arm Raises",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand with your feet shoulder-width apart",
+                        "Hold a light object or bottle in each hand",
+                        "Raise your arms out to the sides to shoulder height",
+                        "Lower them back down slowly and repeat"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/2122/382512-mid-air-lateral-raises-with-switching-palms.gif",
+                    "caloriesBurnedPerRepMen": "0.4",
+                    "caloriesBurnedPerRepWomen": "0.3"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Pike Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Start in a downward dog position with your hands and feet on the floor",
+                        "Lower your head towards the ground by bending your elbows",
+                        "Push back up to the starting position",
+                        "Keep your core engaged throughout the movement",
+                        "Repeat for desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/6169/pike-push-up.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Wall wide Push-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Stand facing the wall with your hands wider than your shoulders",
+                        "Engage your core and lower your body towards the wall",
+                        "Press your forearms against the wall",
+                        "Push your body away from the wall until your arms are fully extended",
+                        "Repeat for desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/4456/690012-forearms-to-wide-grip-wall-push-up-male.gif",
+                    "caloriesBurnedPerRepMen": "0.5",
+                    "caloriesBurnedPerRepWomen": "0.4"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Handstand Hold",
+                    "duration": "1Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Stand facing a wall and place your hands on the floor shoulder-width apart",
+                        "Kick your legs up to rest against the wall in a handstand position",
+                        "Engage your shoulders and core to hold the position",
+                        "Hold for the desired duration, then lower your legs carefully"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/3399/576212-handstand-against-the-wall.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                },
+                {
+                    "title": "Archer Push-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a wide push-up position with hands slightly wider than shoulder-width",
+                        "Lower your chest toward one hand while keeping the other arm extended",
+                        "Push back up to the starting position and alternate sides",
+                        "Repeat for desired repetitions"
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                }
+            ]
         }
     }
 }
