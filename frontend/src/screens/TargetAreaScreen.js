@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import SVGComponent from "../components/svgComponent";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { base_url } = require("../../config");
+
+const bodyParts = [
+    { name: "Abdominals", key: "abdominals" },
+    { name: "Chest", key: "chest" },
+    { name: "Calves", key: "calves" },
+    { name: "Hands", key: "hands" },
+    { name: "Quads", key: "quads" },
+    { name: "Obliques", key: "obliques" },
+    { name: "Traps", key: "traps" },
+    { name: "Forearms", key: "forearms" },
+    { name: "Biceps", key: "biceps" },
+    { name: "Front Shoulders", key: "frontShoulders" },
+];
 
 const TargetAreaScreen = ({ navigation, route }) => {
     const { UserData } = route.params;
@@ -24,8 +37,10 @@ const TargetAreaScreen = ({ navigation, route }) => {
         fetchUserDetails();
     }, []);
 
-    const handleSelectionChange = (ids) => {
-        setSelectedIds(ids);
+    const handleSelectionChange = (key) => {
+        setSelectedIds((prev) =>
+            prev.includes(key) ? prev.filter((id) => id !== key) : [...prev, key]
+        );
     };
 
     const inputAccumulator = () => {
@@ -35,28 +50,28 @@ const TargetAreaScreen = ({ navigation, route }) => {
         };
         if (userEmail) {
             fetch(`${base_url}/user/${userEmail}`, {
-              method: "PUT",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(updatedUserData),
+                method: "PUT",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedUserData),
             })
-              .then((response) => {
-                if (!response.ok) {
-                  // Handle HTTP errors
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json(); // Parse JSON response
-              })
-              .then(async (data) => {
-                console.log("Response:", data); // Handle successful response
-                await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
-                navigation.navigate("Dashboard", { UserData: updatedUserData });
-              })
-              .catch((error) => {
-                console.error("Error updating user:", error); // Handle errors
-              });
+                .then((response) => {
+                    if (!response.ok) {
+                        // Handle HTTP errors
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Parse JSON response
+                })
+                .then(async (data) => {
+                    console.log("Response:", data); // Handle successful response
+                    await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
+                    navigation.navigate("Dashboard", { UserData: updatedUserData });
+                })
+                .catch((error) => {
+                    console.error("Error updating user:", error); // Handle errors
+                });
         } else {
             navigation.navigate("Login");
         }
@@ -68,13 +83,45 @@ const TargetAreaScreen = ({ navigation, route }) => {
         >
             <View style={styles.container}>
                 <Text style={styles.title}>What do you want to workout?</Text>
-                <SVGComponent onSelectionChange={handleSelectionChange} />
-                <TouchableOpacity
-                    style={styles.backButton}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Text style={styles.backButtonText}>Back</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainer}>
+
+                    <View style={styles.leftColumn}>
+                        {bodyParts.slice(0, 5).map((part) => (
+                            <TouchableOpacity
+                                key={part.key}
+                                style={[
+                                    styles.bodyPartButton,
+                                    selectedIds.includes(part.key) && styles.selectedButton,
+                                ]}
+                                onPress={() => handleSelectionChange(part.key)}
+                            >
+                                <Text style={styles.buttonText}>{part.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+
+                    <SVGComponent
+                        onSelectionChange={handleSelectionChange}
+                        selectedIds={selectedIds}
+                        style={styles.svgComponent}
+                    />
+
+                    <View style={styles.rightColumn}>
+                        {bodyParts.slice(5).map((part) => (
+                            <TouchableOpacity
+                                key={part.key}
+                                style={[
+                                    styles.bodyPartButton,
+                                    selectedIds.includes(part.key) && styles.selectedButton,
+                                ]}
+                                onPress={() => handleSelectionChange(part.key)}
+                            >
+                                <Text style={styles.buttonText}>{part.name}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
+
                 <TouchableOpacity
                     style={styles.startButton}
                     onPress={() => inputAccumulator()}
@@ -103,17 +150,39 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: "center",
     },
-    backButton: {
-        position: "absolute",
-        top: 50,
-        left: 20,
-        backgroundColor: "#000",
+    buttonContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
+        marginTop: 20,
+    },
+    leftColumn: {
+        flex: 1,
+        justifyContent: "space-around",
+        alignItems: "center",
+    },
+    rightColumn: {
+        flex: 1,
+        justifyContent: "space-around",
+        alignItems: "center",
+    },
+    bodyPartButton: {
+        backgroundColor: "#4CAF50",
         padding: 10,
         borderRadius: 5,
+        marginBottom: 10,
+        width: 100,
+        alignItems: "center",
     },
-    backButtonText: {
+    selectedButton: {
+        backgroundColor: "#FF5722",
+    },
+    buttonText: {
         color: "#fff",
-        fontSize: 16,
+        fontSize: 12,
+        fontWeight: "bold",
+        textAlign: "center",
     },
     startButton: {
         backgroundColor: "#4CAF50",
@@ -125,10 +194,9 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 60,
     },
-    buttonText: {
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "bold",
+    svgComponent: {
+        flex: 1,
+        height: "60%",
     },
 });
 
