@@ -63,22 +63,28 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
+class TokenData(BaseModel):
+    email: str
+
 
 class TokenData(BaseModel):
     email: Optional[str] = None
 
 class UserWorkout(BaseModel):
-    email: str
-    name: str
-    workoutName: str
-    workoutGIF: str
-    workoutDuration: str
-    targettedBodyPart: str
-    equipment: str
-    level: str
-    suitableFor: str
+    email: str| None = None
+    name: str| None = None
+    type: str| None = None
+    gender: str| None = None
+    workoutName: str| None = None
+    workoutGIF: str| None = None
+    workoutDuration: str| None = None
+    targettedBodyPart: str| None = None
+    equipment: str| None = None
+    level: str| None = None
+    suitableFor: str| None = None
     isCompleted: bool |None = False
-    isSkipped: bool
-    totalCalBurnt: int
-    calBurnPerRep: int
+    isSkipped: bool| None = False
+    totalCalBurnt: str| None = None
+    calBurnPerRep: str| None = None
+    reps:int | None = None
     date: datetime | None = datetime.utcnow()
