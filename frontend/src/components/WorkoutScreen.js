@@ -57,17 +57,14 @@ const Workouts = ({ navigation, route }) => {
         if (currentExerciseIndex < allExercises.length - 1) {
             const nextIndex = currentExerciseIndex + 1;
             setCurrentExerciseIndex(nextIndex);
-            exerciseData = allExercises[nextIndex];
-            setCurrentExerciseData(exerciseData);
+            setCurrentExerciseData(allExercises[nextIndex]);
             setIsLast(nextIndex === allExercises.length - 1);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
         } else {
-            exerciseData = allExercises[currentExerciseIndex];
-            setCurrentExerciseData(exerciseData);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
             navigation.goBack();
         }
-
+        const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
         const data = {
