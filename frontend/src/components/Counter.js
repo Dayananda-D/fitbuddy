@@ -11,8 +11,13 @@ import {
 export default function Counter({ onCountChange }) {
     const [count, setCount] = useState(0);
 
-    const increment = () => setCount((prevCount) => Math.min(prevCount + 1, 100)); // Limit to 999
-    const decrement = () => setCount((prevCount) => Math.max(prevCount - 1, 0)); // No negative numbers
+    const increment = () => {
+        setCount((prevCount) => Math.min(prevCount + 1, 100));
+        onCountChange(count);
+    }; // Limit to 999
+    const decrement = () => {setCount((prevCount) => Math.max(prevCount - 1, 0))
+        onCountChange(count);
+    }; // No negative numbers
     const handleInputChange = (text) => {
         // Ensure only numeric input
         const numericValue = text.replace(/[^0-9]/g, '');
