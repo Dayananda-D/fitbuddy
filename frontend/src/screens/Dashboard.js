@@ -533,7 +533,7 @@ const Banner = ({ data }) => (
                         />
                     </View>
                 </View>
-                <BannerText>Day - 1</BannerText>
+                <BannerText>{calculateDayCount(data.created_at) || "Day - 1"}</BannerText>
                 <BannerText>{data.selectedBodyParts + "  workout"}</BannerText>
             </View>
         </ImageBackground>
@@ -560,6 +560,21 @@ const HeaderTitle = ({ data }) => {
     );
 };
 
+const calculateDayCount = (createdAt) => {
+    // Parse the created_at timestamp
+    const createdDate = new Date(createdAt);
+    
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the difference in milliseconds
+    const timeDifference = currentDate - createdDate;
+
+    // Convert milliseconds to days
+    const dayCount = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + 1; // Add 1 for Day One
+
+    return `Day ${dayCount}`;
+}
 const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
 const styles = StyleSheet.create({
     container: {
