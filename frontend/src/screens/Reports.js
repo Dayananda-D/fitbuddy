@@ -1,9 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableWithoutFeedback, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import moment, { duration } from 'moment';
 import Swiper from 'react-native-swiper';
 import { Ionicons } from "@expo/vector-icons";
+import LoadingScreen from './LoadingScreen';
+import { jwtDecode } from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const { width } = Dimensions.get('window');
+const { base_url } = require("../../config");
 const workout = require('../data/workoutData.json');
 const category = 'calves';
 const level = 'advanced';
@@ -14,26 +19,13 @@ const Reports = () => {
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
+    const [token, setToken] = useState();
+    const [WorkoutData, setWorkoutData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const calculateTotalExercise = () => {
-        return workout.exercises[category][level].length
-    };
-    const calculateTotalTime = () => {
-        let count = 0;
-        workout.exercises[category][level].forEach(item => {
-            count += parseInt(item.duration.match(/\d+/)[0])
-        });
-        return count;
-    };
-    const calculateTotalcalories = () => {
-        let calCount = 0;
-        workout.exercises[category][level].forEach(item => {
-            calCount += parseInt(item.caloriesBurnedPerRepMen.match(/\d+/)[0]);
-        });
-        return calCount;
-    }
     const weeks = React.useMemo(() => {
         const start = moment().add(week, 'weeks').startOf('week');
+
         return [-1, 0, 1].map(adj => {
             return Array.from({ length: 7 }).map((_, index) => {
                 const date = moment(start).add(adj, 'week').add(index, 'day');
@@ -44,6 +36,53 @@ const Reports = () => {
             });
         });
     }, [week]);
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("@MyApp_user");
+                const decodedToken = jwtDecode(token);
+                const work = await getWorkoutData(value, decodedToken.email, token);
+                setWorkoutData(work);
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            } finally {
+                setLoading(false); // Always set loading to false after fetch
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+    
+
+    // if (loading) {
+    //     // Display a loading indicator while fetching user details
+    //     return <LoadingScreen message="Loading your activities..." />;
+    // }
+
+    const calculateTotalExercise = () => {
+        // return workout.exercises[category][level].length
+        return WorkoutData.length
+    };
+    const calculateTotalTime = () => {
+        let count = 0;
+        // workout.exercises[category][level].forEach(item => {
+            WorkoutData.forEach(item => {
+            count += parseInt(item.workoutDuration.match(/\d+/)[0])
+        });
+        return count;
+    };
+    const calculateTotalcalories = () => {
+        // onDateChange();
+        let calCount = 0;
+        // workout.exercises[category][level].forEach(item => {
+            WorkoutData.forEach(item => {
+            calCount += parseInt(item.calBurnPerRep.match(/\d+/)[0]);
+        });
+        return calCount;
+    }
+
     return (
         // <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground
@@ -54,7 +93,7 @@ const Reports = () => {
                 <View style={styles.header}>
                     <Text style={styles.maintitle}>Reports</Text>
                 </View>
-                <View style={styles.picker}>
+                {/* <View style={styles.picker}>
                     <Swiper
                         index={1}
                         ref={swiper}
@@ -65,18 +104,22 @@ const Reports = () => {
                                 return;
                             }
                             setTimeout(() => {
+                                ;
                                 const newIndex = ind - 1;
                                 const newWeek = week + newIndex;
                                 setWeek(newWeek);
                                 setValue(moment(value).add(newIndex, 'week').toDate());
-                                swiper.current.scrollTo(1, false);
+                                onDateChange(moment(value).add(newIndex, 'week').toDate());
+                                // swiper.current.scrollTo(1, false);
                             }, 100);
-                        }}>
+                        }}
+                        >
                         {weeks.map((dates, index) => (
                             <View style={styles.itemRow} key={index}>
                                 {dates.map((item, dateIndex) => {
                                     const isActive =
                                         value.toDateString() === item.date.toDateString();
+                                        // onDateChange(value);
                                     return (
                                         <TouchableWithoutFeedback
                                             key={dateIndex}
@@ -110,7 +153,7 @@ const Reports = () => {
                             </View>
                         ))}
                     </Swiper>
-                </View>
+                </View> */}
                 <View style={styles.totalReport}>
                     <Text style={styles.subtitle}>Today's Total:</Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -131,21 +174,22 @@ const Reports = () => {
                 <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
                     <Text style={styles.subtitle}>{value.toDateString()}</Text>
                     <ScrollView>
-                        {workout.exercises[category][level].map((item, index) => (
+                        {/* {workout.exercises[category][level].map((item, index) => ( */}
+                        {WorkoutData.map((item, index) => (
                             <View key={index}>
                                 {/* <Text style={styles.header}>Warm-up Exercises</Text> */}
                                 <View style={styles.card}>
                                     <View>
                                         <Image
-                                            source={{ uri: item.image }}
+                                            source={{ uri: item.workoutGIF }}
                                             style={styles.image}
                                         />
-                                        <Text style={styles.title}>{item.title}</Text>
+                                        <Text style={styles.title}>{item.workoutName}</Text>
                                     </View>
                                     <View style={{ justifyContent: 'space-around' }}>
-                                        <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.duration}</Text>
-                                        <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: 10</Text>
-                                        <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.caloriesBurnedPerRepMen * 10}</Text>
+                                        <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.workoutDuration}</Text>
+                                        <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: {item.reps}</Text>
+                                        <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.calBurnPerRep * 10}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -159,6 +203,28 @@ const Reports = () => {
 }
 
 export default Reports;
+
+const getWorkoutData = async (date, email, token) => {
+    try {
+      const response = await fetch(`${base_url}/wokout/${date}/${email}`, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("Workout data:", data);
+      return data
+    } catch (error) {
+      console.error("Error fetching workout:", error);
+    }
+  };
 
 const styles = StyleSheet.create({
     container: {
@@ -180,7 +246,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: '15%',
         alignSelf: "center",
-        backgroundColor: '#ffffff66',
+        backgroundColor: 'rgb(161 152 208)',
         borderRadius: 10
     },
     totalInnerItems: {

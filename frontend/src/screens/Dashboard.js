@@ -46,6 +46,7 @@ const Dashboard = ({ route }) => {
     const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
+    const [workoutData, setWorkoutData] = useState({});
     const [loading, setLoading] = useState(true);
 
     const onWarmupComplete = (index) => {
@@ -68,13 +69,20 @@ const Dashboard = ({ route }) => {
                 const decodedToken = jwtDecode(token);
 
                 if (data) {
+                    const userDate = JSON.parse(data)
                     setToken(token);
-                    setUserData(JSON.parse(data));
+                    setUserData(userDate);
+                    const workout = await getWorkoutData(userDate.email, token);
+                    setWorkoutData(workout);
+                    await AsyncStorage.setItem('workoutData', JSON.stringify(workout));
                     return;
                 }
 
                 if (token && decodedToken.email) {
                     setToken(token);
+                    const workout = await getWorkoutData(decodedToken.email, token);
+                    await AsyncStorage.setItem('workoutData', JSON.stringify(workout));
+                    setWorkoutData(workout);
                     await fetch(`${base_url}/user/${decodedToken.email}`, {
                         method: "GET",
                         headers: {
@@ -576,6 +584,31 @@ const calculateDayCount = (createdAt) => {
 
     return `Day ${dayCount}`;
 }
+
+const getWorkoutData = async (email, token) => {
+    const date = new Date();
+    try {
+      const response = await fetch(`${base_url}/wokout/${date}/${email}`, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log("Workout data:", data);
+      return data
+    } catch (error) {
+      console.error("Error fetching workout:", error);
+    }
+  };
+
+  
 const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
 const styles = StyleSheet.create({
     container: {
