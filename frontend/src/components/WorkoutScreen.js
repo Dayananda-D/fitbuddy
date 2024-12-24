@@ -9,6 +9,9 @@ import {
     Animated,
 } from "react-native";
 import Counter from "../components/Counter";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const { base_url } = require("../../config");
 
 const InstructionText = ({ instructions, title }) => {
     return (
@@ -30,20 +33,77 @@ const Workouts = ({ navigation, route }) => {
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
     const [isLast, setIsLast] = useState(isLastExercise);
+    const [userData, setUserData] = useState({});
+    const [token, setToken] = useState();
+    const [reps, setReps] = useState(0);
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("@MyApp_user");
+
+                setToken(token);
+                setUserData(JSON.parse(data));
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const moveToNextExercise = () => {
         if (currentExerciseIndex < allExercises.length - 1) {
             const nextIndex = currentExerciseIndex + 1;
             setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
+            exerciseData = allExercises[nextIndex];
+            setCurrentExerciseData(exerciseData);
             setIsLast(nextIndex === allExercises.length - 1);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
         } else {
+            exerciseData = allExercises[currentExerciseIndex];
+            setCurrentExerciseData(exerciseData);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
             navigation.goBack();
         }
+
+        const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
+
+        const data = {
+            "email": userData.email,
+            "name": userData.name,
+            "type": "workout",
+            "gender": userData.gender,
+            "workoutName": exerciseData?.title,
+            "workoutGIF": exerciseData?.image,
+            "workoutDuration": exerciseData?.duration,
+            "targettedBodyPart": typeof userData.selectedBodyParts == 'object' ? userData.selectedBodyParts.join() : userData.selectedBodyParts,
+            "equipment": "Body weight",
+            "level": userData.level,
+            "suitableFor": "string",
+            "isCompleted": true,
+            "isSkipped": false,
+            "totalCalBurnt": "0",
+            "calBurnPerRep": calBurnPerRep,
+            "reps": reps
+          }
+        updateExercises(data, token);
     };
+
+    const updateExercises = (data, token) => {
+        fetch (`${base_url}/wokout`,{
+            method: "POST",
+            headers: {
+                accept: "application/json",
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+    }
     const handleCountChange = (newCount) => {
+        setReps(newCount);
         console.log("Current Count:", newCount); // Handle count changes as needed
     };
 
