@@ -1,10 +1,10 @@
 {
     "exercises": {
-        "chest": {
+        "abdominals": {
             "warmup": [
                 {
                     "title": "Cat-Cow Stretch",
-                    "duration": "10sec",
+                    "duration": "30sec",
                     "type": "Warmup",
                     "instruction": [
                         "Start on all fours with hands under shoulders and knees under hips",
@@ -18,7 +18,7 @@
                 },
                 {
                     "title": "Dead Bug",
-                    "duration": "10sec",
+                    "duration": "30sec",
                     "type": "Warmup",
                     "instruction": [
                         "Lie on your back with arms extended towards the ceiling and knees bent at 90 degrees",
@@ -121,7 +121,7 @@
                 }
             ]
         },
-        "abdominal": {
+        "chest": {
             "warmup": [
                 {
                     "title": "Cat Cow Stretch",

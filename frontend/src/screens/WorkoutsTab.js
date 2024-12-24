@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -11,20 +11,33 @@ import {
     ScrollView,
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const home = require('../../assets/images/Home.png');
-const heart = require('../../assets/images/H.png');
-const dumbbell = require('../../assets/images/dumbbell.png');
-const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
 const verify = require('../../assets/images/verify.png');
 const disapprove = require('../../assets/images/disapprove.png');
-const category = 'chest';
-const level = 'advanced';
+// const category = 'chest';
+// const level = 'advanced';
 
 const WarmupTab = ({ allWarmupsCompleted, setAllWarmupsCompleted }) => {
     const navigation = useNavigation();
+    const [category, setCategory] = useState('chest');
+    const [level, setLevel] = useState('beginner');
     const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const selectedPart = await AsyncStorage.getItem("selectedPart");
+                const level = await AsyncStorage.getItem("level");
+                setCategory(selectedPart);
+                setLevel(level);
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        }
+        fetchUserDetails();
+    }, []);
 
     const navigateWarmup = (item, index) => {
         navigation.navigate("Warmups", {
@@ -88,10 +101,24 @@ const WarmupTab = ({ allWarmupsCompleted, setAllWarmupsCompleted }) => {
 
 
 const WorkoutTab = ({ allWarmupsCompleted }) => {
-    const [workoutCompleted, setWorkoutCompleted] = useState(
-        Array(workout.exercises[category][level].length).fill(false)
-    );
     const navigation = useNavigation();
+    const [category, setCategory] = useState('chest');
+    const [level, setLevel] = useState('beginner');
+    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const selectedPart = await AsyncStorage.getItem("selectedPart");
+                const level = await AsyncStorage.getItem("level");
+                setCategory(selectedPart);
+                setLevel(level);
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        }
+        fetchUserDetails();
+    }, []);
 
     const navigateWorkout = (item, index) => {
         if (allWarmupsCompleted) {

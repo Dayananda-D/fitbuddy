@@ -41,7 +41,7 @@ const Workouts = ({ navigation, route }) => {
         const fetchUserDetails = async () => {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
 
                 setToken(token);
                 setUserData(JSON.parse(data));
@@ -84,12 +84,12 @@ const Workouts = ({ navigation, route }) => {
             "totalCalBurnt": "0",
             "calBurnPerRep": calBurnPerRep,
             "reps": reps
-          }
+        }
         updateExercises(data, token);
     };
 
     const updateExercises = (data, token) => {
-        fetch (`${base_url}/wokout`,{
+        fetch(`${base_url}/wokout`, {
             method: "POST",
             headers: {
                 accept: "application/json",

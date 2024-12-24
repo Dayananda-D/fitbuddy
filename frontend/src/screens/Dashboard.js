@@ -37,10 +37,10 @@ const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
-const category = 'chest';
-const level = 'advanced';
 
 const Dashboard = () => {
+    const [category, setCategory] = useState('chest');
+    const [level, setLevel] = useState('beginner');
     const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
     const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
     const [userData, setUserData] = useState({});
@@ -63,12 +63,14 @@ const Dashboard = () => {
         const fetchUserDetails = async () => {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
                 const decodedToken = jwtDecode(token);
 
                 if (data) {
                     setToken(token);
                     setUserData(JSON.parse(data));
+                    setCategory(data.selectedBodyParts[0]);
+                    setLevel(data.level);
                     return;
                 }
 
@@ -89,8 +91,12 @@ const Dashboard = () => {
                             return response.json();
                         })
                         .then(async (data) => {
-                            await AsyncStorage.setItem("@MyApp_user", JSON.stringify(data));
+                            await AsyncStorage.setItem("selectedPart", data.selectedBodyParts[0]);
+                            await AsyncStorage.setItem("level", data.level);
+                            await AsyncStorage.setItem("baseData", JSON.stringify(data));
                             setUserData(data);
+                            setCategory(data.selectedBodyParts[0]);
+                            setLevel(data.level);
                             console.log(data);
                         })
                         .catch(async (error) => {
@@ -141,6 +147,9 @@ const Dashboard = () => {
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category].warmup.map((item, index) => (
                                 <VideoPlayWarmup
+                                    category={category}
+                                    level={level}
+                                    userData={userData}
                                     index={index}
                                     key={index}
                                     data={workout}
@@ -158,6 +167,9 @@ const Dashboard = () => {
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
+                                    category={category}
+                                    level={level}
+                                    userdata={userData}
                                     index={index}
                                     key={index}
                                     data={workout}
@@ -180,6 +192,8 @@ export default Dashboard;
 const VideoPlay = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
+    const category = data.category;
+    const level = data.level;
     const isLastExercise = currentIndex === data.data.exercises[category][level].length - 1;
     const lastIndex = data.data.exercises[category][level].length - 1;
     const allExercises = data.data.exercises[category][level];
@@ -316,6 +330,7 @@ const VideoPlay = (data) => {
 const VideoPlayWarmup = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
+    const category = data.category;
     const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
     const allExercises = data.data.exercises[category].warmup;
     const warmupCompleted = data.warmupCompleted;
@@ -429,7 +444,7 @@ const Card = ({ data, index }) => {
                 style={{
                     flex: 1,
                     height: 150,
-                    padding: 10,
+                    padding: 20,
                     alignSelf: 'center',
                     backgroundColor: data.color,
                     justifyContent: 'space-between',
@@ -563,7 +578,7 @@ const HeaderTitle = ({ data }) => {
 const calculateDayCount = (createdAt) => {
     // Parse the created_at timestamp
     const createdDate = new Date(createdAt);
-    
+
     // Get the current date
     const currentDate = new Date();
 
