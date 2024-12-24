@@ -8,7 +8,9 @@ import {
     TouchableOpacity,
     Animated,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const { base_url } = require("../../config");
 const InstructionText = ({ instructions, title }) => {
     return (
         <View>
@@ -29,18 +31,60 @@ const Warmups = ({ navigation, route }) => {
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
     const [isLast, setIsLast] = useState(isLastExercise);
+    const [userData, setUserData] = useState({});
+    const [token, setToken] = useState();
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("@MyApp_user");
+
+                setToken(token);
+                setUserData(JSON.parse(data));
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const moveToNextExercise = () => {
+        let exerciseData
         if (currentExerciseIndex < allExercises.length - 1) {
             const nextIndex = currentExerciseIndex + 1;
             setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
+            exerciseData = allExercises[nextIndex];
+            setCurrentExerciseData(exerciseData);
             setIsLast(nextIndex === allExercises.length - 1);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
         } else {
+            exerciseData = allExercises[currentExerciseIndex];
+            setCurrentExerciseData(exerciseData);
             onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
             navigation.goBack();
         }
+        const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
+
+        const data = {
+            "email": userData.email,
+            "name": userData.name,
+            "type": "warmup",
+            "gender": userData.gender,
+            "workoutName": exerciseData?.title,
+            "workoutGIF": exerciseData?.image,
+            "workoutDuration": exerciseData?.duration,
+            "targettedBodyPart": typeof userData.selectedBodyParts == 'object' ? userData.selectedBodyParts.join() : userData.selectedBodyParts,
+            "equipment": "Body weight",
+            "level": userData.level,
+            "suitableFor": "string",
+            "isCompleted": true,
+            "isSkipped": false,
+            "totalCalBurnt": "0",
+            "calBurnPerRep": calBurnPerRep,
+          }
+        updateExercises(data, token);
     };
 
     return (
@@ -86,6 +130,18 @@ const Warmups = ({ navigation, route }) => {
         </ImageBackground>
     );
 };
+
+const updateExercises = (data, token) => {
+    fetch (`${base_url}/wokout`,{
+        method: "POST",
+        headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+}
 
 const TimerButton = ({ duration, onComplete, isLast }) => {
     const numericDuration = parseInt(duration.match(/\d+/)[0]);
