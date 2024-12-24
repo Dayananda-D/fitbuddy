@@ -12,11 +12,18 @@ export default function Counter({ onCountChange }) {
     const [count, setCount] = useState(0);
 
     const increment = () => {
-        setCount((prevCount) => Math.min(prevCount + 1, 100));
-        onCountChange(count);
+        setCount((prevCount) => {
+            let con = Math.min(prevCount + 1, 100);
+            onCountChange(con);
+            return con
+        });
     }; // Limit to 999
-    const decrement = () => {setCount((prevCount) => Math.max(prevCount - 1, 0))
-        onCountChange(count);
+    const decrement = () => {
+        setCount((prevCount) => {
+            let con = Math.max(prevCount - 1, 0);
+            onCountChange(con);
+            return con
+        })
     }; // No negative numbers
     const handleInputChange = (text) => {
         // Ensure only numeric input
