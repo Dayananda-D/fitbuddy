@@ -538,11 +538,14 @@ const Card = ({ data, userData }) => {
     );
 };
 const Header = ({ data }) => {
+    const navigation = useNavigation();
     return (
         <View style={styles.header}>
             <ImageContainer image={headerImage} />
             <HeaderTitle data={data} />
-            <ImageContainer image={notification} height={'50%'} width={'50%'} />
+            <TouchableOpacity onPress={() => navigation.navigate('Activities')}>
+                <ImageContainer image={notification} height={'50%'} width={'50%'} />
+            </TouchableOpacity>
         </View>
     );
 }
