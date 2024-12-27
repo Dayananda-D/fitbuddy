@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -16,48 +16,43 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const workout = require('../data/workoutData.json');
 const verify = require('../../assets/images/verify.png');
 const disapprove = require('../../assets/images/disapprove.png');
-// const category = 'chest';
-// const level = 'advanced';
 
-const WarmupTab = ({ allWarmupsCompleted, setAllWarmupsCompleted }) => {
+const WarmupTab = () => {
     const navigation = useNavigation();
     const [category, setCategory] = useState('chest');
-    const [level, setLevel] = useState('beginner');
-    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
+    const [warmupCompleted, setWarmupCompleted] = useState([]);
 
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const selectedPart = await AsyncStorage.getItem("selectedPart");
-                const level = await AsyncStorage.getItem("level");
-                setCategory(selectedPart);
-                setLevel(level);
-            } catch (error) {
-                console.error("Error fetching user details", error);
-            }
+    const fetchUserDetails = useCallback(async () => {
+        try {
+            const selectedPart = await AsyncStorage.getItem("selectedPart");
+            setCategory(selectedPart);
+        } catch (error) {
+            console.error("Error fetching user details", error);
         }
-        fetchUserDetails();
     }, []);
+
+    const fetchWarmupCompleted = useCallback(async () => {
+        try {
+            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+            setWarmupCompleted(storedWarmupCompleted);
+        } catch (error) {
+            console.error("Error fetching warmup completed in WorkoutsTab:", error);
+        }
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchUserDetails();
+            fetchWarmupCompleted();
+        }, [fetchUserDetails, fetchWarmupCompleted])
+    );
 
     const navigateWarmup = (item, index) => {
         navigation.navigate("Warmups", {
             allExercises: workout.exercises[category].warmup,
             currentExercise: item,
             currentIndex: index,
-            isLastExercise: index === workout.exercises[category].warmup.length - 1,
-            onWarmupComplete: () => handleWarmupComplete(),
-        });
-
-        if (index === workout.exercises[category].warmup.length - 1) {
-            setAllWarmupsCompleted(true); // Update the state in the parent component
-        }
-    };
-
-    const handleWarmupComplete = (index) => {
-        setWarmupCompleted((prev) => {
-            const updatedWarmupCompleted = [...prev];
-            updatedWarmupCompleted[index] = true;
-            return updatedWarmupCompleted;
+            isLastExercise: index === workout.exercises[category].warmup.length - 1
         });
     };
 
@@ -100,25 +95,51 @@ const WarmupTab = ({ allWarmupsCompleted, setAllWarmupsCompleted }) => {
 };
 
 
-const WorkoutTab = ({ allWarmupsCompleted }) => {
+const WorkoutTab = () => {
     const navigation = useNavigation();
     const [category, setCategory] = useState('chest');
     const [level, setLevel] = useState('beginner');
-    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
+    const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
+    const [workoutCompleted, setWorkoutCompleted] = useState([]);
+    const [warmupCompleted, setWarmupCompleted] = useState([]);
 
-    useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const selectedPart = await AsyncStorage.getItem("selectedPart");
-                const level = await AsyncStorage.getItem("level");
-                setCategory(selectedPart);
-                setLevel(level);
-            } catch (error) {
-                console.error("Error fetching user details", error);
-            }
+    const fetchUserDetails = useCallback(async () => {
+        try {
+            const selectedPart = await AsyncStorage.getItem("selectedPart");
+            const level = await AsyncStorage.getItem("level");
+            setCategory(selectedPart);
+            setLevel(level);
+        } catch (error) {
+            console.error("Error fetching user details", error);
         }
-        fetchUserDetails();
     }, []);
+
+    const fetchWarmupWorkoutCompleted = useCallback(async () => {
+        try {
+            const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
+            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+            setWorkoutCompleted(storedWorkoutCompleted);
+            setWarmupCompleted(storedWarmupCompleted);
+        } catch (error) {
+            console.error("Error fetching warmup and workout completed in WorkoutsTab:", error);
+        }
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchUserDetails();
+            fetchWarmupWorkoutCompleted();
+        }, [fetchUserDetails, fetchWarmupWorkoutCompleted])
+    );
+
+    useFocusEffect(
+        useCallback(() => {
+            if (warmupCompleted.length > 0 && warmupCompleted.every((completed) => completed)) {
+                setAllWarmupsCompleted(true);
+            }
+        }, [warmupCompleted])
+    );
+
 
     const navigateWorkout = (item, index) => {
         if (allWarmupsCompleted) {

@@ -66,7 +66,7 @@ const LoginScreen = ({ route }) => {
     };
 
     const handleSocialLogin = (platform) => {
-        Alert.alert("Login", `Logging in with ${platform}`);
+        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
     };
 
     return (

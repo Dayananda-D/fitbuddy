@@ -53,17 +53,7 @@ const Workouts = ({ navigation, route }) => {
         fetchUserDetails();
     }, []);
 
-    const moveToNextExercise = () => {
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-        } else {
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-            navigation.goBack();
-        }
+    const moveToNextExercise = async () => {
         const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
@@ -86,6 +76,25 @@ const Workouts = ({ navigation, route }) => {
             "reps": reps
         }
         updateExercises(data, token);
+
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
+        }
+
+        // Update workoutCompleted in AsyncStorage
+        try {
+            const workoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
+            workoutCompleted[currentExerciseIndex] = true;
+            await AsyncStorage.setItem("workoutCompleted", JSON.stringify(workoutCompleted));
+            console.log("workout completed updated:", workoutCompleted);
+        } catch (error) {
+            console.error("Error updating workout completed:", error);
+        }
     };
 
     const updateExercises = (data, token) => {
