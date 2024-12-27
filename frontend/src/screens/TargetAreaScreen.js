@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from "react-native";
 import SVGComponent from "../components/svgComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -9,13 +9,13 @@ const bodyParts = [
     { name: "Abdominals", key: "abdominals" },
     { name: "Chest", key: "chest" },
     { name: "Calves", key: "calves" },
-    { name: "Hands", key: "hands" },
-    { name: "Quads", key: "quads" },
-    { name: "Obliques", key: "obliques" },
-    { name: "Traps", key: "traps" },
-    { name: "Forearms", key: "forearms" },
-    { name: "Biceps", key: "biceps" },
     { name: "Front Shoulders", key: "frontShoulders" },
+    // { name: "Hands", key: "hands" },
+    // { name: "Quads", key: "quads" },
+    // { name: "Obliques", key: "obliques" },
+    // { name: "Traps", key: "traps" },
+    // { name: "Forearms", key: "forearms" },
+    // { name: "Biceps", key: "biceps" },
 ];
 
 const TargetAreaScreen = ({ navigation, route }) => {
@@ -38,9 +38,16 @@ const TargetAreaScreen = ({ navigation, route }) => {
     }, []);
 
     const handleSelectionChange = (key) => {
-        setSelectedIds((prev) =>
-            prev.includes(key) ? prev.filter((id) => id !== key) : [...prev, key]
-        );
+        setSelectedIds((prev) => {
+            if (prev.includes(key)) {
+                return prev.filter((id) => id !== key);
+            } else if (prev.length >= 1) {
+                Alert.alert("Selection Restriction", "Only one body part selection is supported for now..!.");
+                return prev;
+            } else {
+                return [...prev, key];
+            }
+        });
     };
 
     const inputAccumulator = () => {
@@ -67,7 +74,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                 .then(async (data) => {
                     console.log("Response:", data); // Handle successful response
                     await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
-                    navigation.navigate("Dashboard", { UserData: updatedUserData });
+                    navigation.navigate("Main", { UserData: updatedUserData });
                 })
                 .catch((error) => {
                     console.error("Error updating user:", error); // Handle errors
@@ -106,7 +113,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                         style={styles.svgComponent}
                     />
 
-                    <View style={styles.rightColumn}>
+                    {/* <View style={styles.rightColumn}>
                         {bodyParts.slice(5).map((part) => (
                             <TouchableOpacity
                                 key={part.key}
@@ -119,12 +126,18 @@ const TargetAreaScreen = ({ navigation, route }) => {
                                 <Text style={styles.buttonText}>{part.name}</Text>
                             </TouchableOpacity>
                         ))}
-                    </View>
+                    </View> */}
                 </View>
 
                 <TouchableOpacity
-                    style={styles.startButton}
-                    onPress={() => inputAccumulator()}
+                    style={[styles.startButton, selectedIds.length === 0 && styles.disabledButton]}
+                    onPress={() => {
+                        if (selectedIds.length === 0) {
+                            Alert.alert("Selection Error", "Please select any one body part.");
+                        } else {
+                            inputAccumulator();
+                        }
+                    }}
                 >
                     <Text style={styles.buttonText}>Let’s Begin</Text>
                 </TouchableOpacity>
@@ -147,7 +160,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         color: "#fff",
-        marginBottom: 20,
+        marginBottom: 100,
         textAlign: "center",
     },
     buttonContainer: {
@@ -196,7 +209,10 @@ const styles = StyleSheet.create({
     },
     svgComponent: {
         flex: 1,
-        height: "60%",
+        height: "100%",
+    },
+    disabledButton: {
+        backgroundColor: '#d3d3d3',
     },
 });
 

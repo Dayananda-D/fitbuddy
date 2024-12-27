@@ -1,6 +1,7 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
+    Alert,
     Button,
     Image,
     ImageBackground,
@@ -37,39 +38,27 @@ const heart = require('../../assets/images/H.png');
 const dumbbell = require('../../assets/images/dumbbell.png');
 const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
-const category = 'chest';
-const level = 'advanced';
 
-const Dashboard = ({ route }) => {
-    const UserData = route?.params?.UserData || {};
-    const [warmupCompleted, setWarmupCompleted] = useState(Array(workout.exercises[category].warmup.length).fill(false));
-    const [workoutCompleted, setWorkoutCompleted] = useState(Array(workout.exercises[category][level].length).fill(false));
+const Dashboard = () => {
+    const navigation = useNavigation();
+    const [category, setCategory] = useState('chest');
+    const [level, setLevel] = useState('beginner');
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
     const [loading, setLoading] = useState(true);
-
-    const onWarmupComplete = (index) => {
-        const updatedWarmupCompleted = [...warmupCompleted];
-        updatedWarmupCompleted[index] = true;
-        setWarmupCompleted(updatedWarmupCompleted);
-    };
-
-    const onWorkoutComplete = (index) => {
-        const updatedWorkoutCompleted = [...workoutCompleted];
-        updatedWorkoutCompleted[index] = true;
-        setWorkoutCompleted(updatedWorkoutCompleted);
-    };
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
                 const decodedToken = jwtDecode(token);
 
                 if (data) {
                     setToken(token);
                     setUserData(JSON.parse(data));
+                    setCategory(JSON.parse(data).selectedBodyParts[0]);
+                    setLevel(JSON.parse(data).level);
                     return;
                 }
 
@@ -90,8 +79,14 @@ const Dashboard = ({ route }) => {
                             return response.json();
                         })
                         .then(async (data) => {
-                            await AsyncStorage.setItem("@MyApp_user", JSON.stringify(data));
+                            await AsyncStorage.setItem("selectedPart", data.selectedBodyParts[0]);
+                            await AsyncStorage.setItem("level", data.level);
+                            await AsyncStorage.setItem("warmupCompleted", JSON.stringify(Array(workout.exercises[data.selectedBodyParts[0]].warmup.length).fill(false)));
+                            await AsyncStorage.setItem("workoutCompleted", JSON.stringify(Array(workout.exercises[data.selectedBodyParts[0]][data.level].length).fill(false)));
+                            await AsyncStorage.setItem("baseData", JSON.stringify(data));
                             setUserData(data);
+                            setCategory(data.selectedBodyParts[0]);
+                            setLevel(data.level);
                             console.log(data);
                         })
                         .catch(async (error) => {
@@ -101,6 +96,7 @@ const Dashboard = ({ route }) => {
                         });
                 }
             } catch (error) {
+                Alert.alert("Error", "An error occurred while fetching user details. Please re-login again.");
                 console.error("Error fetching user details", error);
             } finally {
                 setLoading(false);
@@ -130,8 +126,8 @@ const Dashboard = ({ route }) => {
                 <View style={{ marginHorizontal: '3%', marginTop: 20 }}>
                     <Label>Your Activities</Label>
                     <View style={{ flexDirection: 'row' }}>
-                        {data.map((item, index) => (
-                            <Card data={item} index={index} key={index} />
+                        {data1.map((item, index) => (
+                            <Card data={item} index={index} key={index} userData={userData} />
                         ))}
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
@@ -142,11 +138,12 @@ const Dashboard = ({ route }) => {
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category].warmup.map((item, index) => (
                                 <VideoPlayWarmup
+                                    category={category}
+                                    level={level}
+                                    userData={userData}
                                     index={index}
                                     key={index}
                                     data={workout}
-                                    warmupCompleted={warmupCompleted}
-                                    onWarmupComplete={onWarmupComplete}
                                 />
                             ))}
                         </View>
@@ -159,12 +156,12 @@ const Dashboard = ({ route }) => {
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
                             {workout.exercises[category][level].map((item, index) => (
                                 <VideoPlay
+                                    category={category}
+                                    level={level}
+                                    userdata={userData}
                                     index={index}
                                     key={index}
                                     data={workout}
-                                    workoutCompleted={workoutCompleted}
-                                    warmupCompleted={warmupCompleted}
-                                    onWorkoutComplete={onWorkoutComplete}
                                 />
                             ))}
                         </View>
@@ -181,17 +178,41 @@ export default Dashboard;
 const VideoPlay = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
+    const category = data.category;
+    const level = data.level;
     const isLastExercise = currentIndex === data.data.exercises[category][level].length - 1;
     const lastIndex = data.data.exercises[category][level].length - 1;
     const allExercises = data.data.exercises[category][level];
-    const warmupCompleted = data.warmupCompleted;
-    const workoutCompleted = data.workoutCompleted;
     const currentExercise = data.data.exercises[category][level][currentIndex];
     const onWorkoutComplete = data.onWorkoutComplete;
+    const [warmupCompleted, setWarmupCompleted] = useState([]);
+    const [workoutCompleted, setWorkoutCompleted] = useState([]);
+    const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
+
+    const fetchWarmupCompleted = useCallback(async () => {
+        try {
+            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+            const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
+            setWarmupCompleted(storedWarmupCompleted);
+            setWorkoutCompleted(storedWorkoutCompleted);
+
+            if (storedWarmupCompleted.length > 0 && storedWarmupCompleted.every((completed) => completed)) {
+                setAllWarmupsCompleted(true);
+            }
+        } catch (error) {
+            console.error("Error fetching warmup and workout completed:", error);
+        }
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            fetchWarmupCompleted();
+        }, [fetchWarmupCompleted])
+    );
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
-            {!warmupCompleted[lastIndex] && (
+        <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
+            {!allWarmupsCompleted && (
                 <View
                     style={{
                         position: 'absolute',
@@ -282,9 +303,7 @@ const VideoPlay = (data) => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })}>
-                            <Image source={play} style={{ height: 10, width: 10 }} />
-                        </TouchableOpacity>
+                        <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
                     <Text style={{
                         // fontFamily: 'Poppins-Regular' 
@@ -317,15 +336,29 @@ const VideoPlay = (data) => {
 const VideoPlayWarmup = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
+    const category = data.category;
     const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
     const allExercises = data.data.exercises[category].warmup;
-    const warmupCompleted = data.warmupCompleted;
-    const exerciseComplete = data.workoutCompleted;
     const currentExercise = data.data.exercises[category].warmup[currentIndex];
-    const onWarmupComplete = data.onWarmupComplete;
+    const [warmupCompleted, setWarmupCompleted] = useState([]);
+
+    useFocusEffect(
+        useCallback(() => {
+            const fetchWarmupCompleted = async () => {
+                try {
+                    const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+                    setWarmupCompleted(storedWarmupCompleted);
+                } catch (error) {
+                    console.error("Error fetching warmup completed:", error);
+                }
+            };
+
+            fetchWarmupCompleted();
+        }, [])
+    );
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWarmupComplete: onWarmupComplete })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
             <View
                 style={{
                     borderRadius: 15,
@@ -391,9 +424,7 @@ const VideoPlayWarmup = (data) => {
                             borderRadius: 15,
                             zIndex: 3,
                         }}>
-                        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWarmupComplete: onWarmupComplete })}>
-                            <Image source={play} style={{ height: 10, width: 10 }} />
-                        </TouchableOpacity>
+                        <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
                     <Text style={{
                         // fontFamily: 'Poppins-Regular' 
@@ -422,98 +453,94 @@ const VideoPlayWarmup = (data) => {
         </TouchableOpacity>
     )
 };
-const Card = ({ data, index }) => {
+const Card = ({ data, userData }) => {
+    const navigation = useNavigation();
     return (
-        <View
-            style={{
-                flex: 1,
-                height: 150,
-                padding: 10,
-                alignSelf: 'center',
-                backgroundColor: data.color,
-                justifyContent: 'space-between',
-                marginHorizontal: 8,
-                borderRadius: 10,
-                shadowColor: 'lightgrey',
-                shadowOffset: { width: -5, height: 5 },
-                shadowOpacity: 0.5,
-                shadowRadius: 2,
-            }}>
-            <Image source={data.image} style={{ height: 25, width: 25 }} />
-            <View style={{ alignSelf: 'center', margin: 5 }}>
-                <Progress.Circle
-                    size={50}
-                    progress={data.status / 100}
-                    indeterminate={false}
-                    animated={true}
-                    showsText={true}
-                    unfilledColor="#ededed"
-                    borderColor="#ededed"
-                    color={data.darkColor}
-                    strokeCap="round"
-                    thickness={5}
-                    style={{
-                        shadowColor: 'grey',
-                        shadowOffset: { width: 2, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 1,
-                    }}
-                    textStyle={{
-                        fontSize: 16,
-                        // fontFamily: 'Poppins-Bold',
-                        fontWeight: 'bold',
-                    }}
-                />
-            </View>
-            <View>
-                <Text style={{
-                    fontSize: 10,
-                    // fontFamily: 'Poppins-Light' 
-                }}>
-                    {'Day     1'}
-                </Text>
-                <Text style={{
-                    fontSize: 10,
-                    // fontFamily: 'Poppins-Light' 
-                }}>
-                    {'Time   20 min'}
-                </Text>
-            </View>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('Activities')}>
             <View
                 style={{
-                    flexDirection: 'row',
+                    flex: 1,
+                    height: 150,
+                    padding: 20,
+                    alignSelf: 'center',
+                    backgroundColor: data.color,
                     justifyContent: 'space-between',
-                    alignItems: 'center',
+                    marginHorizontal: 8,
+                    borderRadius: 10,
+                    shadowColor: 'lightgrey',
+                    shadowOffset: { width: -5, height: 5 },
+                    shadowOpacity: 0.5,
+                    shadowRadius: 2,
                 }}>
-                <Text style={{
-                    // fontFamily: 'Poppins-Regular' 
-                }}>{data.name}</Text>
+                <Image source={data.image} style={{ height: 25, width: 25 }} />
+                <View style={{ alignSelf: 'center', margin: 5 }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Progress.Circle
+                            size={50}
+                            progress={data.status / 100}
+                            indeterminate={false}
+                            animated={true}
+                            color={data.darkColor}
+                            unfilledColor="#ededed"
+                            borderWidth={0}
+                            thickness={5}
+                            strokeCap="round"
+                            style={{
+                                shadowColor: 'grey',
+                                shadowOffset: { width: 2, height: 2 },
+                                shadowOpacity: 0.1,
+                                shadowRadius: 1,
+                            }}
+                        />
+                        <Text style={{ position: 'absolute', fontSize: 16, fontWeight: 'bold', color: data.darkColor }}>
+                            {Math.round(data.status)}%
+                        </Text>
+                    </View>
+
+                </View>
+                <View>
+                    <Text style={{
+                        fontSize: 10,
+                    }}>
+                        {calculateDayCount(userData.created_at) || "Day - 1"}
+                    </Text>
+                    <Text style={{
+                        fontSize: 10,
+                    }}>
+                        {'Time   0 min'}
+                    </Text>
+                </View>
                 <View
                     style={{
-                        backgroundColor: data.lightColor,
-                        padding: 2,
-                        borderRadius: 10,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
                     }}>
-                    <Image
-                        source={next}
+                    <Text>{data.name}</Text>
+                    <View
                         style={{
-                            height: 12,
-                            width: 12,
-                            resizeMode: 'contain',
-                        }}
-                    />
+                            backgroundColor: data.lightColor,
+                            padding: 2,
+                            borderRadius: 10,
+                        }}>
+                        <Image
+                            resizeMode='contain'
+                            source={next}
+                            style={{
+                                height: 12,
+                                width: 12
+                            }}
+                        />
+                    </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 const Header = ({ data }) => {
-    const navigation = useNavigation();
     return (
         <View style={styles.header}>
-            {/* <TouchableOpacity onPress={() => navigation.navigate("SignUp")}> */}
             <ImageContainer image={headerImage} />
-            {/* </TouchableOpacity> */}
             <HeaderTitle data={data} />
             <ImageContainer image={notification} height={'50%'} width={'50%'} />
         </View>
@@ -529,13 +556,13 @@ const Banner = ({ data }) => (
                     <View style={styles.fireContainer}>
                         <Image
                             source={fire}
-                            resizeMode="contain"
                             style={styles.fireImage}
+                            resizeMode='contain'
                         />
                     </View>
                 </View>
                 <BannerText>{calculateDayCount(data.created_at) || "Day - 1"}</BannerText>
-                <BannerText>{data.selectedBodyParts + "  workout"}</BannerText>
+                <BannerText>{toSentenceCase(data.selectedBodyParts[0]) + "  workout"}</BannerText>
             </View>
         </ImageBackground>
         <Image source={model} style={styles.model} resizeMode="contain" />
@@ -564,7 +591,7 @@ const HeaderTitle = ({ data }) => {
 const calculateDayCount = (createdAt) => {
     // Parse the created_at timestamp
     const createdDate = new Date(createdAt);
-    
+
     // Get the current date
     const currentDate = new Date();
 
@@ -574,8 +601,14 @@ const calculateDayCount = (createdAt) => {
     // Convert milliseconds to days
     const dayCount = Math.floor(timeDifference / (1000 * 60 * 60 * 24)) + 1; // Add 1 for Day One
 
-    return `Day ${dayCount}`;
-}
+    return `Day - ${dayCount}`;
+};
+
+const toSentenceCase = (str) => {
+    if (!str) return str;
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 const Label = ({ children }) => <Text style={styles.label}>{children}</Text>;
 const styles = StyleSheet.create({
     container: {
@@ -584,7 +617,7 @@ const styles = StyleSheet.create({
     header: {
         paddingHorizontal: 5,
         marginHorizontal: 15,
-        marginTop:10,
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -604,7 +637,7 @@ const styles = StyleSheet.create({
     fireImage: { height: 15, width: 15, alignSelf: 'center', margin: 5 },
     banner: {
         marginTop: 20,
-        marginHorizontal:15,
+        marginHorizontal: 15,
         padding: 30,
         resizeMode: 'contain',
         borderRadius: 20,
@@ -655,10 +688,10 @@ const styles = StyleSheet.create({
     },
 });
 
-const data = [
+const data1 = [
     {
         name: 'Cycling',
-        status: 85,
+        status: 0,
         image: cycle,
         lightColor: '#f8e4d9',
         color: '#fcf1ea',
@@ -666,7 +699,7 @@ const data = [
     },
     {
         name: 'Walking',
-        status: 25,
+        status: 0,
         image: walk,
         lightColor: '#d7f0f7',
         color: '#e8f7fc',
@@ -674,7 +707,7 @@ const data = [
     },
     {
         name: 'Yoga',
-        status: 85,
+        status: 0,
         image: yoga,
         lightColor: '#dad5fe',
         color: '#e7e3ff',

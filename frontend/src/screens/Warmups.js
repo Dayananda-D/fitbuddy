@@ -26,7 +26,7 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex, isLastExercise, onWarmupComplete, onWorkoutComplete } = route.params;
+    const { allExercises, currentExercise, currentIndex, isLastExercise } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
@@ -38,7 +38,7 @@ const Warmups = ({ navigation, route }) => {
         const fetchUserDetails = async () => {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
 
                 setToken(token);
                 setUserData(JSON.parse(data));
@@ -50,17 +50,7 @@ const Warmups = ({ navigation, route }) => {
         fetchUserDetails();
     }, []);
 
-    const moveToNextExercise = () => {
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-        } else {
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-            navigation.goBack();
-        }
+    const moveToNextExercise = async () => {
         const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
@@ -80,8 +70,27 @@ const Warmups = ({ navigation, route }) => {
             "isSkipped": false,
             "totalCalBurnt": "0",
             "calBurnPerRep": calBurnPerRep,
-          }
+        }
         updateExercises(data, token);
+
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
+        };
+
+        // Update warmupCompleted in AsyncStorage
+        try {
+            const warmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+            warmupCompleted[currentExerciseIndex] = true;
+            await AsyncStorage.setItem("warmupCompleted", JSON.stringify(warmupCompleted));
+            console.log("Warmup completed updated:", warmupCompleted);
+        } catch (error) {
+            console.error("Error updating warmup completed:", error);
+        }
     };
 
     return (
@@ -129,7 +138,7 @@ const Warmups = ({ navigation, route }) => {
 };
 
 const updateExercises = (data, token) => {
-    fetch (`${base_url}/wokout`,{
+    fetch(`${base_url}/wokout`, {
         method: "POST",
         headers: {
             accept: "application/json",

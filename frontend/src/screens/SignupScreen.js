@@ -29,9 +29,9 @@ const SignupScreen = () => {
     const [level, setLevel] = useState(null);
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
-      { label: 'Beginner', value: 'beginner' },
-      { label: 'Intermediate', value: 'intermediate' },
-      { label: 'Advanced', value: 'advanced' },
+        { label: 'Beginner', value: 'beginner' },
+        { label: 'Intermediate', value: 'intermediate' },
+        { label: 'Advanced', value: 'advanced' },
     ]);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -86,16 +86,20 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_name', username);
                 await AsyncStorage.setItem('user_level', level);
 
-                navigation.navigate('Gender', {access_token});
+                navigation.navigate('Gender', { access_token });
                 Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
             }).catch(error => {
                 console.error('Error:', error);
             });
-            
+
         }).catch(error => {
             console.error('Error:', error);
         });
 
+    };
+
+    const handleSocialLogin = (platform) => {
+        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
     };
 
     return (

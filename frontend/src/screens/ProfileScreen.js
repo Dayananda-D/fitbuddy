@@ -29,7 +29,7 @@ export default function ProfileScreen() {
     const fetchUserDetails = async () => {
       try {
         const token = await AsyncStorage.getItem("auth_token");
-        const userData = await AsyncStorage.getItem("@MyApp_user");
+        const userData = await AsyncStorage.getItem("baseData");
 
         if (token) setToken(token);
         if (userData) setUserData(JSON.parse(userData));

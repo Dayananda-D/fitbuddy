@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
+import ActivitiesScreen from "./src/screens/ActivitiesScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -108,17 +109,18 @@ export default function App() {
         <Stack.Screen name="Goal" component={GoalScreen} />
         <Stack.Screen name="TargetAreaScreen" component={TargetAreaScreen} />
         <Stack.Screen name="Main" component={MyTabs} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+        {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
         <Stack.Screen name="Warmups" component={Warmups} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} />
-        <Stack.Screen name="Reports" component={Reports} />
+        {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
+        {/* <Stack.Screen name="Reports" component={Reports} /> */}
         <Stack.Screen name="Workouts" component={Workouts} />
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
         {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
+        <Stack.Screen name="Activities" component={ActivitiesScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

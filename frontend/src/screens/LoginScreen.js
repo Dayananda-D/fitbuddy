@@ -56,7 +56,7 @@ const LoginScreen = ({ route }) => {
             await AsyncStorage.setItem('user_level', decodedToken.level || 'Beginner');
             await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
 
-            navigation.navigate('Dashboard');
+            navigation.navigate('Main');
             console.log('Success:', data);
             Alert.alert("Success", "Logged in successfully!");
         }).catch(error => {
@@ -66,7 +66,7 @@ const LoginScreen = ({ route }) => {
     };
 
     const handleSocialLogin = (platform) => {
-        Alert.alert("Login", `Logging in with ${platform}`);
+        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
     };
 
     return (

@@ -41,7 +41,7 @@ const Workouts = ({ navigation, route }) => {
         const fetchUserDetails = async () => {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
 
                 setToken(token);
                 setUserData(JSON.parse(data));
@@ -53,17 +53,7 @@ const Workouts = ({ navigation, route }) => {
         fetchUserDetails();
     }, []);
 
-    const moveToNextExercise = () => {
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-        } else {
-            onWarmupComplete ? onWarmupComplete(currentExerciseIndex) : onWorkoutComplete(currentExerciseIndex);
-            navigation.goBack();
-        }
+    const moveToNextExercise = async () => {
         const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
@@ -84,12 +74,31 @@ const Workouts = ({ navigation, route }) => {
             "totalCalBurnt": "0",
             "calBurnPerRep": calBurnPerRep,
             "reps": reps
-          }
+        }
         updateExercises(data, token);
+
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
+        }
+
+        // Update workoutCompleted in AsyncStorage
+        try {
+            const workoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
+            workoutCompleted[currentExerciseIndex] = true;
+            await AsyncStorage.setItem("workoutCompleted", JSON.stringify(workoutCompleted));
+            console.log("workout completed updated:", workoutCompleted);
+        } catch (error) {
+            console.error("Error updating workout completed:", error);
+        }
     };
 
     const updateExercises = (data, token) => {
-        fetch (`${base_url}/wokout`,{
+        fetch(`${base_url}/wokout`, {
             method: "POST",
             headers: {
                 accept: "application/json",
@@ -215,7 +224,7 @@ const styles = StyleSheet.create({
     },
     nextButton: {
         position: "absolute",
-        bottom: 70,
+        bottom: 80,
         right: 5,
         alignItems: "flex-end",
         backgroundColor: "#4CAF50",
