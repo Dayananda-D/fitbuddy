@@ -85,26 +85,12 @@ export default function ProfileScreen() {
         </TouchableOpacity>
 
         {/* User Information */}
-        <Text style={styles.userName}>Hi, {userData.name || "Jane"}</Text>
+        <Text style={styles.userName}>Hi, {userData.name || "Friend!"}</Text>
         <Text style={styles.userLevel}>{userData.level || "Beginner"}</Text>
 
         {/* Menu Items */}
-        {/* <View style={styles.menu}>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Settings</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>My Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>Goal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>My Workout Tabs</Text>
-        </TouchableOpacity>
-      </View> */}
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
             <View style={styles.menuItemLeft}>
               <Icon name="settings" size={24} color="#fff" />
               <Text style={styles.menuText}>Settings</Text>
@@ -112,7 +98,7 @@ export default function ProfileScreen() {
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
             <View style={styles.menuItemLeft}>
               <Icon name="person" size={24} color="#fff" />
               <Text style={styles.menuText}>My Profile</Text>
@@ -120,7 +106,7 @@ export default function ProfileScreen() {
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
             <View style={styles.menuItemLeft}>
               <Icon name="bookmark" size={24} color="#fff" />
               <Text style={styles.menuText}>My Workouts</Text>
@@ -128,10 +114,10 @@ export default function ProfileScreen() {
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("TargetAreaScreen")}>
             <View style={styles.menuItemLeft}>
               <Icon name="stars" size={24} color="#fff" />
-              <Text style={styles.menuText}>Goal</Text>
+              <Text style={styles.menuText}>Prefered Workout Area</Text>
             </View>
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
@@ -192,22 +178,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 30,
   },
-  //   menu: {
-  //     width: '100%',
-  //     marginTop: 20,
-  //   },
-  //   menuItem: {
-  //     width:'100%',
-  //     padding: 15,
-  //     backgroundColor: '#2D2D50',
-  //     marginVertical: 5,
-  //     borderRadius: 10,
-  //   },
-  //   menuText: {
-  //     color: '#FFFFFF',
-  //     fontSize: 18,
-  //     fontWeight: '500',
-  //   },
   menu: {
     width: "100%",
     marginTop: 20,
@@ -217,7 +187,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 15,
-    // backgroundColor: '#fff',
     backgroundColor: "#2D2D50",
     marginVertical: 5,
     borderRadius: 10,
@@ -251,7 +220,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 15,
-    // backgroundColor: '#fff',
     backgroundColor: "#b23b3b",
     marginVertical: 5,
     borderRadius: 10,

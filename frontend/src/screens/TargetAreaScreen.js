@@ -19,9 +19,11 @@ const bodyParts = [
 ];
 
 const TargetAreaScreen = ({ navigation, route }) => {
-    const { UserData } = route.params;
+    const UserData = route.params?.UserData || {};
     const [selectedIds, setSelectedIds] = useState([]);
     const [userEmail, setUserEmail] = useState();
+    const [gender, setGender] = useState();
+    const [goal, setGoal] = useState();
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -35,6 +37,26 @@ const TargetAreaScreen = ({ navigation, route }) => {
         };
 
         fetchUserDetails();
+    }, []);
+
+    useEffect(async () => {
+        if (!UserData.hasOwnProperty("gender")) {
+            try {
+                const basedata = await AsyncStorage.getItem('baseData');
+                const email = JSON.parse(basedata).email;
+                const gender = JSON.parse(basedata).gender;
+                const goal = JSON.parse(basedata).goal;
+
+                setUserEmail(email);
+                setGender(gender);
+                setGoal(goal);
+            } catch (error) {
+                console.error('Error fetching user details', error);
+            }
+
+            UserData['gender'] = gender;
+            UserData['goal'] = goal;
+        }
     }, []);
 
     const handleSelectionChange = (key) => {
@@ -55,6 +77,11 @@ const TargetAreaScreen = ({ navigation, route }) => {
             ...UserData,
             selectedBodyParts: selectedIds
         };
+        debugger;
+        if (!updatedUserData.hasOwnProperty("gender")) {
+            updatedUserData['gender'] = gender;
+            updatedUserData['goal'] = goal;
+        }
         if (userEmail) {
             fetch(`${base_url}/user/${userEmail}`, {
                 method: "PUT",
