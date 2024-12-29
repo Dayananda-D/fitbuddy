@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 export default function Counter({ onCountChange }) {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(10);
 
     const increment = () => {
         setCount((prevCount) => {

@@ -284,6 +284,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 3,
         backgroundColor: "#fff",
+        padding: 10
     },
     gifPlayer: {
         height: 300,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
     },
     gifDesc: {
         backgroundColor: "white",
-        padding: 10,
+        padding: 20,
         borderRadius: 15,
     },
     progressBarContainer: {

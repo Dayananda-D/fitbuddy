@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Icons library
+import LoadingScreen from "./LoadingScreen";
 
 
 const NewPasswordScreen = ({ navigation, route }) => {
@@ -16,17 +17,26 @@ const NewPasswordScreen = ({ navigation, route }) => {
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   const resetPassword = () => {
     if (code.length === 6 && newPassword === confirmPassword && newPassword.length > 6) {
       // Logic to update the user's password
       console.log("Password reset successful!");
+      setLoading(true);
       confirmResetPassword(code, newPassword, navigation);
       alert("Password reset successful!");
     } else {
       alert("Passwords do not match or are too short.");
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    // Display a loading indicator while fetching user details
+    return <LoadingScreen message="Updating your password.. Please Wait" />;
+  }
 
   return (
     <ImageBackground
@@ -100,8 +110,10 @@ const confirmResetPassword = (token, newPassword, navigation) => {
       console.log("Password reset successfully:", data);
       alert("Your password has been reset successfully.");
       navigation.navigate("Login");
+      setLoading(false);
     })
     .catch((error) => {
+      setLoading(false);
       console.error("Error:", error.message);
       alert(error.message || "An error occurred. Please try again.");
     });
@@ -146,7 +158,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
     color: "#dbdbdb",
     marginBottom: 30,
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
   input: {
     width: "100%",

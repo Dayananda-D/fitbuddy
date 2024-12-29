@@ -13,6 +13,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropDownPicker from 'react-native-dropdown-picker';
+import LoadingScreen from "./LoadingScreen";
 
 const googleLogo = require("../../assets/images/google.png");
 const facebookLogo = require("../../assets/images/facebook.png");
@@ -34,11 +35,13 @@ const SignupScreen = () => {
         { label: 'Advanced', value: 'advanced' },
     ]);
     const [showDatePicker, setShowDatePicker] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigation = useNavigation();
     const handleSubmit = () => {
         // Basic validation
         console.log(base_url);
+        setLoading(true);
         if (!username || !email || !password) {
             Alert.alert("Error", "All fields are required!");
             return;
@@ -87,12 +90,15 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_level', level);
 
                 navigation.navigate('Gender', { access_token });
+                setLoading(false);
                 Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
             }).catch(error => {
                 console.error('Error:', error);
+                setLoading(false);
             });
 
         }).catch(error => {
+            setLoading(false);
             console.error('Error:', error);
         });
 
@@ -101,6 +107,11 @@ const SignupScreen = () => {
     const handleSocialLogin = (platform) => {
         Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
     };
+
+    if (loading) {
+        // Display a loading indicator while fetching user details
+        return <LoadingScreen message="Creating your account – unlocking your fitness journey, one step at a time!" />;
+    }
 
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={{ width: '100%', height: '100%' }}>
