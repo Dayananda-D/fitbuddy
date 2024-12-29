@@ -324,7 +324,7 @@ const VideoPlay = (data) => {
                                 fontSize: 12,
                                 color: '#8860a2',
                             }}>
-                            {currentExercise.duration}
+                            8-10 Reps
                         </Text>
                     </View>
                 </View>
@@ -460,7 +460,7 @@ const Card = ({ data, userData }) => {
             <View
                 style={{
                     flex: 1,
-                    height: 150,
+                    height: '100%',
                     padding: 20,
                     alignSelf: 'center',
                     backgroundColor: data.color,

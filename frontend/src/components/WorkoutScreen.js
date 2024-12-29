@@ -4,9 +4,7 @@ import {
     Text,
     StyleSheet,
     ImageBackground,
-    Image,
     TouchableOpacity,
-    Animated,
 } from "react-native";
 import Counter from "../components/Counter";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,7 +26,7 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Workouts = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex, isLastExercise, onWarmupComplete, onWorkoutComplete } = route.params;
+    const { allExercises, currentExercise, currentIndex, isLastExercise } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
@@ -36,6 +34,8 @@ const Workouts = ({ navigation, route }) => {
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
     const [reps, setReps] = useState(0);
+    const [elapsedTimes, setElapsedTimes] = useState(Array(allExercises.length).fill(0));
+    const timerRef = useRef(null);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -53,28 +53,74 @@ const Workouts = ({ navigation, route }) => {
         fetchUserDetails();
     }, []);
 
+    useEffect(() => {
+        startTimer();
+
+        return () => {
+            clearTimer(); // Clean up the timer on component unmount
+        };
+    }, [currentExerciseIndex]); // Restart the timer whenever the exercise changes
+
+    const startTimer = () => {
+        clearTimer(); // Clear any previous timer
+        timerRef.current = setInterval(() => {
+            setElapsedTimes((prevTimes) => {
+                const updatedTimes = [...prevTimes];
+                updatedTimes[currentExerciseIndex] += 1; // Increment the timer for the current exercise
+                return updatedTimes;
+            });
+        }, 1000);
+    };
+
+    const clearTimer = () => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+        }
+    };
+
+    const formatTime = (seconds) => {
+        const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const secs = (seconds % 60).toString().padStart(2, '0');
+        return `${mins}:${secs}`;
+    };
+
+    const moveToPrevExercise = () => {
+        clearTimer(); // Clear the timer
+        if (currentExerciseIndex !== 0) {
+            const prevIndex = currentExerciseIndex - 1;
+            setCurrentExerciseIndex(prevIndex);
+            setCurrentExerciseData(allExercises[prevIndex]);
+            setIsLast(prevIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
+        }
+    };
+
     const moveToNextExercise = async () => {
+        clearTimer(); // Clear the timer
         const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
         const data = {
-            "email": userData.email,
-            "name": userData.name,
-            "type": "workout",
-            "gender": userData.gender,
-            "workoutName": exerciseData?.title,
-            "workoutGIF": exerciseData?.image,
-            "workoutDuration": exerciseData?.duration,
-            "targettedBodyPart": typeof userData.selectedBodyParts == 'object' ? userData.selectedBodyParts.join() : userData.selectedBodyParts,
-            "equipment": "Body weight",
-            "level": userData.level,
-            "suitableFor": "string",
-            "isCompleted": true,
-            "isSkipped": false,
-            "totalCalBurnt": "0",
-            "calBurnPerRep": calBurnPerRep,
-            "reps": reps
-        }
+            email: userData.email,
+            name: userData.name,
+            type: "workout",
+            gender: userData.gender,
+            workoutName: exerciseData?.title,
+            workoutGIF: exerciseData?.image,
+            workoutDuration: exerciseData?.duration,
+            targettedBodyPart: typeof userData.selectedBodyParts === 'object' ? userData.selectedBodyParts.join() : userData.selectedBodyParts,
+            equipment: "Body weight",
+            level: userData.level,
+            suitableFor: "string",
+            isCompleted: true,
+            isSkipped: false,
+            totalCalBurnt: "0",
+            calBurnPerRep: calBurnPerRep,
+            reps: reps,
+        };
         updateExercises(data, token);
 
         if (currentExerciseIndex < allExercises.length - 1) {
@@ -135,7 +181,7 @@ const Workouts = ({ navigation, route }) => {
                 <View style={styles.gifDesc}>
                     <Text style={{ fontWeight: "bold" }}>{currentExerciseData.title}</Text>
                     <Text style={{ fontSize: 14, color: "#8860a2" }}>
-                        {currentExerciseData.duration}
+                        Duration: {formatTime(elapsedTimes[currentExerciseIndex])}
                     </Text>
                 </View>
             </View>
@@ -146,17 +192,27 @@ const Workouts = ({ navigation, route }) => {
                 <InstructionText instructions={currentExerciseData.instruction} />
             </View>
 
-            {/* Counter */}
-            <Counter onCountChange={handleCountChange} />
+            <View style={styles.bottomContainer}>
+                {/* Previous Button */}
+                <TouchableOpacity
+                    style={currentExerciseIndex !== 0 ? styles.prevButton : styles.prevButtonDis}
+                    onPress={moveToPrevExercise}
+                    disabled={currentExerciseIndex === 0}
+                >
+                    <Text style={styles.nextButtonText}>Previous</Text>
+                </TouchableOpacity>
 
-            {/* Next Button */}
-            <TouchableOpacity
-                style={styles.nextButton}
-                onPress={moveToNextExercise}
-            >
-                <Text style={styles.nextButtonText}>{isLast ? "Complete" : "Next"}</Text>
-            </TouchableOpacity>
+                {/* Counter */}
+                <Counter onCountChange={handleCountChange} />
 
+                {/* Next Button */}
+                <TouchableOpacity
+                    style={styles.nextButton}
+                    onPress={moveToNextExercise}
+                >
+                    <Text style={styles.nextButtonText}>{isLast ? "Complete" : "Next"}</Text>
+                </TouchableOpacity>
+            </View>
         </ImageBackground>
     );
 };
@@ -212,6 +268,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 3,
         backgroundColor: "#fff",
+        padding: 10
     },
     gifPlayer: {
         height: 300,
@@ -219,12 +276,11 @@ const styles = StyleSheet.create({
     },
     gifDesc: {
         backgroundColor: "white",
-        padding: 10,
+        padding: 20,
         borderRadius: 15,
     },
     nextButton: {
         position: "absolute",
-        bottom: 80,
         right: 5,
         alignItems: "flex-end",
         backgroundColor: "#4CAF50",
@@ -232,11 +288,34 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10
     },
+    prevButton: {
+        position: "absolute",
+        alignSelf: "flex-start",
+        left: 5,
+        backgroundColor: "#4CAF50",
+        padding: 10,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10
+    },
+    prevButtonDis: {
+        position: "absolute",
+        alignSelf: "flex-start",
+        left: 5,
+        backgroundColor: "#9bde9e",
+        padding: 10,
+        borderTopRightRadius: 10,
+        borderBottomRightRadius: 10
+    },
     nextButtonText: {
         fontSize: 16,
         fontWeight: "bold",
         color: "#fff",
     },
+    bottomContainer: {
+        width: '100%',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    }
 });
 
 export default Workouts;

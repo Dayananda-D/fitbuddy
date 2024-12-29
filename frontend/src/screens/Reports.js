@@ -1,12 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableWithoutFeedback, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
 import moment, { duration } from 'moment';
 import Swiper from 'react-native-swiper';
 import { Ionicons } from "@expo/vector-icons";
 const { width } = Dimensions.get('window');
 const workout = require('../data/workoutData.json');
-const category = 'calves';
-const level = 'advanced';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -14,17 +13,53 @@ const Reports = () => {
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
+    const [category, setCategory] = useState('chest');
+    const [level, setLevel] = useState('beginner');
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const selectedPart = await AsyncStorage.getItem("selectedPart");
+                const level = await AsyncStorage.getItem("level");
+                setCategory(selectedPart);
+                setLevel(level);
+            } catch (error) {
+                console.error("Error fetching user details", error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []); // Empty dependency array ensures this runs only once
+
 
     const calculateTotalExercise = () => {
         return workout.exercises[category][level].length
     };
+
     const calculateTotalTime = () => {
-        let count = 0;
+        let totalSeconds = 0;
+
         workout.exercises[category][level].forEach(item => {
-            count += parseInt(item.duration.match(/\d+/)[0])
+            const match = item.duration.match(/(\d+)(sec|Min)/);
+            if (match) {
+                const val = parseInt(match[1], 10);
+                const unit = match[2];
+
+                if (unit === "min" || unit === "Min") {
+                    totalSeconds += val * 60; // Convert minutes to seconds
+                } else if (unit === "sec" || unit === "Sec") {
+                    totalSeconds += val; // Already in seconds
+                }
+            }
         });
-        return count;
+
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+
+        // Format as mm:ss
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
+
     const calculateTotalcalories = () => {
         let calCount = 0;
         workout.exercises[category][level].forEach(item => {
@@ -44,6 +79,11 @@ const Reports = () => {
             });
         });
     }, [week]);
+
+    const isCurrentDate = (date) => {
+        const today = new Date();
+        return date.toDateString() === today.toDateString();
+    };
     return (
         // <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground
@@ -111,47 +151,54 @@ const Reports = () => {
                         ))}
                     </Swiper>
                 </View>
-                <View style={styles.totalReport}>
-                    <Text style={styles.subtitle}>Today's Total:</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <View>
-                            <Text style={styles.innerItems}>Calories Burnt:</Text>
-                            <Text>{calculateTotalcalories() + 'Calories'}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.innerItems}>Duration:</Text>
-                            <Text>{calculateTotalTime() + 'Mins'}</Text>
-                        </View>
-                        <View>
-                            <Text style={styles.innerItems}>Exercises:</Text>
-                            <Text>{calculateTotalExercise()}</Text>
-                        </View>
-                    </View>
-                </View>
-                <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
-                    <Text style={styles.subtitle}>{value.toDateString()}</Text>
-                    <ScrollView>
-                        {workout.exercises[category][level].map((item, index) => (
-                            <View key={index}>
-                                {/* <Text style={styles.header}>Warm-up Exercises</Text> */}
-                                <View style={styles.card}>
-                                    <View>
-                                        <Image
-                                            source={{ uri: item.image }}
-                                            style={styles.image}
-                                        />
-                                        <Text style={styles.title}>{item.title}</Text>
-                                    </View>
-                                    <View style={{ justifyContent: 'space-around' }}>
-                                        <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.duration}</Text>
-                                        <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: 10</Text>
-                                        <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.caloriesBurnedPerRepMen * 10}</Text>
-                                    </View>
+                {isCurrentDate(value) ? (
+                    <View>
+                        <View style={styles.totalReport}>
+                            <Text style={styles.subtitle}>Today's Total:</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View>
+                                    <Text style={styles.innerItems}>Calories Burnt:</Text>
+                                    <Text>{calculateTotalcalories() + ' Calories'}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.innerItems}>Duration:</Text>
+                                    <Text>{calculateTotalTime() + ' Mins'}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.innerItems}>Exercises:</Text>
+                                    <Text>{calculateTotalExercise()}</Text>
                                 </View>
                             </View>
-                        ))}
-                    </ScrollView>
-                </View>
+                        </View>
+                        <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
+                            <Text style={styles.subtitle}>{value.toDateString()}</Text>
+                            <ScrollView>
+                                {workout.exercises[category][level].map((item, index) => (
+                                    <View key={index}>
+                                        <View style={styles.card}>
+                                            <View>
+                                                <Image
+                                                    source={{ uri: item.image }}
+                                                    style={styles.image}
+                                                />
+                                                <Text style={styles.title}>{item.title}</Text>
+                                            </View>
+                                            <View style={{ justifyContent: 'space-around' }}>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.duration}</Text>
+                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: 10</Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.caloriesBurnedPerRepMen * 10}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.noDataContainer}>
+                        <Text style={styles.noDataText}>No Data Available</Text>
+                    </View>
+                )}
             </View>
         </ImageBackground>
         // </SafeAreaView >
@@ -178,7 +225,7 @@ const styles = StyleSheet.create({
     totalReport: {
         padding: 15,
         width: "90%",
-        height: '15%',
+        height: '20%',
         alignSelf: "center",
         backgroundColor: '#ffffff66',
         borderRadius: 10
@@ -278,5 +325,14 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16,
         fontWeight: "bold",
+    },
+    noDataContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    noDataText: {
+        fontSize: 18,
+        color: 'grey',
     },
 });

@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
+import LoadingScreen from "./LoadingScreen";
 
 const { base_url } = require("../../config");
 const googleLogo = require("../../assets/images/google.png");
@@ -23,9 +24,11 @@ const LoginScreen = ({ route }) => {
     const [emailOrNumber, setEmailOrNumber] = useState("");
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(false);
 
     const handleLogin = () => {
         console.log(base_url);
+        setLoading(true);
         if (!emailOrNumber || !password) {
             Alert.alert("Error", "Please enter all fields!");
             return;
@@ -59,8 +62,11 @@ const LoginScreen = ({ route }) => {
             navigation.navigate('Main');
             console.log('Success:', data);
             Alert.alert("Success", "Logged in successfully!");
+            setLoading(false);
         }).catch(error => {
+            setLoading(false);
             console.error('Error:', error);
+            Alert.alert("Failed to Login ", error.message + "Please try again later");
         });
 
     };
@@ -68,6 +74,11 @@ const LoginScreen = ({ route }) => {
     const handleSocialLogin = (platform) => {
         Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
     };
+
+    if (loading) {
+        // Display a loading indicator while fetching user details
+        return <LoadingScreen message="Logging you in – unlocking your fitness journey, one step at a time!" />;
+    }
 
     return (
         <ImageBackground source={require('../../assets/images/background.png')} style={{ width: '100%', height: '100%' }}>

@@ -78,14 +78,14 @@ const WarmupTab = () => {
                         >
                             <Image source={warmupCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
                         </View>
-                        <View style={{ justifyContent: 'space-around' }}>
+                        <View style={{ justifyContent: 'center' }}>
                             <TouchableOpacity
                                 style={styles.startButton}
                                 onPress={() => navigateWarmup(item, index)}
                             >
                                 <Text style={styles.buttonText}>Start</Text>
                             </TouchableOpacity>
-                            <Text>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
+                            {/* <Text>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text> */}
                         </View>
                     </View>
                 </View>
@@ -187,7 +187,7 @@ const WorkoutTab = () => {
                         <View>
                             <Image source={{ uri: item.image }} style={styles.image} />
                             <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.time}>Duration: {item.duration}</Text>
+                            <Text style={styles.time}>8-10 Reps</Text>
                         </View>
                         <View
                             style={{
@@ -201,7 +201,7 @@ const WorkoutTab = () => {
                         >
                             <Image source={workoutCompleted[index] ? verify : disapprove} style={{ height: 20, width: 20 }} />
                         </View>
-                        <View style={{ justifyContent: 'space-around' }}>
+                        <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
                             <TouchableOpacity
                                 style={styles.startButton}
                                 onPress={() => navigateWorkout(item, index)}
