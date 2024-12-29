@@ -156,7 +156,7 @@ const WorkoutTab = () => {
         <ScrollView>
             {workout.exercises[category][level].map((item, index) => (
                 <View style={styles.scene} key={index}>
-                    {allWarmupsCompleted && (
+                    {!allWarmupsCompleted && (
                         <View
                             style={{
                                 position: 'absolute',

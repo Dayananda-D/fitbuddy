@@ -211,8 +211,8 @@ const VideoPlay = (data) => {
     );
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={warmupCompleted[lastIndex]}>
-            {allWarmupsCompleted && (
+        <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
+            {!allWarmupsCompleted && (
                 <View
                     style={{
                         position: 'absolute',
