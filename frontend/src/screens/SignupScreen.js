@@ -89,17 +89,19 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_name', username);
                 await AsyncStorage.setItem('user_level', level);
 
-                navigation.navigate('Gender', { access_token });
                 setLoading(false);
+                navigation.navigate('Gender', { access_token });
                 Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
             }).catch(error => {
                 console.error('Error:', error);
                 setLoading(false);
+                Alert.alert("Failed to Sign Up", error.message + "Please try again later");
             });
 
         }).catch(error => {
             setLoading(false);
             console.error('Error:', error);
+            Alert.alert("Failed to Sign Up", error.message + "Please try again later");
         });
 
     };
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
     dobCalender: {
         width: 25,
         height: 25,
-        left: 150,
+        left: '40vw',
         bottom: 55,
         alignSelf: 'flex-end',
     },

@@ -66,6 +66,7 @@ const LoginScreen = ({ route }) => {
         }).catch(error => {
             setLoading(false);
             console.error('Error:', error);
+            Alert.alert("Failed to Login ", error.message + "Please try again later");
         });
 
     };
