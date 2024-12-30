@@ -30,16 +30,37 @@ def get_user_workout(email:str, db: Session):
         raise HTTPException(status_code=404, detail="User not found")
     return user_workouts
 
-def get_user_today_workout(js_date:str, email: str, db: Session):
-    parsed_datetime = datetime.strptime(js_date, "%a %b %d %Y %H:%M:%S GMT%z (%Z)")
-    today = parsed_datetime.date()  # Extract only the date part
+# def get_user_today_workout(js_date:str, email: str, db: Session):
+#     parsed_datetime = datetime.strptime(js_date, "%a %b %d %Y %H:%M:%S GMT%z (%Z)")
+#     today = parsed_datetime.date()  # Extract only the date part
+#     user_workouts = (
+#         db.query(models.UserWorkout)
+#         .filter(models.UserWorkout.email == email, func.date(models.UserWorkout.date) == today)
+#         .all()
+#     )
+#     if not user_workouts:
+#         raise HTTPException(status_code=404, detail="No workouts found for today")
+#     return user_workouts
+def get_user_today_workout(js_date: str, email: str, db: Session):
+    # Remove the parenthesized timezone name
+    js_date_cleaned = js_date.split(" (")[0]  # Removes " (India Standard Time)"
+    
+    # Parse the cleaned datetime string
+    parsed_datetime = datetime.strptime(js_date_cleaned, "%a %b %d %Y %H:%M:%S GMT%z")
+    
+    # Extract only the date part
+    today = parsed_datetime.date()
+    
+    # Query the database
     user_workouts = (
         db.query(models.UserWorkout)
         .filter(models.UserWorkout.email == email, func.date(models.UserWorkout.date) == today)
         .all()
     )
+    
     if not user_workouts:
         raise HTTPException(status_code=404, detail="No workouts found for today")
+    
     return user_workouts
 
 def update_user_workout(email: str, id: int, user_workout: dict, db: Session):
