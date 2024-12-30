@@ -1,7 +1,7 @@
 
 import os
 import pandas as pd
-from .. import models, database
+from src import models, database
 from sqlalchemy.exc import SQLAlchemyError
 
 CSV_PATH = "megaGymDataset.csv"

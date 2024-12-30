@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, Date, Float, Text, JSON, Boolean
-from .database import Base
+from src.database import Base
 from datetime import datetime
 
 class User(Base):
@@ -37,8 +37,10 @@ class UserWorkout(Base):
     __tablename__= 'user_workout'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    email = Column(String, index=True, nullable=False)
+    name = Column(String, nullable=True)
+    type = Column(String, nullable=True)
+    gender = Column(String(50), nullable=True)
+    email = Column(String, index=True, nullable=True)
     workoutName = Column(String, nullable=True)
     workoutGIF = Column(String, nullable=True)
     workoutDuration = Column(String, nullable=True)
@@ -46,8 +48,9 @@ class UserWorkout(Base):
     equipment = Column(String, nullable=True)
     level = Column(String, nullable=True)
     suitableFor = Column(String, nullable=True)
-    isCompleted = Column(Boolean, default=False, nullable=False)
+    isCompleted = Column(Boolean, default=False, nullable=True)
     isSkipped = Column(Boolean, nullable=True)
-    totalCalBurnt = Column(Integer, nullable=True)
-    calBurnPerRep = Column(Integer, nullable=True)
-    date = Column(DateTime, default=datetime.utcnow, nullable=False)
+    totalCalBurnt = Column(String, nullable=True)
+    calBurnPerRep = Column(String, nullable=True)
+    reps= Column(Integer,default=0, nullable=True)
+    date = Column(DateTime, default=datetime.utcnow, nullable=True)

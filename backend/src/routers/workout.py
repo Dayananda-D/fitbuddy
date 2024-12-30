@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter, Depends, status, HTTPException
-from .. import schemas, database, models, oauth2
+from src import schemas, database, models, oauth2
 from sqlalchemy.orm import Session
-from ..repository import workout
+from src.repository import workout
 
 router = APIRouter(
     prefix="/wokout",
@@ -11,13 +11,17 @@ router = APIRouter(
 
 get_db = database.get_db
 
-@router.post('/', response_model=schemas.UserWorkout)
+@router.post('', response_model=schemas.UserWorkout)
 def create_user_workout(request: schemas.UserWorkout, db: Session = Depends(get_db), current_user: schemas.UserAuthorized = Depends(oauth2.get_current_user)):
     return workout.create_user_workout(request, db)
 
 @router.get("/{email}")
 def get_user_workout(email: str, db: Session = Depends(get_db), current_user: schemas.UserAuthorized = Depends(oauth2.get_current_user)):
     return workout.get_user_workout(email, db)
+
+@router.get("/{date}/{email}")
+def get_user_workout(date:str, email: str, db: Session = Depends(get_db), current_user: schemas.UserAuthorized = Depends(oauth2.get_current_user)):
+    return workout.get_user_today_workout(date, email, db)
 
 @router.put("/{email}/{id}")
 def update_user_workout(email: str, id:int, user_workout:dict, db: Session = Depends(get_db), current_user: schemas.UserAuthorized = Depends(oauth2.get_current_user)):

@@ -3,9 +3,13 @@ import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableWi
 import moment, { duration } from 'moment';
 import Swiper from 'react-native-swiper';
 import { Ionicons } from "@expo/vector-icons";
-const { width } = Dimensions.get('window');
-const workout = require('../data/workoutData.json');
+import LoadingScreen from './LoadingScreen';
+import { jwtDecode } from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const { width } = Dimensions.get('window');
+const { base_url } = require("../../config");
+const workout = require('../data/workoutData.json');
 
 
 
@@ -17,6 +21,9 @@ const Reports = () => {
     const [level, setLevel] = useState('beginner');
     const [duration, setDuration] = useState(0);
     const [reps, setReps] = useState(0);
+    const [token, setToken] = useState();
+    const [WorkoutData, setWorkoutData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -35,13 +42,13 @@ const Reports = () => {
 
 
     const calculateTotalExercise = () => {
-        return workout.exercises[category][level].length
+        return WorkoutData.length
     };
 
     const calculateTotalTime = () => {
         let totalSeconds = 0;
 
-        workout.exercises[category][level].forEach(item => {
+        WorkoutData.forEach(item => {
             const match = item.duration.match(/(\d+)(sec|Min)/);
             if (match) {
                 const val = parseInt(match[1], 10);
@@ -64,13 +71,14 @@ const Reports = () => {
 
     const calculateTotalcalories = () => {
         let calCount = 0;
-        workout.exercises[category][level].forEach(item => {
+        WorkoutData.forEach(item => {
             calCount += item.caloriesBurnedPerRepMen * 10;
         });
         return calCount;
     }
     const weeks = React.useMemo(() => {
         const start = moment().add(week, 'weeks').startOf('week');
+
         return [-1, 0, 1].map(adj => {
             return Array.from({ length: 7 }).map((_, index) => {
                 const date = moment(start).add(adj, 'week').add(index, 'day');
@@ -86,6 +94,32 @@ const Reports = () => {
         const today = new Date();
         return date.toDateString() === today.toDateString();
     };
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("@MyApp_user");
+                const decodedToken = jwtDecode(token);
+                const work = await getWorkoutData(value, decodedToken.email, token);
+                setWorkoutData(work);
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            } finally {
+                setLoading(false); // Always set loading to false after fetch
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
+
+
+    // if (loading) {
+    //     // Display a loading indicator while fetching user details
+    //     return <LoadingScreen message="Loading your activities..." />;
+    // }
+
+
     return (
         // <SafeAreaView style={{ flex: 1 }}>
         <ImageBackground
@@ -107,18 +141,22 @@ const Reports = () => {
                                 return;
                             }
                             setTimeout(() => {
+                                ;
                                 const newIndex = ind - 1;
                                 const newWeek = week + newIndex;
                                 setWeek(newWeek);
                                 setValue(moment(value).add(newIndex, 'week').toDate());
-                                swiper.current.scrollTo(1, false);
+                                onDateChange(moment(value).add(newIndex, 'week').toDate());
+                                // swiper.current.scrollTo(1, false);
                             }, 100);
-                        }}>
+                        }}
+                    >
                         {weeks.map((dates, index) => (
                             <View style={styles.itemRow} key={index}>
                                 {dates.map((item, dateIndex) => {
                                     const isActive =
                                         value.toDateString() === item.date.toDateString();
+                                    // onDateChange(value);
                                     return (
                                         <TouchableWithoutFeedback
                                             key={dateIndex}
@@ -209,6 +247,28 @@ const Reports = () => {
 
 export default Reports;
 
+const getWorkoutData = async (date, email, token) => {
+    try {
+        const response = await fetch(`${base_url}/wokout/${date}/${email}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Workout data:", data);
+        return data
+    } catch (error) {
+        console.error("Error fetching workout:", error);
+    }
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -229,7 +289,7 @@ const styles = StyleSheet.create({
         width: "90%",
         height: '20%',
         alignSelf: "center",
-        backgroundColor: '#ffffff66',
+        backgroundColor: 'rgb(161 152 208)',
         borderRadius: 10
     },
     totalInnerItems: {
