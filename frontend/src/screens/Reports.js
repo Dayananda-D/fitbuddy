@@ -53,13 +53,13 @@ const Reports = () => {
 
 
     const calculateTotalExercise = () => {
-        return WorkoutData.length
+        return WorkoutData?.length
     };
 
     const calculateTotalTime = () => {
         let totalSeconds = 0;
 
-        WorkoutData.forEach(item => {
+        WorkoutData?.forEach(item => {
             const match = item.workoutDuration.match(/(\d{2}):(\d{2})/); // Matches MM:SS format
             if (match) {
                 const minutes = parseInt(match[1], 10); // Extract minutes
@@ -78,7 +78,7 @@ const Reports = () => {
 
     const calculateTotalcalories = () => {
         let calCount = 0;
-        WorkoutData.forEach(item => {
+        WorkoutData?.forEach(item => {
             calCount += item.calBurnPerRep * item.reps;
         });
         return calCount;
@@ -99,6 +99,7 @@ const Reports = () => {
 
     const isCurrentDateChange = async (date) => {
         if (new Date(WorkoutData[0].date).getUTCDate() !== new Date(date).getUTCDate()) {
+            setLoading(true);
             try {
                 const token = await AsyncStorage.getItem("auth_token");
                 const data = await AsyncStorage.getItem("baseData");
@@ -111,6 +112,8 @@ const Reports = () => {
                 } else { setEmptyData(true); }
             } catch (error) {
                 console.error("Error fetching workout data", error);
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -198,7 +201,7 @@ const Reports = () => {
                     </Swiper>
                 </View>
                 {!emptyData ? (
-                    <View>
+                    <View style={{ flex: 1 }}>
                         <View style={styles.totalReport}>
                             <Text style={styles.subtitle}>Today's Total:</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -219,7 +222,7 @@ const Reports = () => {
                         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
                             <Text style={styles.subtitle}>{value.toDateString()}</Text>
                             <ScrollView>
-                                {WorkoutData.map((item, index) => (
+                                {WorkoutData?.map((item, index) => (
                                     <View key={index}>
                                         <View style={styles.card}>
                                             <View>
@@ -279,6 +282,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingVertical: 24,
+        height: '100%'
     },
     header: {
         paddingHorizontal: 16,

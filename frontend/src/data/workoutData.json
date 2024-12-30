@@ -125,7 +125,7 @@
             "warmup": [
                 {
                     "title": "Cat Cow Stretch",
-                    "duration": "2Min",
+                    "duration": "30sec",
                     "type": "Warm-up",
                     "instruction": [
                         "Start on all fours, with knees under hips and wrists under shoulders",
@@ -138,7 +138,7 @@
                 },
                 {
                     "title": "Push-up (wall)",
-                    "duration": "2Min",
+                    "duration": "30sec",
                     "type": "Warm-up",
                     "instruction": [
                         "Stand facing the wall, extend your arms in front of you and place your palms flat on the wall at shoulder height and shoulder-width apart",
@@ -151,7 +151,7 @@
                 },
                 {
                     "title": "Roll Pec Foam Rolling",
-                    "duration": "2Min",
+                    "duration": "30sec",
                     "type": "Warm-up",
                     "instruction": [
                         "Lie face down and position the foam roller underneath your chest",

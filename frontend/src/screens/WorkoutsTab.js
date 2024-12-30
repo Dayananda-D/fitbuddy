@@ -294,6 +294,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "600",
         color: "#333",
+        width: 160,
+        overflow: 'hidden'
     },
     time: {
         fontSize: 14,
