@@ -167,8 +167,9 @@ const SignupScreen = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Date of Birth"
-                    value={dob ? dob.toLocaleDateString() : "Select DOB"}
-                    inputMode="none"
+                    // value={dob ? dob.toLocaleDateString() : "Select DOB"}
+                    inputMode='numeric'
+                    returnKeyType="done"
                     onPress={() => setShowDatePicker(true)}
                 />
                 <TouchableOpacity onPress={() => setShowDatePicker(true)}>

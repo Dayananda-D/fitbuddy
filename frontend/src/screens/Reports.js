@@ -15,6 +15,8 @@ const Reports = () => {
     const [week, setWeek] = useState(0);
     const [category, setCategory] = useState('chest');
     const [level, setLevel] = useState('beginner');
+    const [duration, setDuration] = useState(0);
+    const [reps, setReps] = useState(0);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -63,7 +65,7 @@ const Reports = () => {
     const calculateTotalcalories = () => {
         let calCount = 0;
         workout.exercises[category][level].forEach(item => {
-            calCount += parseInt(item.caloriesBurnedPerRepMen.match(/\d+/)[0]);
+            calCount += item.caloriesBurnedPerRepMen * 10;
         });
         return calCount;
     }

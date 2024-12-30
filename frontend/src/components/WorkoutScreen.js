@@ -110,7 +110,7 @@ const Workouts = ({ navigation, route }) => {
             gender: userData.gender,
             workoutName: exerciseData?.title,
             workoutGIF: exerciseData?.image,
-            workoutDuration: exerciseData?.duration,
+            workoutDuration: formatTime(elapsedTimes[currentExerciseIndex]),
             targettedBodyPart: typeof userData.selectedBodyParts === 'object' ? userData.selectedBodyParts.join() : userData.selectedBodyParts,
             equipment: "Body weight",
             level: userData.level,
