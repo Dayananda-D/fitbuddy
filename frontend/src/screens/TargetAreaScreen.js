@@ -77,7 +77,6 @@ const TargetAreaScreen = ({ navigation, route }) => {
             ...UserData,
             selectedBodyParts: selectedIds
         };
-        debugger;
         if (!updatedUserData.hasOwnProperty("gender")) {
             updatedUserData['gender'] = gender;
             updatedUserData['goal'] = goal;

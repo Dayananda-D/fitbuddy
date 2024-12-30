@@ -1,10 +1,12 @@
-fastapi
+fastapi[all]
 uvicorn
 sqlalchemy
 passlib
 bcrypt
-python-jose
+PyJWT
 python-multipart
 python-dotenv
 pandas
-fastapi[standard]
+asyncpg
+psycopg2
+psycopg2-binary
