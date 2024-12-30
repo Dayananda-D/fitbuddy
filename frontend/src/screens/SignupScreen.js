@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     dobCalender: {
         width: 25,
         height: 25,
-        left: '40vw',
+        left: '40%',
         bottom: 55,
         alignSelf: 'flex-end',
     },
