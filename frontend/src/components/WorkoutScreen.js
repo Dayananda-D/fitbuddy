@@ -33,7 +33,7 @@ const Workouts = ({ navigation, route }) => {
     const [isLast, setIsLast] = useState(isLastExercise);
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
-    const [reps, setReps] = useState(0);
+    const [reps, setReps] = useState(10);
     const [elapsedTimes, setElapsedTimes] = useState(Array(allExercises.length).fill(0));
     const timerRef = useRef(null);
 

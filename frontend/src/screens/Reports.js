@@ -19,21 +19,32 @@ const Reports = () => {
     const [week, setWeek] = useState(0);
     const [category, setCategory] = useState('chest');
     const [level, setLevel] = useState('beginner');
-    const [duration, setDuration] = useState(0);
-    const [reps, setReps] = useState(0);
     const [token, setToken] = useState();
+    const [email, setEmail] = useState();
     const [WorkoutData, setWorkoutData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [emptyData, setEmptyData] = useState(false);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
+                setLoading(true);
                 const selectedPart = await AsyncStorage.getItem("selectedPart");
                 const level = await AsyncStorage.getItem("level");
+                const email = await AsyncStorage.getItem("email");
+                const token = await AsyncStorage.getItem("auth_token");
+                const data = await AsyncStorage.getItem("baseData");
+                const decodedToken = jwtDecode(token);
+                const work = await getWorkoutData(value, decodedToken.email, token);
+
+                setWorkoutData(work);
                 setCategory(selectedPart);
                 setLevel(level);
+                setEmail(email);
             } catch (error) {
                 console.error("Error fetching user details", error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -49,16 +60,11 @@ const Reports = () => {
         let totalSeconds = 0;
 
         WorkoutData.forEach(item => {
-            const match = item.duration.match(/(\d+)(sec|Min)/);
+            const match = item.workoutDuration.match(/(\d{2}):(\d{2})/); // Matches MM:SS format
             if (match) {
-                const val = parseInt(match[1], 10);
-                const unit = match[2];
-
-                if (unit === "min" || unit === "Min") {
-                    totalSeconds += val * 60; // Convert minutes to seconds
-                } else if (unit === "sec" || unit === "Sec") {
-                    totalSeconds += val; // Already in seconds
-                }
+                const minutes = parseInt(match[1], 10); // Extract minutes
+                const seconds = parseInt(match[2], 10); // Extract seconds
+                totalSeconds += (minutes * 60) + seconds; // Convert to total seconds
             }
         });
 
@@ -69,10 +75,11 @@ const Reports = () => {
         return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
 
+
     const calculateTotalcalories = () => {
         let calCount = 0;
         WorkoutData.forEach(item => {
-            calCount += item.caloriesBurnedPerRepMen * 10;
+            calCount += item.calBurnPerRep * item.reps;
         });
         return calCount;
     }
@@ -90,34 +97,33 @@ const Reports = () => {
         });
     }, [week]);
 
-    const isCurrentDate = (date) => {
-        const today = new Date();
-        return date.toDateString() === today.toDateString();
-    };
-
-    useEffect(() => {
-        const fetchUserDetails = async () => {
+    const isCurrentDateChange = async (date) => {
+        if (new Date(WorkoutData[0].date).getUTCDate() !== new Date(date).getUTCDate()) {
             try {
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("@MyApp_user");
+                const data = await AsyncStorage.getItem("baseData");
                 const decodedToken = jwtDecode(token);
-                const work = await getWorkoutData(value, decodedToken.email, token);
-                setWorkoutData(work);
+                const work = await getWorkoutData(date, decodedToken.email, token);
+
+                if (work !== undefined) {
+                    setWorkoutData(work);
+                    setEmptyData(false);
+                } else { setEmptyData(true); }
             } catch (error) {
-                console.error("Error fetching user details:", error);
-            } finally {
-                setLoading(false); // Always set loading to false after fetch
+                console.error("Error fetching workout data", error);
             }
-        };
+        }
+    };
 
-        fetchUserDetails();
-    }, []);
+    const setNewdate = async (date) => {
+        setValue(date);
+        await isCurrentDateChange(date);
+    };
 
-
-    // if (loading) {
-    //     // Display a loading indicator while fetching user details
-    //     return <LoadingScreen message="Loading your activities..." />;
-    // }
+    if (loading) {
+        // Display a loading indicator while fetching user details
+        return <LoadingScreen message="Loading your Report..." />;
+    }
 
 
     return (
@@ -160,7 +166,7 @@ const Reports = () => {
                                     return (
                                         <TouchableWithoutFeedback
                                             key={dateIndex}
-                                            onPress={() => setValue(item.date)}>
+                                            onPress={() => setNewdate(item.date)}>
                                             <View
                                                 style={[
                                                     styles.item,
@@ -191,7 +197,7 @@ const Reports = () => {
                         ))}
                     </Swiper>
                 </View>
-                {isCurrentDate(value) ? (
+                {!emptyData ? (
                     <View>
                         <View style={styles.totalReport}>
                             <Text style={styles.subtitle}>Today's Total:</Text>
@@ -213,20 +219,20 @@ const Reports = () => {
                         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
                             <Text style={styles.subtitle}>{value.toDateString()}</Text>
                             <ScrollView>
-                                {workout.exercises[category][level].map((item, index) => (
+                                {WorkoutData.map((item, index) => (
                                     <View key={index}>
                                         <View style={styles.card}>
                                             <View>
                                                 <Image
-                                                    source={{ uri: item.image }}
+                                                    source={{ uri: item.workoutGIF }}
                                                     style={styles.image}
                                                 />
-                                                <Text style={styles.title}>{item.title}</Text>
+                                                <Text style={styles.title}>{item.workoutName}</Text>
                                             </View>
                                             <View style={{ justifyContent: 'space-around' }}>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.duration}</Text>
-                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: 10</Text>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.caloriesBurnedPerRepMen * 10}</Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.workoutDuration}</Text>
+                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: {item.reps}</Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.calBurnPerRep * item.reps}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -281,7 +287,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         color: '#fff',
-        marginBottom: 12,
+        // marginBottom: 12,
         padding: 15,
     },
     totalReport: {
@@ -302,7 +308,7 @@ const styles = StyleSheet.create({
     picker: {
         flex: 1,
         maxHeight: 74,
-        paddingVertical: 12,
+        // paddingVertical: 12,
         flexDirection: 'row',
     },
     subtitle: {
