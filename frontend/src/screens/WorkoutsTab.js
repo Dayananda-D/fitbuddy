@@ -185,6 +185,7 @@ const WorkoutTab = () => {
                     )}
                     <View style={styles.card}>
                         <View>
+                            <Text style={{ textAlign: "center", fontSize: 14, fontWeight: "bold" }}>Recommended 2 to 3 sets</Text>
                             <Image source={{ uri: item.image }} style={styles.image} />
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.time}>8-10 Reps</Text>

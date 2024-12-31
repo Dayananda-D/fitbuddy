@@ -27,6 +27,7 @@ const SignupScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState(new Date());
+    const [birthDate, setBirthDate] = useState();
     const [level, setLevel] = useState(null);
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
@@ -170,6 +171,7 @@ const SignupScreen = () => {
                     // value={dob ? dob.toLocaleDateString() : "Select DOB"}
                     inputMode='numeric'
                     returnKeyType="done"
+                    value={birthDate?.toLocaleDateString()}
                     onPress={() => setShowDatePicker(true)}
                 />
                 <TouchableOpacity onPress={() => setShowDatePicker(true)}>
@@ -183,7 +185,10 @@ const SignupScreen = () => {
                         display="default"
                         onChange={(event, selectedDate) => {
                             setShowDatePicker(false);
-                            if (selectedDate) setDob(selectedDate);
+                            if (selectedDate) {
+                                setDob(selectedDate);
+                                setBirthDate(selectedDate);
+                            }
                         }}
                         style={{ backgroundColor: 'rgba(233, 227, 230, 0.57)', borderRadius: 10, bottom: 20 }}
                     />

@@ -212,7 +212,7 @@ const VideoPlay = (data) => {
         }
     }, []);
 
-    useFocusEffect(
+    useEffect(
         useCallback(() => {
             fetchWarmupCompleted();
         }, [fetchWarmupCompleted])
@@ -350,19 +350,19 @@ const VideoPlayWarmup = (data) => {
     const currentExercise = data.data.exercises[category].warmup[currentIndex];
     const [warmupCompleted, setWarmupCompleted] = useState([]);
 
-    useFocusEffect(
-        useCallback(() => {
-            const fetchWarmupCompleted = async () => {
-                try {
-                    const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
-                    setWarmupCompleted(storedWarmupCompleted);
-                } catch (error) {
-                    console.error("Error fetching warmup completed:", error);
-                }
-            };
+    const fetchWarmupCompleted = useCallback(async () => {
+        try {
+            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+            setWarmupCompleted(storedWarmupCompleted);
+        } catch (error) {
+            console.error("Error fetching warmup completed:", error);
+        }
+    }, []);
 
+    useEffect(
+        useCallback(() => {
             fetchWarmupCompleted();
-        }, [])
+        }, [fetchWarmupCompleted])
     );
 
     return (
