@@ -49,17 +49,18 @@ const Reports = () => {
         };
 
         fetchUserDetails();
+        isCurrentDateChange(new Date());
     }, []); // Empty dependency array ensures this runs only once
 
 
     const calculateTotalExercise = () => {
-        return WorkoutData?.length
+        return WorkoutData?.filter(item => item.type === "workout").length
     };
 
     const calculateTotalTime = () => {
         let totalSeconds = 0;
 
-        WorkoutData?.forEach(item => {
+        WorkoutData?.filter(item => item.type === "workout").forEach(item => {
             const match = item.workoutDuration.match(/(\d{2}):(\d{2})/); // Matches MM:SS format
             if (match) {
                 const minutes = parseInt(match[1], 10); // Extract minutes
@@ -78,7 +79,7 @@ const Reports = () => {
 
     const calculateTotalcalories = () => {
         let calCount = 0;
-        WorkoutData?.forEach(item => {
+        WorkoutData?.filter(item => item.type === "workout").forEach(item => {
             calCount += item.calBurnPerRep * item.reps;
         });
         return calCount;
@@ -98,24 +99,24 @@ const Reports = () => {
     }, [week]);
 
     const isCurrentDateChange = async (date) => {
-        if (new Date(WorkoutData[0].date).getUTCDate() !== new Date(date).getUTCDate()) {
-            setLoading(true);
-            try {
-                const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("baseData");
-                const decodedToken = jwtDecode(token);
-                const work = await getWorkoutData(date, decodedToken.email, token);
+        // if (new Date(WorkoutData[0].date).getDate() !== new Date(date).getDate()) {
+        setLoading(true);
+        try {
+            const token = await AsyncStorage.getItem("auth_token");
+            const data = await AsyncStorage.getItem("baseData");
+            const decodedToken = jwtDecode(token);
+            const work = await getWorkoutData(date, decodedToken.email, token);
 
-                if (work !== undefined) {
-                    setWorkoutData(work);
-                    setEmptyData(false);
-                } else { setEmptyData(true); }
-            } catch (error) {
-                console.error("Error fetching workout data", error);
-            } finally {
-                setLoading(false);
-            }
+            if (work !== undefined) {
+                setWorkoutData(work);
+                setEmptyData(false);
+            } else { setEmptyData(true); }
+        } catch (error) {
+            console.error("Error fetching workout data", error);
+        } finally {
+            setLoading(false);
         }
+        // }
     };
 
     const setNewdate = async (date) => {
@@ -222,7 +223,7 @@ const Reports = () => {
                         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
                             <Text style={styles.subtitle}>{value.toDateString()}</Text>
                             <ScrollView>
-                                {WorkoutData?.map((item, index) => (
+                                {WorkoutData?.filter(item => item.type === "workout").map((item, index) => (
                                     <View key={index}>
                                         <View style={styles.card}>
                                             <View>

@@ -99,6 +99,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                 })
                 .then(async (data) => {
                     console.log("Response:", data); // Handle successful response
+                    await AsyncStorage.removeItem('baseData');
                     await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
                     navigation.navigate("Main", { UserData: updatedUserData });
                 })

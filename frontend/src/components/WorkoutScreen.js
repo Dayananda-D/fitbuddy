@@ -180,9 +180,8 @@ const Workouts = ({ navigation, route }) => {
                 ></ImageBackground>
                 <View style={styles.gifDesc}>
                     <Text style={{ fontWeight: "bold" }}>{currentExerciseData.title}</Text>
-                    <Text style={{ fontSize: 14, color: "#8860a2" }}>
-                        Duration: {formatTime(elapsedTimes[currentExerciseIndex])}
-                    </Text>
+                    <Text style={{ fontSize: 14 }} >Recommended 2 to 3 sets</Text>
+                    <Text style={{ fontSize: 14, color: "#8860a2", paddingTop: 5 }} >Duration: {formatTime(elapsedTimes[currentExerciseIndex])}</Text>
                 </View>
             </View>
 
@@ -213,7 +212,7 @@ const Workouts = ({ navigation, route }) => {
                     <Text style={styles.nextButtonText}>{isLast ? "Complete" : "Next"}</Text>
                 </TouchableOpacity>
             </View>
-        </ImageBackground>
+        </ImageBackground >
     );
 };
 
