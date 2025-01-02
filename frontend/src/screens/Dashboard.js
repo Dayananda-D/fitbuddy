@@ -197,26 +197,23 @@ const VideoPlay = (data) => {
     const [workoutCompleted, setWorkoutCompleted] = useState([]);
     const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
 
-    const fetchWarmupCompleted = useCallback(async () => {
-        try {
-            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
-            const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
-            setWorkoutCompleted(storedWorkoutCompleted);
+    useEffect(() => {
+        const fetchWarmupCompleted = async () => {
+            try {
+                const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+                const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
+                setWarmupCompleted(storedWarmupCompleted);
+                setWorkoutCompleted(storedWorkoutCompleted);
 
-            if (storedWarmupCompleted.length > 0 && storedWarmupCompleted.every((completed) => completed)) {
-                setAllWarmupsCompleted(true);
+                if (storedWarmupCompleted.length > 0 && storedWarmupCompleted.every((completed) => completed)) {
+                    setAllWarmupsCompleted(true);
+                }
+            } catch (error) {
+                console.error("Error fetching warmup and workout completed:", error);
             }
-        } catch (error) {
-            console.error("Error fetching warmup and workout completed:", error);
-        }
+        };
+        fetchWarmupCompleted();
     }, []);
-
-    useEffect(
-        useCallback(() => {
-            fetchWarmupCompleted();
-        }, [fetchWarmupCompleted])
-    );
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate("Workouts", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex, onWorkoutComplete: onWorkoutComplete })} disabled={!warmupCompleted[lastIndex]}>
@@ -350,20 +347,19 @@ const VideoPlayWarmup = (data) => {
     const currentExercise = data.data.exercises[category].warmup[currentIndex];
     const [warmupCompleted, setWarmupCompleted] = useState([]);
 
-    const fetchWarmupCompleted = useCallback(async () => {
-        try {
-            const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
-        } catch (error) {
-            console.error("Error fetching warmup completed:", error);
-        }
-    }, []);
 
-    useEffect(
-        useCallback(() => {
-            fetchWarmupCompleted();
-        }, [fetchWarmupCompleted])
-    );
+    useEffect(() => {
+        const fetchWarmupCompleted = async () => {
+            try {
+                const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
+                setWarmupCompleted(storedWarmupCompleted);
+            } catch (error) {
+                console.error("Error fetching warmup completed:", error);
+            }
+        };
+
+        fetchWarmupCompleted();
+    }, []);
 
     return (
         <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
