@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     ImageBackground,
     Image,
+    Platform
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
@@ -37,6 +38,8 @@ const SignupScreen = () => {
     ]);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [loading, setLoading] = useState(false);
+    const today = new Date();
+    const minimumDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
 
     const navigation = useNavigation();
     const handleSubmit = () => {
@@ -116,6 +119,19 @@ const SignupScreen = () => {
         ToastService.show('info', null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
     };
 
+    const handleDateChange = (event, selectedDate) => {
+        setShowDatePicker(false);
+        if (selectedDate) {
+          const age = today.getFullYear() - selectedDate.getFullYear();
+          if (age >= 16) {
+            setDob(selectedDate);
+            setBirthDate(selectedDate);
+          } else {
+            ToastService.show('warning', null, 'Age should be 16 or older to use the workout.', 3000);
+          }
+        }
+      };
+
     if (loading) {
         // Display a loading indicator while fetching user details
         return <LoadingScreen message="Creating your account – unlocking your fitness journey, one step at a time!" />;
@@ -185,16 +201,12 @@ const SignupScreen = () => {
 
                 {showDatePicker && (
                     <DateTimePicker
-                        value={dob}
+                        value={dob || minimumDate}
                         mode="date"
-                        display="default"
-                        onChange={(event, selectedDate) => {
-                            setShowDatePicker(false);
-                            if (selectedDate) {
-                                setDob(selectedDate);
-                                setBirthDate(selectedDate);
-                            }
-                        }}
+                        display={Platform.OS === "ios" ? "spinner" : "default"}
+                        minimumDate={new Date(1900, 0, 1)}
+                        maximumDate={minimumDate}
+                        onChange={handleDateChange}
                         style={{ backgroundColor: 'rgba(233, 227, 230, 0.57)', borderRadius: 10, bottom: 20 }}
                     />
                 )}
