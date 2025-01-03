@@ -365,7 +365,7 @@ const VideoPlayWarmup = (data) => {
     );
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, isLastExercise: isLastExercise, currentIndex: currentIndex })}>
+        <TouchableOpacity onPress={() => navigation.navigate("Warmups", { allExercises: allExercises, currentExercise: currentExercise, currentIndex: currentIndex })}>
             <View
                 style={{
                     borderRadius: 15,

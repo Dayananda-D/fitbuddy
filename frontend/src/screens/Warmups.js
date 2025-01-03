@@ -26,11 +26,11 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex, isLastExercise } = route.params;
+    const { allExercises, currentExercise, currentIndex } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
-    const [isLast, setIsLast] = useState(isLastExercise);
+    const [isLast, setIsLast] = useState(false);
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
 
@@ -78,19 +78,24 @@ const Warmups = ({ navigation, route }) => {
             const warmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
             warmupCompleted[currentExerciseIndex] = true;
             await AsyncStorage.setItem("warmupCompleted", JSON.stringify(warmupCompleted));
-            console.log("Warmup completed updated:", warmupCompleted);
+
+            const allCompleted = warmupCompleted.length > 0 && warmupCompleted.every((completed) => completed);
+
+            if (!allCompleted) {
+                const incompleteIndex = warmupCompleted.findIndex(completed => !completed);
+                if (incompleteIndex !== -1) {
+                    setCurrentExerciseIndex(incompleteIndex);
+                    setCurrentExerciseData(allExercises[incompleteIndex]);
+                    setIsLast(incompleteIndex === warmupCompleted.lastIndexOf(false));
+                }
+            } else {
+                // Handle the case where all exercises are completed
+                console.log("All warmups are completed");
+                navigation.goBack();
+            }
         } catch (error) {
             console.error("Error updating warmup completed:", error);
         }
-
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-        } else {
-            navigation.goBack();
-        };
     };
 
     return (
