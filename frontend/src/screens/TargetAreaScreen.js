@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Alert } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import SVGComponent from "../components/svgComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ToastService } from '../components/ToastMessage';
 
 const { base_url } = require("../../config");
 
@@ -64,7 +65,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
             if (prev.includes(key)) {
                 return prev.filter((id) => id !== key);
             } else if (prev.length >= 1) {
-                Alert.alert("Selection Restriction", "Only one body part selection is supported for now..!.");
+                ToastService.show('info', 'Selection Restriction', 'Only one body part selection is supported for now..!.', 3000);
                 return prev;
             } else {
                 return [...prev, key];
@@ -160,7 +161,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                     style={[styles.startButton, selectedIds.length === 0 && styles.disabledButton]}
                     onPress={() => {
                         if (selectedIds.length === 0) {
-                            Alert.alert("Selection Error", "Please select any one body part.");
+                            ToastService.show('error', 'Selection Error', 'Please select any one body part.', 3000);
                         } else {
                             inputAccumulator();
                         }

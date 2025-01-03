@@ -1,7 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-    Alert,
     Button,
     Image,
     ImageBackground,
@@ -19,6 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useFormState } from 'react-dom';
 const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
+import { ToastService } from '../components/ToastMessage';
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
@@ -104,7 +104,7 @@ const Dashboard = () => {
                         });
                 }
             } catch (error) {
-                Alert.alert("Error", "An error occurred while fetching user details. Please re-login again.");
+                ToastService.show('error',null, 'An error occurred while fetching user details. Please re-login again.', 3000);
                 console.error("Error fetching user details", error);
             } finally {
                 setLoading(false);

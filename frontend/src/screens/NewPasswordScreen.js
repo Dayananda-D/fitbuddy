@@ -29,7 +29,7 @@ const NewPasswordScreen = ({ navigation, route }) => {
       await confirmResetPassword(code, newPassword, navigation);
       setLoading(false);
     } else {
-      ToastService.show('warning', '', 'Passwords do not match or are too short.', 2000);
+      ToastService.show('warning', null, 'Passwords do not match or are too short.', 2000);
       setLoading(false);
     }
   };
@@ -109,11 +109,11 @@ const confirmResetPassword = async (token, newPassword, navigation) => {
     })
     .then((data) => {
       navigation.navigate("Login");
-      ToastService.show('success', '', data.message, 3000);
+      ToastService.show('success', null, data.message, 3000);
     })
     .catch((error) => {
       console.error("Error:", error.message);
-      ToastService.show('error', '', error.message, 2000);
+      ToastService.show('error', null, error.message, 2000);
     })
 };
 

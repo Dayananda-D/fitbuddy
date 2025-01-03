@@ -28,8 +28,8 @@ const ToastMessage = forwardRef((_, ref) => {
   const [toastState, setToastState] = useState({
     isVisible: false,
     type: 'info',
-    text: '',
-    description: '',
+    text: null,
+    description: null,
     timeout: 1000,
   });
 
@@ -85,8 +85,8 @@ const ToastMessage = forwardRef((_, ref) => {
         >
           <FontAwesome5 name={icon} size={40} color="#FFF" />
           <View style={{ marginLeft: 12, width: '80%' }}>
-            <Text style={{ fontSize: 18, fontWeight: '600', color: '#FFF' }}>{text}</Text>
-            <Text style={{ fontSize: 16, fontWeight: '400', color: '#FFF' }}>{description}</Text>
+            {text && (<Text style={{ fontSize: 18, fontWeight: '600', color: '#FFF' }}>{text}</Text>)}
+            {description && (<Text style={{ fontSize: 16, fontWeight: '400', color: '#FFF' }}>{description}</Text>)}
           </View>
         </Animated.View>
       )}

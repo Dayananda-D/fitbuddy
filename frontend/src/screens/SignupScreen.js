@@ -6,7 +6,6 @@ import {
     TextInput,
     TouchableOpacity,
     ImageBackground,
-    Alert,
     Image,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -44,7 +43,7 @@ const SignupScreen = () => {
         // Basic validation
         console.log(base_url);
         if (!username || !email || !password) {
-            ToastService.show('warning', '', 'All fields are required!', 2000);
+            ToastService.show('warning', null, 'All fields are required!', 2000);
             return;
         }
         setLoading(true);
@@ -99,10 +98,10 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_level', level);
 
                 navigation.navigate('Gender', { access_token });
-                ToastService.show('success', '', `Signed up successfully!\nUsername: ${username}`, 2000);
+                ToastService.show('success', null, `Signed up successfully!\nUsername: ${username}`, 2000);
             }).catch(error => {
                 console.error('Error:', error);
-                ToastService.show('error', '', error.message, 2000);
+                ToastService.show('error', null, error.message, 2000);
             });
         }).catch(error => {
             console.error('Error:', error);
@@ -114,7 +113,7 @@ const SignupScreen = () => {
     };
 
     const handleSocialLogin = (platform) => {
-        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
+        ToastService.show('info', null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
     };
 
     if (loading) {

@@ -5,7 +5,6 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-    Alert,
     Image,
     ImageBackground
 } from "react-native";
@@ -30,7 +29,7 @@ const LoginScreen = ({ route }) => {
     const handleLogin = () => {
         console.log(base_url);
         if (!emailOrNumber || !password) {
-            ToastService.show('info', '', 'Please enter your username and password to log in.', 3000)
+            ToastService.show('info', null, 'Please enter your username and password to log in.', 3000)
             return;
         }
         setLoading(true);
@@ -73,7 +72,7 @@ const LoginScreen = ({ route }) => {
     };
 
     const handleSocialLogin = (platform) => {
-        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
+        ToastService.show('info',null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
     };
 
     if (loading) {

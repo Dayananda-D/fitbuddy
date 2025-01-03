@@ -23,7 +23,7 @@ const ResetPasswordScreen = ({ navigation }) => {
       console.log(`Sending code to: ${email}`);
       requestResetPassword(email, navigation);
     } else {
-      ToastService.show('info', '', 'Please enter your email.', 2000);
+      ToastService.show('info', null, 'Please enter your email.', 2000);
     }
   };
 
@@ -79,10 +79,10 @@ const requestResetPassword = (email, navigation) => {
       .then((data) => {
         console.log('Reset password request sent successfully:', data);
         navigation.navigate("NewPassword");
-        ToastService.show('success', '', 'A reset code has been sent to your email.', 3000);
+        ToastService.show('success', null, 'A reset code has been sent to your email.', 3000);
       })
       .catch((error) => {
-        ToastService.show('error', '', error.message, 3000);
+        ToastService.show('error', null, error.message, 3000);
       });
   };
   
