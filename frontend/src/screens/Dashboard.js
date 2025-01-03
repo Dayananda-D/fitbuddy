@@ -21,7 +21,6 @@ import LoadingScreen from './LoadingScreen';
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
-const banner = require('../../assets/images/bg.png');
 const fire = require('../../assets/images/fire.png');
 const model = require('../../assets/images/model.png');
 const cycle = require('../../assets/images/cycle.png');
@@ -32,10 +31,6 @@ const play = require('../../assets/images/play.png');
 const disapprove = require('../../assets/images/disapprove.png');
 const verify = require('../../assets/images/verify.png');
 const book = require('../../assets/images/Book.png');
-const home = require('../../assets/images/Home.png');
-const heart = require('../../assets/images/H.png');
-const dumbbell = require('../../assets/images/dumbbell.png');
-const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
 
 const Dashboard = () => {
@@ -564,7 +559,7 @@ const Header = ({ data }) => {
 
 const Banner = ({ data }) => (
     <>
-        <ImageBackground style={styles.banner} source={banner}>
+        <ImageBackground style={styles.banner}>
             <View style={styles.bannerContainer}>
                 <View style={styles.rowLabel}>
                     <Text style={styles.offer}>Start Your work out now</Text>
@@ -683,6 +678,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         flexDirection: 'row',
+        backgroundColor: '#8860a3'
     },
     bannerContainer: { flex: 1 },
     label: {

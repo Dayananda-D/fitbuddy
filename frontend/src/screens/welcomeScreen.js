@@ -8,7 +8,7 @@ const WelcomeScreen = ({ navigation }) => {
             style={styles.backgroundImage}
         >
             <View style={styles.container}>
-                <Text style={styles.title}>Welcome to FitLife!</Text>
+                <Text style={styles.title}>Welcome to FitBuddy!</Text>
                 <Text style={styles.description}>
                     Elevate Your Fitness with a Cutting Edge to Fuel Your Motivation & Crush your goal
                 </Text>
@@ -32,21 +32,20 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'space-evenly',
         alignItems: "center",
     },
     title: {
         fontSize: 24,
         fontWeight: "bold",
         color: "#fff",
-        marginBottom: 20,
+        marginTop: 100,
         textAlign: "center",
     },
     description: {
         color: "#9e9e9e",
         textAlign: "center",
         fontSize: 16,
-        paddingTop: 100,
         fontWeight: "600",
     },
     startButton: {
