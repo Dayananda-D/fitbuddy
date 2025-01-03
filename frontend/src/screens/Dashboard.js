@@ -16,7 +16,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
-import { useFormState } from 'react-dom';
 const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
 
@@ -201,8 +200,8 @@ const VideoPlay = (data) => {
         try {
             const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
             const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
-            setWorkoutCompleted(storedWorkoutCompleted);
+            setWarmupCompleted([...storedWarmupCompleted]);
+            setWorkoutCompleted([...storedWorkoutCompleted]);
 
             if (storedWarmupCompleted.length > 0 && storedWarmupCompleted.every((completed) => completed)) {
                 setAllWarmupsCompleted(true);
@@ -357,7 +356,7 @@ const VideoPlayWarmup = (data) => {
     const fetchWarmupCompleted = async () => {
         try {
             const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
+            setWarmupCompleted([...storedWarmupCompleted]);
             console.log("Warmup completed:", storedWarmupCompleted);
         } catch (error) {
             console.error("Error fetching warmup completed:", error);

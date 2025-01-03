@@ -73,15 +73,6 @@ const Warmups = ({ navigation, route }) => {
         }
         updateExercises(data, token);
 
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-        } else {
-            navigation.goBack();
-        };
-
         // Update warmupCompleted in AsyncStorage
         try {
             const warmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
@@ -91,6 +82,15 @@ const Warmups = ({ navigation, route }) => {
         } catch (error) {
             console.error("Error updating warmup completed:", error);
         }
+
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
+        };
     };
 
     return (
