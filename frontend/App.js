@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Profiler } from "react";
+import React, { useState, useEffect, Profiler, useRef } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import WelcomeScreen from "./src/screens/welcomeScreen";
@@ -22,6 +22,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
 import ActivitiesScreen from "./src/screens/ActivitiesScreen";
+import ToastMessage, { ToastService } from './src/components/ToastMessage';
 
 const Tab = createBottomTabNavigator();
 
@@ -66,8 +67,11 @@ export default function App() {
   const [token, setToken] = useState();
   const [workoutFlag, setWorkoutFlag] = useState();
   const [loading, setLoading] = useState(true); // Add a loading state
+  const toastRef = useRef(null);
 
   useEffect(() => {
+    ToastService.init(toastRef);
+
     const fetchUserDetails = async () => {
       try {
         const token = await AsyncStorage.getItem("auth_token");
@@ -98,6 +102,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
+      <ToastMessage ref={toastRef} />
       <Stack.Navigator
         initialRouteName={landingPage}
         screenOptions={{

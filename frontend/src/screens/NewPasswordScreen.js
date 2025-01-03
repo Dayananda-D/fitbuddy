@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Icons library
 import LoadingScreen from "./LoadingScreen";
+import { ToastService } from '../components/ToastMessage';
 
 
 const NewPasswordScreen = ({ navigation, route }) => {
@@ -20,15 +21,15 @@ const NewPasswordScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
 
 
-  const resetPassword = () => {
+  const resetPassword = async () => {
     if (code.length === 6 && newPassword === confirmPassword && newPassword.length > 6) {
       // Logic to update the user's password
       console.log("Password reset successful!");
       setLoading(true);
-      confirmResetPassword(code, newPassword, navigation);
-      alert("Password reset successful!");
+      await confirmResetPassword(code, newPassword, navigation);
+      setLoading(false);
     } else {
-      alert("Passwords do not match or are too short.");
+      ToastService.show('warning', '', 'Passwords do not match or are too short.', 2000);
       setLoading(false);
     }
   };
@@ -85,8 +86,8 @@ const NewPasswordScreen = ({ navigation, route }) => {
   );
 };
 
-const confirmResetPassword = (token, newPassword, navigation) => {
-  fetch(
+const confirmResetPassword = async (token, newPassword, navigation) => {
+  return await fetch(
     `https://fitbuddy-0n9o.onrender.com/reset-password/confirm?token=${encodeURIComponent(
       token
     )}&new_password=${encodeURIComponent(newPassword)}`,
@@ -102,21 +103,18 @@ const confirmResetPassword = (token, newPassword, navigation) => {
         return response.json(); // Parse the response as JSON if successful
       } else {
         return response.json().then((errorData) => {
-          throw new Error(errorData.message || "Failed to reset the password");
+          throw new Error(errorData.detail || "Failed to reset the password");
         });
       }
     })
     .then((data) => {
-      console.log("Password reset successfully:", data);
-      alert("Your password has been reset successfully.");
       navigation.navigate("Login");
-      setLoading(false);
+      ToastService.show('success', '', data.message, 3000);
     })
     .catch((error) => {
-      setLoading(false);
       console.error("Error:", error.message);
-      alert(error.message || "An error occurred. Please try again.");
-    });
+      ToastService.show('error', '', error.message, 2000);
+    })
 };
 
 const styles = StyleSheet.create({

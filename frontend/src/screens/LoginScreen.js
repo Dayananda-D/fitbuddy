@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
     StyleSheet,
     Text,
@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 import LoadingScreen from "./LoadingScreen";
+import { ToastService } from '../components/ToastMessage';
 
 const { base_url } = require("../../config");
 const googleLogo = require("../../assets/images/google.png");
@@ -25,14 +26,14 @@ const LoginScreen = ({ route }) => {
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-
+    
     const handleLogin = () => {
         console.log(base_url);
-        setLoading(true);
         if (!emailOrNumber || !password) {
-            Alert.alert("Error", "Please enter all fields!");
+            ToastService.show('info', '', 'Please enter your username and password to log in.', 3000)
             return;
         }
+        setLoading(true);
         fetch(`${base_url}/login`, {
             method: 'POST',
             headers: {
@@ -43,30 +44,30 @@ const LoginScreen = ({ route }) => {
                 username: emailOrNumber,
                 password: password
             }).toString()
-        }).then(response => {
+        }).then(async response => {
+            const responseData = await response.json();
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(responseData.detail);
             }
-            return response.json();
+            return responseData;
         }).then(async data => {
             const { access_token, token_type } = data;
             // Save the token and token_type in AsyncStorage
             await AsyncStorage.setItem('auth_token', access_token);
             await AsyncStorage.setItem('token_type', token_type);
             const decodedToken = jwtDecode(access_token);
-            console.log(decodedToken)
+
             await AsyncStorage.setItem('user_name', decodedToken.name || "Jane");
             await AsyncStorage.setItem('user_level', decodedToken.level || 'Beginner');
             await AsyncStorage.setItem('selectedBodyPartsAdded', JSON.stringify(true));
 
             navigation.navigate('Main');
-            console.log('Success:', data);
-            Alert.alert("Success", "Logged in successfully!");
-            setLoading(false);
         }).catch(error => {
+            setTimeout(() => {
+                ToastService.show('error', error.message, 'Please try again later', 3000)
+            }, 200);
+        }).finally(() => {
             setLoading(false);
-            console.error('Error:', error);
-            Alert.alert("Failed to Login ", error.message + "Please try again later");
         });
 
     };

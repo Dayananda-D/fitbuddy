@@ -20,6 +20,7 @@ const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
 const calendar = require("../../assets/images/Calender.png");
 const { base_url } = require("../../config");
+import { ToastService } from '../components/ToastMessage';
 
 
 const SignupScreen = () => {
@@ -42,11 +43,11 @@ const SignupScreen = () => {
     const handleSubmit = () => {
         // Basic validation
         console.log(base_url);
-        setLoading(true);
         if (!username || !email || !password) {
-            Alert.alert("Error", "All fields are required!");
+            ToastService.show('warning', '', 'All fields are required!', 2000);
             return;
         }
+        setLoading(true);
         fetch(`${base_url}/user/signup`, {
             method: 'POST',
             headers: {
@@ -61,10 +62,13 @@ const SignupScreen = () => {
                 level: level
             })
         }).then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (response.ok) {
+              return response.json();
+            } else {
+              return response.json().then((errorData) => {
+                throw new Error(errorData.detail || "Failed to Signup");
+              });
             }
-            return response.json();
         }).then(data => {
             console.log('Success:', data);
             fetch(`${base_url}/login`, {
@@ -78,10 +82,14 @@ const SignupScreen = () => {
                     password: password
                 }).toString()
             }).then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  return response.json().then((errorData) => {
+                    throw new Error(errorData.detail || "Failed to Signup");
+                  });
                 }
-                return response.json();
+                
             }).then(async data => {
                 const { access_token, token_type } = data;
                 await AsyncStorage.setItem('auth_token', access_token);
@@ -90,20 +98,18 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_name', username);
                 await AsyncStorage.setItem('user_level', level);
 
-                setLoading(false);
                 navigation.navigate('Gender', { access_token });
-                Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+                ToastService.show('success', '', `Signed up successfully!\nUsername: ${username}`, 2000);
             }).catch(error => {
                 console.error('Error:', error);
-                setLoading(false);
-                Alert.alert("Failed to Sign Up", error.message + "Please try again later");
+                ToastService.show('error', '', error.message, 2000);
             });
-
         }).catch(error => {
-            setLoading(false);
             console.error('Error:', error);
-            Alert.alert("Failed to Sign Up", error.message + "Please try again later");
-        });
+            ToastService.show('error', error.message, 'Please try again later', 2000);
+        }).finally(() => {
+            setLoading(false);
+        })
 
     };
 

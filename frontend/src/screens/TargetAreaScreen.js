@@ -72,7 +72,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
         });
     };
 
-    const inputAccumulator = () => {
+    const inputAccumulator = () => {debugger
         const updatedUserData = {
             ...UserData,
             selectedBodyParts: selectedIds
