@@ -123,14 +123,6 @@ const Workouts = ({ navigation, route }) => {
         };
         updateExercises(data, token);
 
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-        } else {
-            navigation.goBack();
-        }
 
         // Update workoutCompleted in AsyncStorage
         try {
@@ -140,6 +132,15 @@ const Workouts = ({ navigation, route }) => {
             console.log("workout completed updated:", workoutCompleted);
         } catch (error) {
             console.error("Error updating workout completed:", error);
+        }
+
+        if (currentExerciseIndex < allExercises.length - 1) {
+            const nextIndex = currentExerciseIndex + 1;
+            setCurrentExerciseIndex(nextIndex);
+            setCurrentExerciseData(allExercises[nextIndex]);
+            setIsLast(nextIndex === allExercises.length - 1);
+        } else {
+            navigation.goBack();
         }
     };
 

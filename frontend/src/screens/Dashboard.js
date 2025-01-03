@@ -16,13 +16,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as Progress from 'react-native-progress';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
-import { useFormState } from 'react-dom';
 const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
-const banner = require('../../assets/images/bg.png');
 const fire = require('../../assets/images/fire.png');
 const model = require('../../assets/images/model.png');
 const cycle = require('../../assets/images/cycle.png');
@@ -33,10 +31,6 @@ const play = require('../../assets/images/play.png');
 const disapprove = require('../../assets/images/disapprove.png');
 const verify = require('../../assets/images/verify.png');
 const book = require('../../assets/images/Book.png');
-const home = require('../../assets/images/Home.png');
-const heart = require('../../assets/images/H.png');
-const dumbbell = require('../../assets/images/dumbbell.png');
-const profile = require('../../assets/images/User.png');
 const workout = require('../data/workoutData.json');
 
 const Dashboard = () => {
@@ -201,8 +195,8 @@ const VideoPlay = (data) => {
         try {
             const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
             const storedWorkoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
-            setWorkoutCompleted(storedWorkoutCompleted);
+            setWarmupCompleted([...storedWarmupCompleted]);
+            setWorkoutCompleted([...storedWorkoutCompleted]);
 
             if (storedWarmupCompleted.length > 0 && storedWarmupCompleted.every((completed) => completed)) {
                 setAllWarmupsCompleted(true);
@@ -357,7 +351,7 @@ const VideoPlayWarmup = (data) => {
     const fetchWarmupCompleted = async () => {
         try {
             const storedWarmupCompleted = JSON.parse(await AsyncStorage.getItem("warmupCompleted")) || [];
-            setWarmupCompleted(storedWarmupCompleted);
+            setWarmupCompleted([...storedWarmupCompleted]);
             console.log("Warmup completed:", storedWarmupCompleted);
         } catch (error) {
             console.error("Error fetching warmup completed:", error);
@@ -565,7 +559,7 @@ const Header = ({ data }) => {
 
 const Banner = ({ data }) => (
     <>
-        <ImageBackground style={styles.banner} source={banner}>
+        <ImageBackground style={styles.banner}>
             <View style={styles.bannerContainer}>
                 <View style={styles.rowLabel}>
                     <Text style={styles.offer}>Start Your work out now</Text>
@@ -684,6 +678,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         flexDirection: 'row',
+        backgroundColor: '#8860a3'
     },
     bannerContainer: { flex: 1 },
     label: {

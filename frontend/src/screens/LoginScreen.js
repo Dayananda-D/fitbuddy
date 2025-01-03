@@ -117,16 +117,16 @@ const LoginScreen = ({ route }) => {
 
                 {/* Link to SignUp */}
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>Create accound?</Text>
+                    <Text style={styles.footerText}>Create account?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
-                        <Text style={styles.linkText}>SignUp</Text>
+                        <Text style={styles.linkText}>Sign up</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Link to Reset password */}
                 <View style={styles.footer}>
                     <Text style={styles.footerText}></Text>
                     <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-                        <Text style={styles.linkText}>forgot password</Text>
+                        <Text style={styles.linkText}>Forgot Password</Text>
                     </TouchableOpacity>
                 </View>
 
