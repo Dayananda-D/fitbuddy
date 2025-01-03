@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     StyleSheet,
     Text,
@@ -7,6 +7,9 @@ import {
     TouchableOpacity,
     ImageBackground,
     Image,
+    Pressable,
+    Animated,
+    Dimensions,
     Platform
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -22,6 +25,7 @@ const calendar = require("../../assets/images/Calender.png");
 const { base_url } = require("../../config");
 import { ToastService } from '../components/ToastMessage';
 
+const { width } = Dimensions.get("window");
 
 const SignupScreen = () => {
     const [username, setUsername] = useState("");
@@ -29,7 +33,7 @@ const SignupScreen = () => {
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState(new Date());
     const [birthDate, setBirthDate] = useState();
-    const [level, setLevel] = useState(null);
+    const [level, setLevel] = useState("beginner");
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
         { label: 'Beginner', value: 'beginner' },
@@ -41,7 +45,31 @@ const SignupScreen = () => {
     const today = new Date();
     const minimumDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
 
+
     const navigation = useNavigation();
+    const animation = useRef(new Animated.Value(0)).current;
+    const textAnimations = useRef(items.map(() => new Animated.Value(1))).current; // One animation per item
+    const segmentWidth = width * 0.9 / items.length;
+  
+    useEffect(() => {
+      const index = items.findIndex((item) => item.value === level);
+  
+      // Animate the indicator
+      Animated.spring(animation, {
+        toValue: index * segmentWidth,
+        useNativeDriver: true,
+      }).start();
+  
+      // Animate text properties
+      textAnimations.forEach((anim, i) => {
+        Animated.timing(anim, {
+          toValue: i === index ? 1.1 : 0.9, // Active text grows to 1.2x size
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      });
+    }, [level]);
+
     const handleSubmit = () => {
         // Basic validation
         console.log(base_url);
@@ -173,7 +201,7 @@ const SignupScreen = () => {
                 />
 
                 {/* Level Dropdown */}
-                <DropDownPicker
+                {/* <DropDownPicker
                     open={open}
                     value={level}
                     items={items}
@@ -183,7 +211,43 @@ const SignupScreen = () => {
                     style={styles.dropdown}
                     dropDownContainerStyle={styles.dropdownContainer}
                     placeholder="Select Level"
-                />
+                /> */}
+                {/* <View style={styles.groupButton}> */}
+                <View style={styles.segmentedControl}>
+                    <Animated.View
+                    style={[
+                        styles.indicator,
+                        { width: `${100 / items.length}%`, transform: [{ translateX: animation }] },
+                    ]}
+                    />
+                    {items.map((item, index) => (
+                    <Pressable
+                        key={item.value}
+                        onPress={() => setLevel(item.value)}
+                        style={styles.segmentButton}
+                    >
+                        <Animated.Text
+                        style={[
+                            styles.segmentText,
+                            {
+                            color: textAnimations[index].interpolate({
+                                inputRange: [0.9, 1.1],
+                                outputRange: ["#000", "#fff"], // Active text becomes white
+                            }),
+                            transform: [
+                                {
+                                scale: textAnimations[index],
+                                },
+                            ],
+                            },
+                        ]}
+                        >
+                        {item.label}
+                        </Animated.Text>
+                    </Pressable>
+                    ))}
+                </View>
+                {/* </View> */}
 
                 {/* Date of Birth Picker */}
                 <TextInput
@@ -388,4 +452,37 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 5,
     },
+    segmentedControl: {
+        flexDirection: "row",
+        width: "100%",
+        position: "relative",
+        overflow: "hidden",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        // paddingHorizontal: 5,
+        marginBottom: 15,
+        borderWidth: 1,
+        borderColor: "#ccc",
+      },
+      segmentButton: {
+        flex: 1,
+        paddingVertical: 10,
+        alignItems: "center",
+        justifyContent: "center"
+      },
+      segmentText: {
+        fontSize: 15,
+      },
+      indicator: {
+        position: "absolute",
+        height: "100%",
+        backgroundColor: "#8c579a",
+        borderRadius: 10,
+        zIndex: -1,
+      },
+      level: {
+        marginTop: 20,
+        fontWeight: "bold",
+      },
 });
