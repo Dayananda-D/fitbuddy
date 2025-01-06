@@ -23,7 +23,7 @@ const GoalScreen = ({ navigation, route }) => {
                     onPress={() => inputAccumulator("weightLoss")}
                 >
                     <Image
-                        source={require("../../assets/images/weight-loss.png")}
+                        source={UserData.gender === "Male" ? require("../../assets/images/weight_loss_man.jpg") : require("../../assets/images/weight_loss_women.png")}
                         style={styles.goalImage}
                     />
                     <Text style={styles.goalText}>Lose Weight</Text>
@@ -33,7 +33,7 @@ const GoalScreen = ({ navigation, route }) => {
                     onPress={() => inputAccumulator("muscle")}
                 >
                     <Image
-                        source={require("../../assets/images/muscular.jpg")}
+                        source={UserData.gender === "Male" ? require("../../assets/images/muscular_man.jpg") : require("../../assets/images/muscular_women.png")}
                         style={styles.goalImage}
                     />
                     <Text style={styles.goalText}>Build Muscle</Text>
@@ -43,7 +43,7 @@ const GoalScreen = ({ navigation, route }) => {
                     onPress={() => inputAccumulator("fit")}
                 >
                     <Image
-                        source={require("../../assets/images/fit.jpg")}
+                        source={UserData.gender === "Male" ? require("../../assets/images/fit_man.jpg") : require("../../assets/images/fit_women.jpeg")}
                         style={styles.goalImage}
                     />
                     <Text style={styles.goalText}>Keep Fit</Text>
