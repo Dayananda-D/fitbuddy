@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableWithoutFeedback, TouchableOpacity, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, ImageBackground, TouchableWithoutFeedback, TouchableOpacity, ScrollView, SafeAreaView, Alert, BackHandler } from "react-native";
 import moment, { duration } from 'moment';
 import Swiper from 'react-native-swiper';
 import { Ionicons } from "@expo/vector-icons";
@@ -24,6 +24,27 @@ const Reports = () => {
     const [WorkoutData, setWorkoutData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [emptyData, setEmptyData] = useState(false);
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Hold on!", "Are you sure you want to exit?", [
+                {
+                    text: "Cancel",
+                    onPress: () => null,
+                    style: "cancel",
+                },
+                { text: "YES", onPress: () => BackHandler.exitApp() },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, []);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
