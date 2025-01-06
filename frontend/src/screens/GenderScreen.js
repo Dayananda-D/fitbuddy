@@ -23,10 +23,8 @@ const GenderScreen = ({ navigation }) => {
                         style={styles.genderImageWrapper}
                         onPress={() => inputAccumulator("Male")}
                     >
-                        <Image
-                            source={require("../../assets/images/male.jpg")}
-                            style={styles.genderImage}
-                        />
+                        <Image style={styles.genderImage} />
+                        <Image source={require("../../assets/images/male.png")} style={{ width: 200, height: 190, position: 'absolute' }} />
                         <Text style={styles.genderText}>Male</Text>
                     </TouchableOpacity>
 
@@ -34,10 +32,8 @@ const GenderScreen = ({ navigation }) => {
                         style={styles.genderImageWrapper}
                         onPress={() => inputAccumulator("Female")}
                     >
-                        <Image
-                            source={require("../../assets/images/female.jpg")}
-                            style={styles.genderImage}
-                        />
+                        <Image style={styles.genderImage} />
+                        <Image source={require("../../assets/images/female.png")} style={{ width: 200, height: 190, position: 'absolute' }} />
                         <Text style={styles.genderText}>Female</Text>
                     </TouchableOpacity>
                 </View>
@@ -85,6 +81,7 @@ const styles = StyleSheet.create({
         borderRadius: 75,
         borderWidth: 2,
         borderColor: "#4CAF50",
+        backgroundColor: "#000"
     },
     genderText: {
         marginTop: 10,

@@ -172,7 +172,7 @@ const SignupScreen = () => {
                 <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity> */}
             <View style={styles.container}>
-                <Text style={styles.title}>Sign Up</Text>
+                <Text style={styles.title}>Sign up</Text>
 
                 {/* Username Input */}
                 <TextInput
