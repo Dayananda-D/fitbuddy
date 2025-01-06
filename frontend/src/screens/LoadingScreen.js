@@ -56,20 +56,35 @@ const LoadingScreen = ({ message = "Loading..." }) => {
 
 
   const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+  const [showQuotes, setShowQuotes] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % fitnessQuotes.length);
-    }, 5000); // Change quote every 5 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    const timer = setTimeout(() => setShowQuotes(true), 3000);
+    return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (showQuotes) {
+      const interval = setInterval(() => {
+        setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % fitnessQuotes.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [showQuotes]);
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#ffffff" />
-      <Text style={styles.message}>{message}</Text>
-      <Text style={styles.quote}>{fitnessQuotes[currentQuoteIndex]}</Text>
+      {showQuotes ? (
+        <>
+          <ActivityIndicator size="large" color="#ffffff" />
+          <Text style={styles.quote}>{fitnessQuotes[currentQuoteIndex]}</Text>
+        </>
+      ) : (
+        <>
+          <ActivityIndicator size="large" color="#ffffff" />
+          <Text style={styles.message}>{message}</Text>
+        </>
+      )}
     </View>
   );
 };
@@ -79,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#121212', // Match your app's background
+    backgroundColor: '#121212',
     padding: 20,
   },
   message: {

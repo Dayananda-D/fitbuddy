@@ -50,24 +50,24 @@ const SignupScreen = () => {
     const animation = useRef(new Animated.Value(0)).current;
     const textAnimations = useRef(items.map(() => new Animated.Value(1))).current; // One animation per item
     const segmentWidth = width * 0.9 / items.length;
-  
+
     useEffect(() => {
-      const index = items.findIndex((item) => item.value === level);
-  
-      // Animate the indicator
-      Animated.spring(animation, {
-        toValue: index * segmentWidth,
-        useNativeDriver: true,
-      }).start();
-  
-      // Animate text properties
-      textAnimations.forEach((anim, i) => {
-        Animated.timing(anim, {
-          toValue: i === index ? 1.1 : 0.9, // Active text grows to 1.2x size
-          duration: 300,
-          useNativeDriver: false,
+        const index = items.findIndex((item) => item.value === level);
+
+        // Animate the indicator
+        Animated.spring(animation, {
+            toValue: index * segmentWidth,
+            useNativeDriver: true,
         }).start();
-      });
+
+        // Animate text properties
+        textAnimations.forEach((anim, i) => {
+            Animated.timing(anim, {
+                toValue: i === index ? 1.1 : 0.9, // Active text grows to 1.2x size
+                duration: 300,
+                useNativeDriver: false,
+            }).start();
+        });
     }, [level]);
 
     const handleSubmit = () => {
@@ -93,11 +93,11 @@ const SignupScreen = () => {
             })
         }).then(response => {
             if (response.ok) {
-              return response.json();
+                return response.json();
             } else {
-              return response.json().then((errorData) => {
-                throw new Error(errorData.detail || "Failed to Signup");
-              });
+                return response.json().then((errorData) => {
+                    throw new Error(errorData.detail || "Failed to Signup");
+                });
             }
         }).then(data => {
             console.log('Success:', data);
@@ -113,13 +113,13 @@ const SignupScreen = () => {
                 }).toString()
             }).then(response => {
                 if (response.ok) {
-                  return response.json();
+                    return response.json();
                 } else {
-                  return response.json().then((errorData) => {
-                    throw new Error(errorData.detail || "Failed to Signup");
-                  });
+                    return response.json().then((errorData) => {
+                        throw new Error(errorData.detail || "Failed to Signup");
+                    });
                 }
-                
+
             }).then(async data => {
                 const { access_token, token_type } = data;
                 await AsyncStorage.setItem('auth_token', access_token);
@@ -150,19 +150,19 @@ const SignupScreen = () => {
     const handleDateChange = (event, selectedDate) => {
         setShowDatePicker(false);
         if (selectedDate) {
-          const age = today.getFullYear() - selectedDate.getFullYear();
-          if (age >= 16) {
-            setDob(selectedDate);
-            setBirthDate(selectedDate);
-          } else {
-            ToastService.show('warning', null, 'Age should be 16 or older to use the workout.', 3000);
-          }
+            const age = today.getFullYear() - selectedDate.getFullYear();
+            if (age >= 16) {
+                setDob(selectedDate);
+                setBirthDate(selectedDate);
+            } else {
+                ToastService.show('warning', null, 'Age should be 16 or older to use the workout.', 3000);
+            }
         }
-      };
+    };
 
     if (loading) {
         // Display a loading indicator while fetching user details
-        return <LoadingScreen message="Creating your account – unlocking your fitness journey, one step at a time!" />;
+        return <LoadingScreen message="Building your account – paving the way to a better you." />;
     }
 
     return (
@@ -215,36 +215,36 @@ const SignupScreen = () => {
                 {/* <View style={styles.groupButton}> */}
                 <View style={styles.segmentedControl}>
                     <Animated.View
-                    style={[
-                        styles.indicator,
-                        { width: `${100 / items.length}%`, transform: [{ translateX: animation }] },
-                    ]}
+                        style={[
+                            styles.indicator,
+                            { width: `${100 / items.length}%`, transform: [{ translateX: animation }] },
+                        ]}
                     />
                     {items.map((item, index) => (
-                    <Pressable
-                        key={item.value}
-                        onPress={() => setLevel(item.value)}
-                        style={styles.segmentButton}
-                    >
-                        <Animated.Text
-                        style={[
-                            styles.segmentText,
-                            {
-                            color: textAnimations[index].interpolate({
-                                inputRange: [0.9, 1.1],
-                                outputRange: ["#000", "#fff"], // Active text becomes white
-                            }),
-                            transform: [
-                                {
-                                scale: textAnimations[index],
-                                },
-                            ],
-                            },
-                        ]}
+                        <Pressable
+                            key={item.value}
+                            onPress={() => setLevel(item.value)}
+                            style={styles.segmentButton}
                         >
-                        {item.label}
-                        </Animated.Text>
-                    </Pressable>
+                            <Animated.Text
+                                style={[
+                                    styles.segmentText,
+                                    {
+                                        color: textAnimations[index].interpolate({
+                                            inputRange: [0.9, 1.1],
+                                            outputRange: ["#000", "#fff"], // Active text becomes white
+                                        }),
+                                        transform: [
+                                            {
+                                                scale: textAnimations[index],
+                                            },
+                                        ],
+                                    },
+                                ]}
+                            >
+                                {item.label}
+                            </Animated.Text>
+                        </Pressable>
                     ))}
                 </View>
                 {/* </View> */}
@@ -464,25 +464,25 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderWidth: 1,
         borderColor: "#ccc",
-      },
-      segmentButton: {
+    },
+    segmentButton: {
         flex: 1,
         paddingVertical: 10,
         alignItems: "center",
         justifyContent: "center"
-      },
-      segmentText: {
+    },
+    segmentText: {
         fontSize: 15,
-      },
-      indicator: {
+    },
+    indicator: {
         position: "absolute",
         height: "100%",
         backgroundColor: "#8c579a",
         borderRadius: 10,
         zIndex: -1,
-      },
-      level: {
+    },
+    level: {
         marginTop: 20,
         fontWeight: "bold",
-      },
+    },
 });
