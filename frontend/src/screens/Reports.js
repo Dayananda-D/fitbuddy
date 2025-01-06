@@ -272,6 +272,9 @@ const getWorkoutData = async (date, email, token) => {
         }
 
         const data = await response.json();
+        if (data?.message) {
+            throw new Error(data.message);
+        }
         console.log("Workout data:", data);
         return data
     } catch (error) {

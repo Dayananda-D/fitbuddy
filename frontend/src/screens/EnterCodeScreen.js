@@ -8,6 +8,7 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
+import { ToastService } from '../components/ToastMessage';
 
 const EnterCodeScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
@@ -18,7 +19,7 @@ const EnterCodeScreen = ({ navigation }) => {
       console.log(`Verifying code: ${code}`);
       navigation.navigate("NewPassword", {token: code});
     } else {
-      alert("Please enter a valid 6-digit code.");
+      ToastService.show('warning', null, 'Please enter a valid 6-digit code.', 2000);
     }
   };
 

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons"; // Icons library
+import { ToastService } from '../components/ToastMessage';
 
 
 const { base_url } = require("../../config");
@@ -22,7 +23,7 @@ const ResetPasswordScreen = ({ navigation }) => {
       console.log(`Sending code to: ${email}`);
       requestResetPassword(email, navigation);
     } else {
-      alert("Please enter your email.");
+      ToastService.show('info', null, 'Please enter your email.', 2000);
     }
   };
 
@@ -71,18 +72,17 @@ const requestResetPassword = (email, navigation) => {
           return response.json(); // Parse the response as JSON if successful
         } else {
           return response.json().then((errorData) => {
-            throw new Error(errorData.message || 'Failed to send reset code');
+            throw new Error(errorData.detail || 'Failed to send reset code');
           });
         }
       })
       .then((data) => {
         console.log('Reset password request sent successfully:', data);
         navigation.navigate("NewPassword");
-        alert('A reset code has been sent to your email.');
+        ToastService.show('success', null, 'A reset code has been sent to your email.', 3000);
       })
       .catch((error) => {
-        console.error('Error:', error.message);
-        alert(error.message || 'An error occurred. Please try again.');
+        ToastService.show('error', null, error.message, 3000);
       });
   };
   

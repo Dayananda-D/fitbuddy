@@ -61,7 +61,7 @@ def get_user_today_workout(js_date: str, email: str, db: Session):
     if not user_workouts:
         return {"message": "No workouts found for today"}
     
-    return {"message": "Workouts found for today", "workouts": user_workouts}
+    return user_workouts
 
 def update_user_workout(email: str, id: int, user_workout: dict, db: Session):
     # Query the database for the user workout

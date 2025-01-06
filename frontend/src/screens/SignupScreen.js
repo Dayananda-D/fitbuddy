@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     StyleSheet,
     Text,
@@ -6,8 +6,11 @@ import {
     TextInput,
     TouchableOpacity,
     ImageBackground,
-    Alert,
     Image,
+    Pressable,
+    Animated,
+    Dimensions,
+    Platform
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
@@ -20,7 +23,9 @@ const facebookLogo = require("../../assets/images/facebook.png");
 const instagramLogo = require("../../assets/images/instagram.png");
 const calendar = require("../../assets/images/Calender.png");
 const { base_url } = require("../../config");
+import { ToastService } from '../components/ToastMessage';
 
+const { width } = Dimensions.get("window");
 
 const SignupScreen = () => {
     const [username, setUsername] = useState("");
@@ -28,7 +33,7 @@ const SignupScreen = () => {
     const [password, setPassword] = useState("");
     const [dob, setDob] = useState(new Date());
     const [birthDate, setBirthDate] = useState();
-    const [level, setLevel] = useState(null);
+    const [level, setLevel] = useState("beginner");
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
         { label: 'Beginner', value: 'beginner' },
@@ -37,16 +42,42 @@ const SignupScreen = () => {
     ]);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [loading, setLoading] = useState(false);
+    const today = new Date();
+    const minimumDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+
 
     const navigation = useNavigation();
+    const animation = useRef(new Animated.Value(0)).current;
+    const textAnimations = useRef(items.map(() => new Animated.Value(1))).current; // One animation per item
+    const segmentWidth = width * 0.9 / items.length;
+  
+    useEffect(() => {
+      const index = items.findIndex((item) => item.value === level);
+  
+      // Animate the indicator
+      Animated.spring(animation, {
+        toValue: index * segmentWidth,
+        useNativeDriver: true,
+      }).start();
+  
+      // Animate text properties
+      textAnimations.forEach((anim, i) => {
+        Animated.timing(anim, {
+          toValue: i === index ? 1.1 : 0.9, // Active text grows to 1.2x size
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      });
+    }, [level]);
+
     const handleSubmit = () => {
         // Basic validation
         console.log(base_url);
-        setLoading(true);
         if (!username || !email || !password) {
-            Alert.alert("Error", "All fields are required!");
+            ToastService.show('warning', null, 'All fields are required!', 2000);
             return;
         }
+        setLoading(true);
         fetch(`${base_url}/user/signup`, {
             method: 'POST',
             headers: {
@@ -61,10 +92,13 @@ const SignupScreen = () => {
                 level: level
             })
         }).then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (response.ok) {
+              return response.json();
+            } else {
+              return response.json().then((errorData) => {
+                throw new Error(errorData.detail || "Failed to Signup");
+              });
             }
-            return response.json();
         }).then(data => {
             console.log('Success:', data);
             fetch(`${base_url}/login`, {
@@ -78,10 +112,14 @@ const SignupScreen = () => {
                     password: password
                 }).toString()
             }).then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  return response.json().then((errorData) => {
+                    throw new Error(errorData.detail || "Failed to Signup");
+                  });
                 }
-                return response.json();
+                
             }).then(async data => {
                 const { access_token, token_type } = data;
                 await AsyncStorage.setItem('auth_token', access_token);
@@ -90,26 +128,37 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_name', username);
                 await AsyncStorage.setItem('user_level', level);
 
-                setLoading(false);
                 navigation.navigate('Gender', { access_token });
-                Alert.alert("Success", `Signed up successfully!\nUsername: ${username}`);
+                ToastService.show('success', null, `Signed up successfully!\nUsername: ${username}`, 2000);
             }).catch(error => {
                 console.error('Error:', error);
-                setLoading(false);
-                Alert.alert("Failed to Sign Up", error.message + "Please try again later");
+                ToastService.show('error', null, error.message, 2000);
             });
-
         }).catch(error => {
-            setLoading(false);
             console.error('Error:', error);
-            Alert.alert("Failed to Sign Up", error.message + "Please try again later");
-        });
+            ToastService.show('error', error.message, 'Please try again later', 2000);
+        }).finally(() => {
+            setLoading(false);
+        })
 
     };
 
     const handleSocialLogin = (platform) => {
-        Alert.alert("Regret", `Currently ${platform} login is not supported It will be available soon.`);
+        ToastService.show('info', null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
     };
+
+    const handleDateChange = (event, selectedDate) => {
+        setShowDatePicker(false);
+        if (selectedDate) {
+          const age = today.getFullYear() - selectedDate.getFullYear();
+          if (age >= 16) {
+            setDob(selectedDate);
+            setBirthDate(selectedDate);
+          } else {
+            ToastService.show('warning', null, 'Age should be 16 or older to use the workout.', 3000);
+          }
+        }
+      };
 
     if (loading) {
         // Display a loading indicator while fetching user details
@@ -152,7 +201,7 @@ const SignupScreen = () => {
                 />
 
                 {/* Level Dropdown */}
-                <DropDownPicker
+                {/* <DropDownPicker
                     open={open}
                     value={level}
                     items={items}
@@ -162,7 +211,43 @@ const SignupScreen = () => {
                     style={styles.dropdown}
                     dropDownContainerStyle={styles.dropdownContainer}
                     placeholder="Select Level"
-                />
+                /> */}
+                {/* <View style={styles.groupButton}> */}
+                <View style={styles.segmentedControl}>
+                    <Animated.View
+                    style={[
+                        styles.indicator,
+                        { width: `${100 / items.length}%`, transform: [{ translateX: animation }] },
+                    ]}
+                    />
+                    {items.map((item, index) => (
+                    <Pressable
+                        key={item.value}
+                        onPress={() => setLevel(item.value)}
+                        style={styles.segmentButton}
+                    >
+                        <Animated.Text
+                        style={[
+                            styles.segmentText,
+                            {
+                            color: textAnimations[index].interpolate({
+                                inputRange: [0.9, 1.1],
+                                outputRange: ["#000", "#fff"], // Active text becomes white
+                            }),
+                            transform: [
+                                {
+                                scale: textAnimations[index],
+                                },
+                            ],
+                            },
+                        ]}
+                        >
+                        {item.label}
+                        </Animated.Text>
+                    </Pressable>
+                    ))}
+                </View>
+                {/* </View> */}
 
                 {/* Date of Birth Picker */}
                 <TextInput
@@ -180,16 +265,12 @@ const SignupScreen = () => {
 
                 {showDatePicker && (
                     <DateTimePicker
-                        value={dob}
+                        value={dob || minimumDate}
                         mode="date"
                         display="default"
-                        onChange={(event, selectedDate) => {
-                            setShowDatePicker(false);
-                            if (selectedDate) {
-                                setDob(selectedDate);
-                                setBirthDate(selectedDate);
-                            }
-                        }}
+                        minimumDate={new Date(1900, 0, 1)}
+                        maximumDate={minimumDate}
+                        onChange={handleDateChange}
                         style={{ backgroundColor: 'rgba(233, 227, 230, 0.57)', borderRadius: 10, bottom: 20 }}
                     />
                 )}
@@ -371,4 +452,37 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 5,
     },
+    segmentedControl: {
+        flexDirection: "row",
+        width: "100%",
+        position: "relative",
+        overflow: "hidden",
+        height: 50,
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        // paddingHorizontal: 5,
+        marginBottom: 15,
+        borderWidth: 1,
+        borderColor: "#ccc",
+      },
+      segmentButton: {
+        flex: 1,
+        paddingVertical: 10,
+        alignItems: "center",
+        justifyContent: "center"
+      },
+      segmentText: {
+        fontSize: 15,
+      },
+      indicator: {
+        position: "absolute",
+        height: "100%",
+        backgroundColor: "#8c579a",
+        borderRadius: 10,
+        zIndex: -1,
+      },
+      level: {
+        marginTop: 20,
+        fontWeight: "bold",
+      },
 });
