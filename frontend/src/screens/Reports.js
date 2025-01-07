@@ -9,7 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window');
 const { base_url } = require("../../config");
-const workout = require('../data/workoutData.json');
 
 
 
@@ -17,10 +16,6 @@ const Reports = () => {
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
-    const [category, setCategory] = useState('chest');
-    const [level, setLevel] = useState('beginner');
-    const [token, setToken] = useState();
-    const [email, setEmail] = useState();
     const [WorkoutData, setWorkoutData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [emptyData, setEmptyData] = useState(false);
@@ -50,18 +45,11 @@ const Reports = () => {
         const fetchUserDetails = async () => {
             try {
                 setLoading(true);
-                const selectedPart = await AsyncStorage.getItem("selectedPart");
-                const level = await AsyncStorage.getItem("level");
-                const email = await AsyncStorage.getItem("email");
                 const token = await AsyncStorage.getItem("auth_token");
-                const data = await AsyncStorage.getItem("baseData");
                 const decodedToken = jwtDecode(token);
                 const work = await getWorkoutData(value, decodedToken.email, token);
 
                 setWorkoutData(work);
-                setCategory(selectedPart);
-                setLevel(level);
-                setEmail(email);
             } catch (error) {
                 console.error("Error fetching user details", error);
             } finally {
@@ -73,6 +61,14 @@ const Reports = () => {
         isCurrentDateChange(new Date());
     }, []); // Empty dependency array ensures this runs only once
 
+    const dateFormater = (value) => {
+        const day = value.getDate().toString().padStart(2, '0');
+        const month = value.toLocaleString('en-GB', { month: 'short' });
+        const year = value.getFullYear();
+        const weekday = value.toLocaleString('en-GB', { weekday: 'long' });
+
+        return `${day} ${month} ${year}, ${weekday}`;
+    }
 
     const calculateTotalExercise = () => {
         return WorkoutData?.filter(item => item.type === "workout").length
@@ -242,7 +238,7 @@ const Reports = () => {
                             </View>
                         </View>
                         <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 24, marginBottom: 24 }}>
-                            <Text style={styles.subtitle}>{value.toDateString()}</Text>
+                            <Text style={styles.subtitle}>{dateFormater(value)}</Text>
                             <ScrollView>
                                 {WorkoutData?.filter(item => item.type === "workout").map((item, index) => (
                                     <View key={index}>
