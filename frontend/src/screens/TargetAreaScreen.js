@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import SVGComponent from "../components/svgComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastService } from '../components/ToastMessage';
+import LoadingScreen from './LoadingScreen';
 
 const { base_url } = require("../../config");
 
@@ -73,7 +74,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
         });
     };
 
-    const inputAccumulator = () => {debugger
+    const inputAccumulator = () => {
         const updatedUserData = {
             ...UserData,
             selectedBodyParts: selectedIds
@@ -111,6 +112,11 @@ const TargetAreaScreen = ({ navigation, route }) => {
             navigation.navigate("Login");
         }
     };
+
+    if (!gender) {
+        return <LoadingScreen message="Loading your activities..." />;
+    }
+
     return (
         <ImageBackground
             source={require("../../assets/images/background.png")}
@@ -139,6 +145,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                         onSelectionChange={handleSelectionChange}
                         selectedIds={selectedIds}
                         style={styles.svgComponent}
+                        gender={gender}
                     />
 
                     {/* <View style={styles.rightColumn}>
