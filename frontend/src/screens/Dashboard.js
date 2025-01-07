@@ -98,7 +98,7 @@ const Dashboard = () => {
                         });
                 }
             } catch (error) {
-                ToastService.show('error',null, 'An error occurred while fetching user details. Please re-login again.', 3000);
+                ToastService.show('error', null, 'An error occurred while fetching user details. Please re-login again.', 3000);
                 console.error("Error fetching user details", error);
             } finally {
                 setLoading(false);
@@ -310,9 +310,7 @@ const VideoPlay = (data) => {
                         }}>
                         <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
-                    <Text style={{
-                        // fontFamily: 'Poppins-Regular' 
-                    }}>
+                    <Text>
                         {currentExercise.title}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -342,7 +340,6 @@ const VideoPlayWarmup = (data) => {
     const navigation = useNavigation();
     const currentIndex = data.index;
     const category = data.category;
-    const isLastExercise = currentIndex === data.data.exercises[category].warmup.length - 1;
     const allExercises = data.data.exercises[category].warmup;
     const currentExercise = data.data.exercises[category].warmup[currentIndex];
     const [warmupCompleted, setWarmupCompleted] = useState([]);
@@ -433,25 +430,15 @@ const VideoPlayWarmup = (data) => {
                         }}>
                         <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
-                    <Text style={{
-                        // fontFamily: 'Poppins-Regular' 
-                    }}>
+                    <Text>
                         {currentExercise.title}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={{
-                            // fontFamily: 'Poppins-Regular',
-                            fontSize: 12
-                        }}>
+                        <Text style={{ fontSize: 12 }}>
                             <Image source={book} style={{ height: 25, width: 25 }} />
                             {'    ' + currentExercise.type}
                         </Text>
-                        <Text
-                            style={{
-                                // fontFamily: 'Poppins-Regular',
-                                fontSize: 12,
-                                color: '#8860a2',
-                            }}>
+                        <Text style={{ fontSize: 12, color: '#8860a2', }}>
                             {currentExercise.duration}
                         </Text>
                     </View>

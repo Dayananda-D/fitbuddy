@@ -26,11 +26,11 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Workouts = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex, isLastExercise } = route.params;
+    const { allExercises, currentExercise, currentIndex } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
-    const [isLast, setIsLast] = useState(isLastExercise);
+    const [isLast, setIsLast] = useState(false);
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
     const [reps, setReps] = useState(10);
@@ -87,7 +87,7 @@ const Workouts = ({ navigation, route }) => {
     };
 
     const moveToPrevExercise = () => {
-        clearTimer(); // Clear the timer
+        clearTimer();
         if (currentExerciseIndex !== 0) {
             const prevIndex = currentExerciseIndex - 1;
             setCurrentExerciseIndex(prevIndex);
@@ -99,7 +99,7 @@ const Workouts = ({ navigation, route }) => {
     };
 
     const moveToNextExercise = async () => {
-        clearTimer(); // Clear the timer
+        clearTimer();
         const exerciseData = allExercises[currentExerciseIndex];
         const calBurnPerRep = userData.gender === 'Male' ? exerciseData?.caloriesBurnedPerRepMen : exerciseData?.caloriesBurnedPerRepWomen;
 
@@ -129,18 +129,23 @@ const Workouts = ({ navigation, route }) => {
             const workoutCompleted = JSON.parse(await AsyncStorage.getItem("workoutCompleted")) || [];
             workoutCompleted[currentExerciseIndex] = true;
             await AsyncStorage.setItem("workoutCompleted", JSON.stringify(workoutCompleted));
-            console.log("workout completed updated:", workoutCompleted);
+
+            const allCompleted = workoutCompleted.length > 0 && workoutCompleted.every((completed) => completed);
+
+            if (!allCompleted) {
+                const incompleteIndex = workoutCompleted.findIndex(completed => !completed);
+                if (incompleteIndex !== -1) {
+                    setCurrentExerciseIndex(incompleteIndex);
+                    setCurrentExerciseData(allExercises[incompleteIndex]);
+                    setIsLast(incompleteIndex === workoutCompleted.lastIndexOf(false));
+                }
+            } else {
+                // Handle the case where all exercises are completed
+                console.log("All Workouts are completed");
+                navigation.goBack();
+            }
         } catch (error) {
             console.error("Error updating workout completed:", error);
-        }
-
-        if (currentExerciseIndex < allExercises.length - 1) {
-            const nextIndex = currentExerciseIndex + 1;
-            setCurrentExerciseIndex(nextIndex);
-            setCurrentExerciseData(allExercises[nextIndex]);
-            setIsLast(nextIndex === allExercises.length - 1);
-        } else {
-            navigation.goBack();
         }
     };
 
