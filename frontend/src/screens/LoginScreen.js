@@ -25,7 +25,7 @@ const LoginScreen = ({ route }) => {
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
     const [loading, setLoading] = useState(false);
-    
+
     const handleLogin = () => {
         console.log(base_url);
         if (!emailOrNumber || !password) {
@@ -72,12 +72,12 @@ const LoginScreen = ({ route }) => {
     };
 
     const handleSocialLogin = (platform) => {
-        ToastService.show('info',null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
+        ToastService.show('info', null, `Currently ${platform} login is not supported It will be available soon.`, 2000);
     };
 
     if (loading) {
         // Display a loading indicator while fetching user details
-        return <LoadingScreen message="Logging you in – unlocking your fitness journey, one step at a time!" />;
+        return <LoadingScreen message="Welcome back – today’s effort, tomorrow’s results!" />;
     }
 
     return (
