@@ -18,6 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
 import { ToastService } from '../components/ToastMessage';
+import WorkoutImage from "../components/workoutImage";
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
@@ -562,7 +563,7 @@ const Banner = ({ data }) => (
                 <BannerText>{toSentenceCase(data.selectedBodyParts[0]) + "  workout"}</BannerText>
             </View>
         </ImageBackground>
-        <Image source={model} style={styles.model} resizeMode="contain" />
+        <WorkoutImage userGender={data.gender} userSelectedWorkout={data.selectedBodyParts[0]} style={styles.model} />
     </>
 );
 
@@ -678,7 +679,7 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
         zIndex: 10,
-        height: '75%',
+        height: '70%',
         width: '50%',
         transform: [{ rotateY: '180deg' }],
     },
