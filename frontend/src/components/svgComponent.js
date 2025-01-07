@@ -57,11 +57,11 @@ const SVGComponent = (routes) => {
     };
     if (gender === "Female") {
         return (
-          <svg
+          <Svg
             viewBox="0 0 660.46 1206.46"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            class="w-full h-[38rem] animate-fade-in"
+            className="w-full h-[38rem] animate-fade-in"
             width={"60%"}
             height={"100%"}
           >
@@ -92,7 +92,7 @@ const SVGComponent = (routes) => {
             </Defs>
             <G
               id="calves"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("calves")}
             >
               <Path
@@ -106,7 +106,7 @@ const SVGComponent = (routes) => {
             </G>
             <G
               id="quads"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("quads")}
             >
               <Path
@@ -120,7 +120,7 @@ const SVGComponent = (routes) => {
             </G>
             <G
               id="obliques"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("obliques")}
             >
               <Path
@@ -135,7 +135,7 @@ const SVGComponent = (routes) => {
             <G
               id="abdominals"
               onPress={() => applyOnSelection("abdominals")}
-              class="bodymap text-mw-gray active:text-mw-red-700 lg:hover:text-mw-red-100"
+              className="bodymap text-mw-gray active:text-mw-red-700 lg:hover:text-mw-red-100"
             >
               <Path
                 d="M378.74,352.61c1.27-4.66,2.04-7.48.72-10.89-1.97-5.06-7.71-9.37-18.64-14-8.71-3.68-19.87-6.44-25.06-3.13-2.11,1.35-3.14,3.67-3.14,7.09,0,.98-.82,1.77-1.81,1.77-.18,0-.35-.03-.52-.07-.16.04-.34.07-.52.07-1,0-1.81-.79-1.81-1.77,0-3.42-1.02-5.74-3.14-7.09-5.19-3.31-16.34-.55-25.06,3.13-10.93,4.62-16.67,8.94-18.64,14-1.32,3.42-.55,6.23.72,10.89,1.28,4.7,3.04,11.15,3.41,21.39.09,2.57.04,3.78-.04,5.45-.07,1.8-.17,4.26-.14,9.83.09,11.28,2.03,59.8,3.84,92.13,1.69,30.31,11.79,53.79,17.67,65.1,9.04,17.41,18.51,26.52,23.19,26.52.18,0,.35.03.52.07.16-.04.34-.07.52-.07,4.68,0,14.15-9.11,23.19-26.52,5.88-11.31,15.98-34.79,17.67-65.1,1.8-32.35,3.75-80.86,3.84-92.13.04-5.57-.06-8.03-.15-9.83-.06-1.68-.12-2.89-.03-5.45.37-10.24,2.13-16.68,3.41-21.39ZM332.41,560.61c0,.98-.81,1.77-1.81,1.77-.11,0-.21,0-.31-.03-.1.02-.2.03-.31.03-1.01,0-1.81-.79-1.81-1.77v-66.54c0-.97.81-1.77,1.81-1.77.11,0,.21,0,.31.03.1-.02.2-.03.31-.03,1.01,0,1.81.79,1.81,1.77v66.54ZM358.61,468.94c-5.06-.12-18.38,1.36-22.98,2.55-3.24.84-3.23,6.42-3.22,11.32v.79c0,.97-.81,1.77-1.81,1.77-.11,0-.21,0-.31-.03-.1.02-.2.03-.31.03-1.01,0-1.81-.79-1.81-1.77v-.79c0-4.91.02-10.49-3.22-11.32-4.6-1.19-17.92-2.67-22.98-2.55-.98,0-1.83-.74-1.86-1.72-.03-.97.77-1.78,1.77-1.81,5.4-.13,19.09,1.39,24.01,2.67,2.16.56,3.53,1.89,4.4,3.64.87-1.75,2.24-3.08,4.4-3.64,4.92-1.28,18.63-2.8,24.01-2.67,1,.03,1.8.84,1.77,1.81-.03.98-.83,1.76-1.86,1.72ZM365.71,462.75c-4.82.19-8.2.47-11.18.71-3.73.3-6.86.56-11.42.56-1.49,0-3.11-.03-4.97-.09-.03,0-.06,0-.09,0-4.3-.36-6.58-1.94-7.76-5.43-1.2,3.49-3.46,5.07-7.76,5.43-.03,0-.06,0-.09,0-1.86.06-3.49.09-4.97.09-4.56,0-7.69-.26-11.42-.56-2.98-.24-6.36-.51-11.18-.71-1.01-.04-1.79-.86-1.74-1.84.05-.98.9-1.74,1.89-1.69,4.91.2,8.32.48,11.34.72,4.81.38,8.62.69,15.92.45,4.43-.38,5.7-1.25,5.7-17.3,0-.97.82-1.77,1.81-1.77.18,0,.35.03.52.07.16-.04.34-.07.52-.07,1,0,1.81.79,1.81,1.77,0,16.05,1.27,16.92,5.7,17.3,7.31.24,11.11-.07,15.92-.45,3.02-.25,6.43-.52,11.34-.72,1.02-.05,1.84.71,1.89,1.69.05.97-.73,1.79-1.74,1.84ZM301.68,417.07c4.92-.65,13.15-1.74,20.5-1.62,4.56.07,6.91,2.1,8.12,4.96,1.21-2.86,3.56-4.89,8.12-4.96,7.34-.11,15.58.97,20.5,1.62.99.13,1.69,1.02,1.55,1.99-.14.96-1.06,1.64-2.04,1.51-4.82-.64-12.88-1.7-19.95-1.59-4.64.07-5.84,2.52-5.84,11.95,0,.97-.82,1.77-1.81,1.77-.18,0-.35-.03-.52-.07-.16.04-.34.07-.52.07-1,0-1.81-.79-1.81-1.77,0-9.43-1.2-11.88-5.84-11.95-7.07-.11-15.14.95-19.95,1.59-.99.13-1.9-.55-2.04-1.51-.14-.97.56-1.85,1.55-1.99ZM367,415.51l-1.28.02c-3.07.06-6.09.11-9.03.11-9.92,0-18.72-.64-24.09-4.12-1.01-.65-1.76-1.48-2.31-2.47-.55.99-1.31,1.82-2.31,2.47-5.37,3.48-14.17,4.12-24.09,4.12-2.94,0-5.97-.05-9.03-.11l-1.28-.02c-1-.02-1.8-.83-1.78-1.8.02-.97.88-1.76,1.85-1.73l1.27.03c12.88.24,25.03.47,31.05-3.42,2.44-1.59,2.29-6.64,2.1-12.48-.05-1.74-.11-3.54-.11-5.43,0-.97.82-1.77,1.81-1.77.18,0,.35.03.52.07.16-.04.34-.07.52-.07,1,0,1.81.79,1.81,1.77,0,1.89-.06,3.68-.11,5.42-.19,5.85-.34,10.9,2.1,12.49,6.02,3.89,18.17,3.66,31.05,3.42l1.27-.03c.99-.03,1.83.76,1.85,1.73.02.97-.78,1.78-1.78,1.8ZM301.4,368.36l1.06-.32c4.84-1.46,12.95-3.9,19.9-2.55,4.41.86,6.72,3.01,7.94,5.72,1.22-2.71,3.53-4.86,7.94-5.72,6.95-1.36,15.05,1.09,19.9,2.55l1.06.32c.96.29,1.51,1.27,1.21,2.21-.29.94-1.31,1.46-2.26,1.17l-1.09-.33c-4.51-1.36-12.06-3.64-18.11-2.46-5.34,1.04-6.31,4.42-6.31,10.7,0,.97-.82,1.77-1.81,1.77-.18,0-.35-.03-.52-.07-.16.04-.34.07-.52.07-1,0-1.81-.79-1.81-1.77,0-6.28-.97-9.66-6.31-10.7-6.05-1.17-13.6,1.1-18.11,2.46l-1.09.33c-.95.28-1.97-.24-2.26-1.17-.3-.94.24-1.92,1.21-2.21ZM371.09,368.62c-.25.73-.96,1.19-1.71,1.19-.19,0-.39-.03-.59-.1-12.23-4.07-20.54-6.53-32.59-6.25-3.13-.02-4.91-1.9-5.9-4.87-.99,2.97-2.74,4.85-5.86,4.87-12.13-.28-20.41,2.18-32.64,6.25-.2.07-.4.1-.59.1-.75,0-1.46-.46-1.71-1.19-.33-.93.18-1.92,1.12-2.24,12.62-4.2,21.21-6.73,33.85-6.44,3.49-.02,3.49-8.97,3.49-16.87,0-.98.82-1.77,1.81-1.77.18,0,.35.03.52.07.16-.04.34-.07.52-.07,1,0,1.81.79,1.81,1.77,0,7.9,0,16.85,3.54,16.87,12.61-.28,21.19,2.24,33.81,6.44.94.32,1.45,1.32,1.12,2.24Z"
@@ -144,7 +144,7 @@ const SVGComponent = (routes) => {
             </G>
             <G
               id="hands"
-              class="text-mw-gray"
+              className="text-mw-gray"
               onPress={() => applyOnSelection("hands")}
             >
               <Path
@@ -167,7 +167,7 @@ const SVGComponent = (routes) => {
             <G
               id="forearms"
               onPress={() => applyOnSelection("forearms")}
-              class="bodymap text-mw-gray active:text-mw-red-700 lg:hover:text-mw-red-100"
+              className="bodymap text-mw-gray active:text-mw-red-700 lg:hover:text-mw-red-100"
             >
               <Path
                 d="M613.57,477.34c.16,4.29-.48,10.26-4.48,14.26-3.87,3.89-9.77,4.12-14.42,3.49h0c-2.78-2.39-6.15-5.13-10.18-8.28-1.42-1.11-2.92-2.27-4.51-3.5-11.9-9.18-28.19-21.76-53.85-48.72-3.79-3.98-5.27-5.67-6.99-7.62-1.02-1.16-2.12-2.42-3.84-4.3-3.83-4.2-5.83-7.02-7.66-9.95-.77-1.23-1.56-2.89-2.48-4.83-1.47-3.12-3.29-7-6.09-11.27-.6-.91-1.41-2.21-2.44-3.83-.04-.06-.08-.12-.12-.19,6.57,4.64,13.49,7.71,19.25,7.71,2.84,0,5.4-.74,7.49-2.39,4.87-3.85,10.39-13.38,1.74-36.38,12.13,16.24,21.48,24.2,29.82,31.31,8.55,7.27,15.93,13.55,24.9,26.96,14.17,21.18,27.24,44.65,33.96,56.87-.08.2-.12.42-.11.65Z"
@@ -177,12 +177,12 @@ const SVGComponent = (routes) => {
                 data-name="forearms"
                 d="M164.07,392.62c-.05.07-.08.12-.13.19-1.02,1.62-1.83,2.91-2.43,3.82-2.8,4.27-4.63,8.16-6.09,11.27-.92,1.93-1.7,3.6-2.48,4.84-1.83,2.92-3.84,5.73-7.66,9.94-1.71,1.88-2.82,3.14-3.84,4.3-1.72,1.95-3.2,3.64-6.99,7.62-25.66,26.95-41.95,39.53-53.85,48.72-1.58,1.23-3.08,2.38-4.51,3.5-4.03,3.15-7.39,5.89-10.18,8.28h0c-4.65.64-10.55.41-14.43-3.49-3.99-4.01-4.64-9.97-4.48-14.26,0-.22-.03-.44-.11-.64,6.71-12.22,19.8-35.69,33.97-56.88,8.97-13.42,16.35-19.69,24.9-26.96,8.34-7.1,17.7-15.07,29.84-31.33-8.67,23.02-3.15,32.56,1.72,36.41,2.1,1.65,4.65,2.39,7.49,2.39,5.77,0,12.69-3.06,19.25-7.71Z"
                 fill={colors.forearms}
-                stroke-width={0}
+                strokeWidth={0}
               ></Path>
             </G>
             <G
               id="biceps"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("biceps")}
             >
               <Path
@@ -197,14 +197,14 @@ const SVGComponent = (routes) => {
                 d="M225.68,309.3s.02-.02.02-.04c4.51-23.27-10.8-23.89-18.45-22.99-7.63.9-27.35,8.09-51.74,41.89-.02.02-.04.02-.04.04-3.36,4.77-6.29,9.5-8.84,14.17-20.83,37.72-13.32,50.11-8.16,54.18,7.32,5.78,23.15-1.71,35.45-14.96"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
             </G>
             <G
               id="chest"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("chest")}
             >
               <Path
@@ -219,7 +219,7 @@ const SVGComponent = (routes) => {
             <G
               id="front-shoulders"
               onPress={() => applyOnSelection("frontShoulders")}
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
             >
               <Path
                 d="M492.35,309.68c-12.28-13.25-22.58-19.56-29.7-22.55h0c-29.32-31.51-51.01-51.53-61.48-60.8.08-.05.2-.1.36-.12,21.23-2.86,27.56-3.57,29.36-3.75.18-.02.36-.03.55-.04.04,0,.07,0,.11,0,8.02-.48,19.08.57,28.22,11.34,11,13.34,16.9,33.09,21.64,48.96,1.72,5.75,3.35,11.19,4.98,15.46,1.83,4.77,3.78,8.16,5.97,11.52Z"
@@ -232,7 +232,7 @@ const SVGComponent = (routes) => {
             </G>
             <G
               id="traps"
-              class="bodymap active:text-mw-red-700 text-mw-red"
+              className="bodymap active:text-mw-red-700 text-mw-red"
               onPress={() => applyOnSelection("traps")}
             >
               <Path
@@ -244,71 +244,71 @@ const SVGComponent = (routes) => {
                 fill={colors.traps}
               ></Path>
             </G>
-            <G id="body" class="body-map__model">
+            <G id="body" className="body-map__model">
               <G>
                 <Path
                   d="M45.19,477.27c-.19,4.9.64,11.2,4.99,15.56,4.82,4.84,12.11,4.7,17.22,3.82h.02"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M229.09,220.64s1.82,0,30.21,3.82c1.76.24,2.75,1.93,1.43,3.09-9.4,8.31-31.62,28.69-61.72,61.05"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M294.59,160.7c.02.37.04.77.04,1.18.11,2.62.13,5.76.05,9.4v.37c-.05,2.53-.11,4.93-.14,7.2-.02.12-.02.23-.02.33-.99,40.41-3.47,42.72-7.72,42.72-17.85,0-21.96,2.45-28.58,7.9"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M200.88,287.88c6.38-1.6,16.06-5.42,26.14,5.09,12.52,13.06,15.41,26.92,28.86,31.73,13.15,4.71,74.11-3.56,74.11-32.43v-50.08c0-10.45-10.91-21.75-47.95-20.24"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M245.7,317.8s.05.07.09.11c4.11,5.02,11.85,12.74,26.06,26.24,19.62,18.62,6.31,33.12,4.83,103.04-.49,23.16-2.68,50.62-32.12,52.01-7.89.37-13.4-.77-17.24-2.69"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M227.26,496.73c13.71,4.51,32.97,5.65,46.48,32.63,31.54,62.98,56.25,64.72,56.25,80.31"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M283.56,797.29s-11.45,62.4-27.2,60.23c-19.5-2.68-7.39-52.28-31.2-35.79-11.62,8.04-16.22-34.64-17.31-51.29"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M199.33,874.17c3.71,2.38,8.37,5.49,8.99,13.45,1.56,20.19,15.34,20.63,23.37,21.54,14.96,1.69,23.42-3.12,27-13.96"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
               </G>
               <G>
@@ -316,319 +316,319 @@ const SVGComponent = (routes) => {
                   d="M329.78,331.68c0-16.4-22.02-9.26-30.74-5.57-9.48,4.01-17.1,8.53-19.6,14.99-3.01,7.76,3.26,12.56,4,32.96.19,5.31-.25,4.63-.17,15.24.08,11.06,2.03,59.75,3.84,92.21,2.85,51.09,30.55,93.29,42.67,93.29"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M291.2,368.05c12.44-4.14,20.9-6.63,33.23-6.35,5.35-.02,5.35-8.97,5.35-18.63"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M293.62,413.75c13.83.25,26.66.64,33.36-3.7,4.13-2.68,2.8-10.32,2.8-19.37"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M294.94,460.98c12.8.52,15.43,1.57,27.43,1.18,6.4-.54,7.4-3.66,7.4-19.06"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M301.92,370.06c4.32-1.28,13.04-4.2,20.08-2.83s7.78,6.49,7.78,12.43"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M301.92,418.82c5.68-.75,13.28-1.71,20.22-1.61,6.94.11,7.63,5.36,7.63,13.72"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
-                <line
+                <Line
                   x1="329.98"
                   y1="494.08"
                   x2="329.98"
                   y2="560.62"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
-                ></line>
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
+                ></Line>
                 <Path
                   d="M301.92,467.17c5.2-.12,18.71,1.37,23.5,2.61,4.79,1.24,4.56,7.96,4.56,13.81"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
               </G>
               <Path
                 d="M24.03,558.61s-3.51,7.17-4.34,9.48-3.07,8.34-3.08,10.92c0,2.58,10.02,19.71-.68,20.32"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M434.89,309.3s-.02-.02-.02-.04c-4.51-23.27,10.8-23.89,18.45-22.99,7.63.9,27.35,8.09,51.74,41.89.02.02.04.02.04.04,3.36,4.77,6.29,9.5,8.84,14.17,20.83,37.72,13.32,50.11,8.16,54.18-7.32,5.78-23.15-1.71-35.45-14.96"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M615.39,477.27c.19,4.9-.64,11.2-4.99,15.56-4.82,4.84-12.11,4.7-17.22,3.82h-.02"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M431.49,220.64s-1.82,0-30.21,3.82c-1.76.24-2.75,1.93-1.43,3.09,9.4,8.31,31.62,28.69,61.72,61.05"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M365.99,160.7c-.02.37-.04.77-.04,1.18-.11,2.62-.13,5.76-.05,9.4v.37c.05,2.53.11,4.93.14,7.2.02.12.02.23.02.33.99,40.41,3.47,42.72,7.72,42.72,17.85,0,21.96,2.45,28.58,7.9"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M459.7,287.88c-6.38-1.6-16.06-5.42-26.14,5.09-12.52,13.06-15.41,26.92-28.86,31.73-13.15,4.71-74.11-3.56-74.11-32.43v-50.08c0-10.45,10.91-21.75,47.95-20.24"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M414.87,317.8s-.05.07-.09.11c-4.11,5.02-11.85,12.74-26.06,26.24-19.62,18.62-6.31,33.12-4.83,103.04.49,23.16,2.68,50.62,32.12,52.01,7.89.37,13.4-.77,17.24-2.69"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M433.32,496.73c-13.71,4.51-32.97,5.65-46.48,32.63-31.54,62.98-56.25,64.72-56.25,80.31"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M377.02,797.29s11.45,62.4,27.2,60.23c19.5-2.68,7.39-52.28,31.2-35.79,11.62,8.04,16.22-34.64,17.31-51.29"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M461.25,874.17c-3.71,2.38-8.37,5.49-8.99,13.45-1.56,20.19-15.34,20.63-23.37,21.54-14.96,1.69-23.42-3.12-27-13.96"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <G>
                 <Path
                   d="M330.8,331.68c0-16.4,22.02-9.26,30.74-5.57,9.48,4.01,17.1,8.53,19.6,14.99,3.01,7.76-3.26,12.56-4,32.96-.19,5.31.25,4.63.17,15.24-.08,11.06-2.03,59.75-3.84,92.21-2.85,51.09-30.55,93.29-42.67,93.29"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M369.38,368.05c-12.44-4.14-20.9-6.63-33.23-6.35-5.35-.02-5.35-8.97-5.35-18.63"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M366.96,413.75c-13.83.25-26.66.64-33.36-3.7-4.13-2.68-2.8-10.32-2.8-19.37"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M365.64,460.98c-12.8.52-15.43,1.57-27.43,1.18-6.4-.54-7.4-3.66-7.4-19.06"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M358.66,370.06c-4.32-1.28-13.04-4.2-20.08-2.83-7.04,1.37-7.78,6.49-7.78,12.43"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M358.66,418.82c-5.68-.75-13.28-1.71-20.22-1.61-6.94.11-7.63,5.36-7.63,13.72"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
-                <line
+                <Line
                   x1="330.6"
                   y1="494.08"
                   x2="330.6"
                   y2="560.62"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
-                ></line>
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
+                ></Line>
                 <Path
                   d="M358.66,467.17c-5.2-.12-18.71,1.37-23.5,2.61-4.79,1.24-4.56,7.96-4.56,13.81"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
               </G>
               <Path
                 d="M636.55,558.61s3.51,7.17,4.34,9.48c.83,2.31,3.07,8.34,3.08,10.92,0,2.58-10.02,19.71.68,20.32"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M330.6,609.69c2.86,0,12.73,4.33,14.76,21.28,2.03,16.95,10.53,62.07,18.84,92.02,8.3,29.96,14.98,89.07,15.38,101.29,0,27.19,13.78,48.08,15.19,50.64,1.41,2.56,7.24,20.65,7.24,20.65-7.16,68.45,6.85,86.01,10.28,99.64,4.66,41.48,17.94,98.89,13.24,114.03-4.71,15.15.67,13.72.55,16.67-.11,2.94.12,9.91,1.23,16.56,1.12,6.65-1.68,11.99-1.45,17.43,1.45,12.09,12.09,10.46,11.97,14.48-2.46,18.53,16.65,20.7,16.65,20.7,9.51,13.16,21.4,2.91,21.4,2.91,7.88,2.64,10.4-1.99,10.4-1.99,7.14.4,7.27-3.11,7.27-3.11,5.57,1.19,7.49-4.25,7.49-4.25,5.63-5.62-.33-12.9-2.41-15.94-2.08-3.04-15.07-17.7-16.89-20.49-1.82-2.78-11.7-14.92-20.79-36.66-9.1-21.76,3.33-99.12,3.33-99.12,17.39-116.16-4.74-137.7-10.75-168.53-1.02-5.18-5.41-20.14-4.7-31.3,6.67-75.56,13.69-172.32,11.59-209.24-2.1-36.93-20.25-89.32-20.25-89.32-4.2-17.03-6.56-20.01-8.25-24.83-5.44-18.32-19.92-51.63-21.78-61.32-1.86-9.69-.46-28.31.16-30.44.62-2.12,4.51-24.07,8.24-32.7s10.74-40.58,11.51-43.91c.78-3.34,4.82-15.6,4.82-15.6,0,0,4.52,12.27,23.81,34.23,19.29,21.95,34.63,47.65,38.84,54.09,4.5,6.87,6.44,12.71,8.55,16.08,1.94,3.09,4.04,6,7.85,10.19,4.66,5.12,4.85,5.62,10.86,11.94,29.22,30.69,46.58,43,58.55,52.39,11.97,9.39,20.33,16.68,20.93,20.48,0,6.02-3.94,16.29-1.75,22.59,2.19,6.29,1.53,6.99,2.9,12.54,1.38,5.56,6.07,9.09,7.53,15.26.62,12.07.87,16.76,3.85,18.6s8.7,2.85,10.69-3c2-5.85-1.39-13.82-1.42-15.76s.18-7.95.18-7.95c0,0,3.19,1.54,5.23,3.24,6.43,4.81,11.83,12.14,11.83,12.14,2.69,3.77,4.56,10.16,4.56,10.16-.36,7.23.68,10.43-2.62,20.52s5.19,10.27,5.89,8.16,2.4-5.53,2.4-5.53c6.87-10.28,5.02-22.99,5.02-22.99-1.54-9.54-3.49-22.57-3.49-22.57-6.2-20.01-21.22-45.52-22.51-47.7-1.28-2.19-3.06-8.27-5.53-12.33-2.48-4.07-7.17-9.91-7.17-9.91-2.52-4.25-19.51-36.68-38.62-65.26-19.12-28.57-32.02-26.04-58.38-63.3-12.41-17.54-15.2-24.42-20.82-34.11-6.2-10.67-10.28-14.29-13.96-23.9-6-15.7-11.55-46.3-26.9-64.91-14.89-17.52-34.35-10.71-39.58-11.14-5.22-.43-43.58-16.44-45.46-19.26-1.9-2.82-8.45-11.25-9.56-15.8-.26-1.91-.44-4.82-.55-8.2v-.04c-.06-1.99-.11-4.15-.14-6.35,0-.2,0-.41,0-.6-.02-3.15,0-6.37.05-9.35,0-.29,0-.57.02-.85.1-4.61.29-8.52.56-10.48"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M379.61,97.79s10.76-3.74,9.77,12.16c-1.01,15.9-9.79,23.04-15.57,19.9"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M280.97,97.79s-10.76-3.74-9.77,12.16c1.01,15.9,9.79,23.04,15.57,19.9"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M294.05,150.59c.27,1.96.46,5.87.56,10.48,0,.27,0,.56.02.85.06,3.18.08,6.65.05,10v.32c-.02,2.07-.06,4.1-.13,5.98v.04c-.11,3.38-.29,6.29-.55,8.2-1.11,4.55-7.66,12.98-9.56,15.8-1.89,2.82-40.24,18.83-45.46,19.26-5.22.43-24.69-6.38-39.58,11.14-15.34,18.61-20.9,49.21-26.91,64.91-3.67,9.61-7.74,13.23-13.95,23.9-5.62,9.69-8.42,16.58-20.82,34.11-26.35,37.26-39.26,34.73-58.38,63.3-19.11,28.58-36.09,61.01-38.62,65.26,0,0-4.7,5.84-7.17,9.91-2.48,4.06-4.25,10.14-5.53,12.33-1.29,2.19-16.31,27.7-22.51,47.7,0,0-1.95,13.03-3.49,22.57,0,0-1.85,12.71,5.02,22.99,0,0,1.7,3.41,2.4,5.53s9.2,1.93,5.89-8.16c-3.3-10.09-2.26-13.29-2.62-20.52,0,0,1.87-6.39,4.56-10.16,0,0,5.4-7.33,11.83-12.14,2.04-1.7,5.23-3.24,5.23-3.24,0,0,.22,6.01.18,7.95s-3.42,9.91-1.42,15.76c2,5.85,7.72,4.84,10.69,3s3.23-6.53,3.85-18.6c1.46-6.17,6.15-9.7,7.53-15.26,1.37-5.55.72-6.25,2.9-12.54,2.19-6.3-1.75-16.58-1.75-22.59.6-3.8,8.96-11.09,20.93-20.48,11.97-9.39,29.33-21.7,58.55-52.39,6-6.32,6.19-6.82,10.86-11.94,3.81-4.19,5.91-7.1,7.85-10.19,2.11-3.37,4.05-9.21,8.55-16.08,4.22-6.44,19.55-32.14,38.84-54.09,19.29-21.96,23.81-34.23,23.81-34.23,0,0,4.04,12.27,4.82,15.6.77,3.33,7.77,35.28,11.51,43.91,3.74,8.63,7.63,30.58,8.24,32.7.63,2.13,2.02,20.75.16,30.44-1.87,9.69-16.34,43-21.78,61.32-1.7,4.82-4.05,7.8-8.25,24.83,0,0-18.15,52.39-20.25,89.32-2.1,36.92,4.92,133.68,11.59,209.24.71,11.16-3.68,26.12-4.7,31.3-6,30.83-28.13,52.37-10.75,168.53,0,0,12.42,77.36,3.33,99.12-9.09,21.75-18.96,33.88-20.79,36.66-1.81,2.78-14.81,17.45-16.89,20.49-2.09,3.04-8.04,10.32-2.41,15.94,0,0,1.92,5.44,7.49,4.25,0,0,.14,3.5,7.27,3.11,0,0,2.52,4.62,10.4,1.99,0,0,11.89,10.25,21.4-2.91,0,0,19.11-2.17,16.65-20.7-.12-4.02,10.52-2.39,11.97-14.48.23-5.45-2.58-10.79-1.45-17.43,1.12-6.65,1.34-13.62,1.23-16.56-.12-2.95,5.26-1.53.55-16.67-4.7-15.15,8.58-72.55,13.24-114.03,3.43-13.63,17.43-31.19,10.28-99.64,0,0,5.82-18.09,7.24-20.65,1.41-2.57,15.19-23.45,15.19-50.64.4-12.22,7.08-71.33,15.38-101.29,8.31-29.95,16.8-75.07,18.84-92.02,2.02-16.95,11.9-21.28,14.76-21.28"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <G>
                 <Path
                   d="M367,149.3s-5.6,19.62-36.4,24.98"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
                 <Path
                   d="M293.57,149.3s5.6,19.62,36.4,24.98"
                   fill="none"
                   stroke="#484a68"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width={3.58}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={3.58}
                 ></Path>
               </G>
               <Path
                 d="M297.76,13.4l-.11.03c-1.4.39-2.78.79-4.07,1.36-31.24,13.79-34.54,60.58-30.56,97.35,1.61,14.85,9.91,42.02,24.09,62.13,6.84,9.7,12.68-21.42-.33-44.42-6.1-10.79-7.31-23.38-5.8-32.06,4.05-23.49,14.76-32.83,30.62-44.47"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M296.55,17.72c-.18-16.2,43.7-19.12,62.07-12.9,35.89,12.16,48.86,58.31,46.26,92.58-2.03,26.7-8.66,47.75-29.13,79.19-7.44,11.44-15.83-25.4-1.95-46.74,6.65-10.22,5.8-19.31,5.8-32.07,0-28.77-46.58-23.9-72.69-48.38"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M328.54,37.06c8.1,12.59,17.04,19.33,29.18,25.88,20.83,11.22,23.06,21.93,21.91,44.13"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M364.43,47.89c3.82,10.01,17.37,32.08,15.21,54.64"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
               <Path
                 d="M294.97,54.31c-9.45,8.76-14.9,30.21-14.5,51.24"
                 fill="none"
                 stroke="#484a68"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Path>
             </G>
-            <G id="shoulders" class="hidden" style={styles.hidden}>
+            <G id="shoulders" className="hidden" style={styles.hidden}>
               <Ellipse
                 id="hover"
                 cx={230.39}
@@ -637,7 +637,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={430.19}
@@ -646,7 +646,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={230.39}
@@ -654,9 +654,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={430.19}
@@ -664,12 +664,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-            <G id="hips" class="hidden" style={styles.hidden}>
+            <G id="hips" className="hidden" style={styles.hidden}>
               <Ellipse
                 cx={254.33}
                 cy={500.07}
@@ -677,7 +677,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 id="hover-8"
@@ -688,7 +688,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={406.25}
@@ -696,9 +696,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={254.33}
@@ -706,12 +706,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-            <G id="knees" class="hidden" style={styles.hidden}>
+            <G id="knees" className="hidden" style={styles.hidden}>
               <Ellipse
                 cx={239.96}
                 cy={867.71}
@@ -719,7 +719,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={420.62}
@@ -728,7 +728,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={420.62}
@@ -736,9 +736,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={239.96}
@@ -746,12 +746,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-            <G id="ankles" class="hidden" style={styles.hidden}>
+            <G id="ankles" className="hidden" style={styles.hidden}>
               <Ellipse
                 cx={444.56}
                 cy={1113.44}
@@ -759,7 +759,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={216.02}
@@ -768,7 +768,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={444.56}
@@ -776,9 +776,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={216.02}
@@ -786,12 +786,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-            <G id="wrist" class="hidden" style={styles.hidden}>
+            <G id="wrist" className="hidden" style={styles.hidden}>
               <Ellipse
                 cx={608.5}
                 cy={492.26}
@@ -799,7 +799,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={52.08}
@@ -808,7 +808,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={608.5}
@@ -816,9 +816,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={52.08}
@@ -826,12 +826,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-            <G id="elbow" class="hidden" style={styles.hidden}>
+            <G id="elbow" className="hidden" style={styles.hidden}>
               <Ellipse
                 cx={134.9}
                 cy={396.71}
@@ -839,7 +839,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={525.68}
@@ -848,7 +848,7 @@ const SVGComponent = (routes) => {
                 ry={25.49}
                 fill="url(#jointradial)"
                 opacity={1}
-                stroke-width={0}
+                strokeWidth={0}
               ></Ellipse>
               <Ellipse
                 cx={525.68}
@@ -856,9 +856,9 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
               <Ellipse
                 cx={134.9}
@@ -866,12 +866,12 @@ const SVGComponent = (routes) => {
                 rx={12.76}
                 ry={12.42}
                 fill="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width={3.58}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={3.58}
               ></Ellipse>
             </G>
-          </svg>
+          </Svg>
         );
     } else {
         return (
