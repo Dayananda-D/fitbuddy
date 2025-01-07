@@ -9,6 +9,7 @@ import {
     Animated,
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Audio } from "expo-av";
 
 const { base_url } = require("../../config");
 const InstructionText = ({ instructions, title }) => {
@@ -164,35 +165,83 @@ const TimerButton = ({ duration, onComplete, isLast }) => {
         durationInSeconds = numericDuration;
     }
 
+    const formatTime = (totalSeconds) => {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    };
+
     const durationInMilliseconds = durationInSeconds * 1000;
-    const [timer, setTimer] = useState("00:00");
+    const [timer, setTimer] = useState(formatTime(durationInSeconds));
     const [isRunning, setIsRunning] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const [remainingSeconds, setRemainingSeconds] = useState(durationInSeconds);
     const progress = useRef(new Animated.Value(0)).current;
+    const [countdownPlayed, setCountdownPlayed] = useState(false);
+
+    const startSound = useRef(null);
+    const endCountdownSound = useRef(null);
+
+    useEffect(() => {
+        // Load audio files
+        const loadSounds = async () => {
+            startSound.current = new Audio.Sound();
+            endCountdownSound.current = new Audio.Sound();
+            await startSound.current.loadAsync(require("../../assets/go.mp3"));
+            await endCountdownSound.current.loadAsync(require("../../assets/10countdown.mp3"));
+        };
+        loadSounds();
+
+        return () => {
+            // Unload sounds when the component unmounts
+            if (startSound.current) startSound.current.unloadAsync();
+            if (endCountdownSound.current) endCountdownSound.current.unloadAsync();
+        };
+    }, []);
 
     useEffect(() => {
         let interval;
         if (isRunning) {
-            let seconds = 0;
             interval = setInterval(() => {
-                seconds++;
-                const minutes = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                setTimer(
-                    `${minutes.toString().padStart(2, "0")}:${secs
-                        .toString()
-                        .padStart(2, "0")}`
-                );
+                setRemainingSeconds((prev) => {
+                    const newRemaining = prev - 1;
 
-                if (seconds >= durationInSeconds) {
-                    clearInterval(interval);
-                    setIsRunning(false);
-                    setCompleted(true);
-                }
+                    if (newRemaining <= 10 && !countdownPlayed) {
+                        playEndCountdown();
+                        setCountdownPlayed(true);
+                    }
+
+                    if (newRemaining <= 0) {
+                        clearInterval(interval);
+                        setIsRunning(false);
+                        setCompleted(true);
+                        return 0;
+                    }
+
+                    return newRemaining;
+                });
             }, 1000);
         }
         return () => clearInterval(interval);
-    }, [isRunning]);
+    }, [isRunning, countdownPlayed]);
+
+    useEffect(() => {
+        setTimer(formatTime(remainingSeconds));
+    }, [remainingSeconds]);
+
+
+
+    const playStartSound = async () => {
+        if (startSound.current) {
+            await startSound.current.replayAsync();
+        }
+    };
+
+    const playEndCountdown = async () => {
+        if (endCountdownSound.current) {
+            await endCountdownSound.current.replayAsync();
+        }
+    };
 
     const startAnimation = () => {
         setIsRunning(true);
@@ -210,6 +259,8 @@ const TimerButton = ({ duration, onComplete, isLast }) => {
 
     const handleClick = () => {
         if (!isRunning && !completed) {
+            playStartSound(); // Play start sound
+            setCountdownPlayed(false); // Reset countdown flag
             startAnimation();
         } else if (completed) {
             onComplete();
