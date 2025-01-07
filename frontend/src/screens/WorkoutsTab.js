@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
     View,
     Text,
@@ -162,12 +162,11 @@ const WorkoutTab = () => {
                                 position: 'absolute',
                                 marginVertical: 10,
                                 width: '90%',
-                                height: '89%',
+                                height: '90%',
                                 backgroundColor: 'rgba(0,0,0,0.7)',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 zIndex: 2,
-                                // marginLeft: 12,
                                 borderRadius: 10,
                             }}
                         >
