@@ -224,16 +224,16 @@ const Reports = () => {
                             <Text style={styles.subtitle}>Today's Total:</Text>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text style={styles.innerItems}>Calories Burnt:</Text>
-                                    <Text>{calculateTotalcalories() + ' Calories'}</Text>
+                                    <Text style={styles.numberItems}>{calculateTotalcalories()}</Text>
+                                    <Text style={styles.innerItems}>Calories Burnt</Text>
                                 </View>
                                 <View>
-                                    <Text style={styles.innerItems}>Duration:</Text>
-                                    <Text>{calculateTotalTime() + ' Mins'}</Text>
+                                    <Text style={styles.numberItems}>{calculateTotalTime()}</Text>
+                                    <Text style={styles.innerItems}>Workout duration</Text>
                                 </View>
                                 <View>
-                                    <Text style={styles.innerItems}>Exercises:</Text>
-                                    <Text>{calculateTotalExercise()}</Text>
+                                    <Text style={styles.numberItems}>{calculateTotalExercise()}</Text>
+                                    <Text style={styles.innerItems}>Exercises</Text>
                                 </View>
                             </View>
                         </View>
@@ -251,9 +251,9 @@ const Reports = () => {
                                                 <Text style={styles.title}>{item.workoutName}</Text>
                                             </View>
                                             <View style={{ justifyContent: 'space-around' }}>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.workoutDuration}</Text>
-                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: {item.reps}</Text>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {item.calBurnPerRep * item.reps}</Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: <b>{item.workoutDuration}</b></Text>
+                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: <b>{item.reps}</b></Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: <b>{Math.round(item.calBurnPerRep * item.reps)}</b></Text>
                                             </View>
                                         </View>
                                     </View>
@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         textAlign: 'center',
         alignItems: 'center',
+        display: 'flex'
     },
     picker: {
         flex: 1,
@@ -428,4 +429,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'grey',
     },
+    numberItems: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 30,
+        fontWeight: "bold",
+    }
 });
