@@ -128,7 +128,15 @@ const SignupScreen = () => {
                 await AsyncStorage.setItem('user_name', username);
                 await AsyncStorage.setItem('user_level', level);
 
-                navigation.navigate('Gender', { access_token });
+                navigation.navigate("Gender", {
+                  UserData: {
+                    name: username,
+                    email: email,
+                    password: password,
+                    dateOfBirth: dob,
+                    level: level,
+                  },
+                });
                 ToastService.show('success', null, `Signed up successfully!\nUsername: ${username}`, 2000);
             }).catch(error => {
                 console.error('Error:', error);

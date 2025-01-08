@@ -3,7 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from "react
 import SVGComponent from "../components/svgComponent";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastService } from '../components/ToastMessage';
+import Popup from "../components/popup";
 import LoadingScreen from './LoadingScreen';
+const workout = require('../data/workoutData.json');
 
 const { base_url } = require("../../config");
 
@@ -21,44 +23,27 @@ const bodyParts = [
 ];
 
 const TargetAreaScreen = ({ navigation, route }) => {
-    const UserData = route.params?.UserData || {};
+    const userData = route.params?.UserData || {};
     const [selectedIds, setSelectedIds] = useState([]);
-    const [userEmail, setUserEmail] = useState();
-    const [gender, setGender] = useState();
-    const [goal, setGoal] = useState();
+    const [baseData, setBasedata] = useState();
+    const [isPopupVisible, setPopupVisible] = useState(false);
 
     useEffect(() => {
-        const fetchUserDetails = async () => {
-            try {
-                const email = await AsyncStorage.getItem('email');
-
-                if (email) setUserEmail(email);
-            } catch (error) {
-                console.error('Error fetching user details', error);
+      (async () => {
+        setBasedata(userData);
+        if (!userData.hasOwnProperty("gender")) {
+          try {
+            const data = await AsyncStorage.getItem("baseData");
+            const userDetails = JSON.parse(data);
+            setBasedata(userDetails);
+            if (userDetails?.selectedBodyParts[0]) {
+              handleSelectionChange(userDetails?.selectedBodyParts[0]);
             }
-        };
-
-        fetchUserDetails();
-    }, []);
-
-    useEffect(async () => {
-        if (!UserData.hasOwnProperty("gender")) {
-            try {
-                const basedata = await AsyncStorage.getItem('baseData');
-                const email = JSON.parse(basedata).email;
-                const gender = JSON.parse(basedata).gender;
-                const goal = JSON.parse(basedata).goal;
-
-                setUserEmail(email);
-                setGender(gender);
-                setGoal(goal);
-            } catch (error) {
-                console.error('Error fetching user details', error);
-            }
-
-            UserData['gender'] = gender;
-            UserData['goal'] = goal;
+          } catch (error) {
+            console.error("Error fetching user details", error);
+          }
         }
+      })();
     }, []);
 
     const handleSelectionChange = (key) => {
@@ -76,15 +61,15 @@ const TargetAreaScreen = ({ navigation, route }) => {
 
     const inputAccumulator = () => {
         const updatedUserData = {
-            ...UserData,
+            ...userData,
             selectedBodyParts: selectedIds
         };
         if (!updatedUserData.hasOwnProperty("gender")) {
-            updatedUserData['gender'] = gender;
-            updatedUserData['goal'] = goal;
+            updatedUserData['gender'] = baseData.gender;
+            updatedUserData['goal'] = baseData.goal;
         }
-        if (userEmail) {
-            fetch(`${base_url}/user/${userEmail}`, {
+        if (baseData.email) {
+            fetch(`${base_url}/user/${baseData.email}`, {
                 method: "PUT",
                 headers: {
                     Accept: "application/json",
@@ -113,9 +98,11 @@ const TargetAreaScreen = ({ navigation, route }) => {
         }
     };
 
-    if (!gender) {
+    if (!baseData?.gender) {
         return <LoadingScreen message="Loading your activities..." />;
     }
+    
+
 
     return (
         <ImageBackground
@@ -124,6 +111,21 @@ const TargetAreaScreen = ({ navigation, route }) => {
         >
             <View style={styles.container}>
                 <Text style={styles.title}>What do you want to workout?</Text>
+
+                {selectedIds.length ? (
+                    <TouchableOpacity
+                        style={styles.workoutButton}
+                        onPress={() => setPopupVisible(true)}
+                    >
+                        <Text style={styles.buttonText}>Select workouts</Text>
+                    </TouchableOpacity>
+                ) : null}
+                <Popup
+                    visible={isPopupVisible}
+                    onClose={() => setPopupVisible(false)}
+                    data={workout.exercises[selectedIds[0]]?.["advanced"]}
+                />
+
                 <View style={styles.buttonContainer}>
 
                     <View style={styles.leftColumn}>
@@ -145,7 +147,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                         onSelectionChange={handleSelectionChange}
                         selectedIds={selectedIds}
                         style={styles.svgComponent}
-                        gender={gender}
+                        gender={baseData.gender}
                     />
 
                     {/* <View style={styles.rightColumn}>
@@ -195,7 +197,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         color: "#fff",
-        marginBottom: 100,
+        marginBottom: 10,
         textAlign: "center",
     },
     buttonContainer: {
@@ -225,6 +227,13 @@ const styles = StyleSheet.create({
     },
     selectedButton: {
         backgroundColor: "#FF5722",
+    },
+    workoutButton: {
+        marginTop: 20,
+        backgroundColor: "#007BFF",
+        padding: 10,
+        borderRadius: 5,
+        alignItems: "center",
     },
     buttonText: {
         color: "#fff",

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from "react-native";
 
-const GenderScreen = ({ navigation }) => {
+const GenderScreen = ({ navigation, route }) => {
+    const { UserData } = route.params;
     const [gender, setGender] = useState("");
-    const UserData = {};
 
     const inputAccumulator = (value) => {
         setGender(value);
-        UserData.gender = value,
-            navigation.navigate("Goal", { UserData });
+        navigation.navigate("Goal", { UserData: {...UserData, gender: value}  });
     };
 
     return (
