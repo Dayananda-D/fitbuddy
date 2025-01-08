@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,12 +9,52 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   ScrollView,
-  TouchableHighlight
 } from "react-native";
-import FeatherIcons from "react-native-vector-icons/Feather"; // Icons library
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import FeatherIcons from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Popup = ({ visible, onClose, data }) => {
+  const [selectedWorkouts, setSelectedWorkouts] = useState([]);
+
+  // Load selected workouts from AsyncStorage on component mount
+  useEffect(() => {
+    const loadSelectedWorkouts = async () => {
+      const storedWorkouts = await AsyncStorage.getItem("selectedWorkouts");
+      if (storedWorkouts) {
+        setSelectedWorkouts(JSON.parse(storedWorkouts));
+      }
+    };
+    loadSelectedWorkouts();
+  }, []);
+
+  // Save selected workouts to AsyncStorage whenever they change
+  useEffect(() => {
+    const saveSelectedWorkouts = async () => {
+      await AsyncStorage.setItem(
+        "selectedWorkouts",
+        JSON.stringify(selectedWorkouts)
+      );
+    };
+    saveSelectedWorkouts();
+  }, [selectedWorkouts]);
+
+  // Handle workout selection or unselection
+  const handleWorkoutSelectionChange = (title) => {
+    if (selectedWorkouts.includes(title)) {
+      // Unselect workout
+      setSelectedWorkouts((prev) =>
+        prev.filter((workout) => workout !== title)
+      );
+    } else {
+      // Select workout
+      setSelectedWorkouts((prev) => [...prev, title]);
+    }
+  };
+
+  // Check if a workout is selected
+  const isWorkoutSelected = (title) => selectedWorkouts?.includes(title);
+
   return (
     <Modal
       animationType="slide"
@@ -32,13 +72,42 @@ const Popup = ({ visible, onClose, data }) => {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
                   <ScrollView>
-                    <TouchableOpacity>
-                      <View style={styles.listItem}>
-                        <Text style={styles.itemTitle}>{item.title}</Text>
-                        <FeatherIcons name="bookmark" size={24} color="#000" />
+                    <TouchableOpacity
+                      onPress={() => handleWorkoutSelectionChange(item.title)}
+                    >
+                      <View
+                        style={[
+                          styles.listItem,
+                          isWorkoutSelected(item.title) && styles.selectedItem,
+                        ]}
+                      >
+                        <Text
+                          style={[
+                            styles.itemTitle,
+                            isWorkoutSelected(item.title) &&
+                              styles.selectedText,
+                          ]}
+                        >
+                          {item.title}
+                        </Text>
 
-                        {/* after seleting workout hilight the icon */}
-                        {/* <Icon name="bookmark" size={24} color="#fff" /> */} 
+                        <FeatherIcons
+                          name="bookmark"
+                          size={24}
+                          color={
+                            isWorkoutSelected(item.title) ? "#fff" : "#000"
+                          }
+                        />
+
+                        {/* {isWorkoutSelected(item.title) ? (
+                          <FeatherIcons
+                            name="bookmark"
+                            size={24}
+                            color="#000"
+                          />
+                        ) : (
+                          <Icon name="bookmark" size={26} color="#f7a000" />
+                        )} */}
                       </View>
                     </TouchableOpacity>
                   </ScrollView>
@@ -63,7 +132,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   popup: {
-    backgroundColor: "white",
+    backgroundColor: "#e2e0e0",
     borderRadius: 10,
     padding: 20,
     width: "90%",
@@ -77,25 +146,27 @@ const styles = StyleSheet.create({
   listItem: {
     marginBottom: 10,
     borderRadius: 5,
-    borderColor: "rgba(0, 0, 0, 0.5)",
+    borderColor: "#77777780",
     borderWidth: 1,
     padding: 10,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+  },
+  selectedItem: {
+    backgroundColor: "#c3bdd2",
+    borderColor:"#c3bdd2"
   },
   itemTitle: {
     fontSize: 14,
-    // fontWeight: "bold",
   },
-  itemDescription: {
-    fontSize: 14,
-    color: "gray",
-  },
+  // selectedText: {
+  //   color: "#fff",
+  // },
   closeButton: {
     marginTop: 20,
-    backgroundColor: "#007BFF",
+    backgroundColor: "#3d98fb",
     padding: 10,
     borderRadius: 10,
     alignItems: "center",

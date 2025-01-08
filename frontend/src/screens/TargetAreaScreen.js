@@ -28,20 +28,22 @@ const TargetAreaScreen = ({ navigation, route }) => {
     const [baseData, setBasedata] = useState();
     const [isPopupVisible, setPopupVisible] = useState(false);
 
-    useEffect(async () => {
+    useEffect(() => {
+      (async () => {
         setBasedata(userData);
         if (!userData.hasOwnProperty("gender")) {
-            try {
-                const data = await AsyncStorage.getItem('baseData');
-                const userDetails = JSON.parse(data)
-                setBasedata(userDetails);
-                if (userDetails?.selectedBodyParts[0]) {
-                    handleSelectionChange(userDetails?.selectedBodyParts[0]);
-                }
-            } catch (error) {
-                console.error('Error fetching user details', error);
+          try {
+            const data = await AsyncStorage.getItem("baseData");
+            const userDetails = JSON.parse(data);
+            setBasedata(userDetails);
+            if (userDetails?.selectedBodyParts[0]) {
+              handleSelectionChange(userDetails?.selectedBodyParts[0]);
             }
+          } catch (error) {
+            console.error("Error fetching user details", error);
+          }
         }
+      })();
     }, []);
 
     const handleSelectionChange = (key) => {
