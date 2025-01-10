@@ -4,15 +4,16 @@ import moment, { duration } from 'moment';
 import Swiper from 'react-native-swiper';
 import { Ionicons } from "@expo/vector-icons";
 import LoadingScreen from './LoadingScreen';
-import { jwtDecode } from 'jwt-decode';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { jwtDecode } from 'jwt-decode';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getWorkoutData } from '../database/database';
+import { useSQLiteContext } from 'expo-sqlite';
 
 const { width } = Dimensions.get('window');
-const { base_url } = require("../../config");
-
-
+// const { base_url } = require("../../config");
 
 const Reports = () => {
+    const db = useSQLiteContext();
     const swiper = useRef();
     const [value, setValue] = useState(new Date());
     const [week, setWeek] = useState(0);
@@ -45,11 +46,12 @@ const Reports = () => {
         const fetchUserDetails = async () => {
             try {
                 setLoading(true);
-                const token = await AsyncStorage.getItem("auth_token");
-                const decodedToken = jwtDecode(token);
-                const work = await getWorkoutData(value, decodedToken.email, token);
+                // const token = await AsyncStorage.getItem("auth_token");
+                // const decodedToken = jwtDecode(token);
+                const allRows = await getWorkoutData(value, db);
 
-                setWorkoutData(work);
+                setWorkoutData(allRows);
+                console.log(value);
             } catch (error) {
                 console.error("Error fetching user details", error);
             } finally {
@@ -119,13 +121,13 @@ const Reports = () => {
         // if (new Date(WorkoutData[0].date).getDate() !== new Date(date).getDate()) {
         setLoading(true);
         try {
-            const token = await AsyncStorage.getItem("auth_token");
-            const data = await AsyncStorage.getItem("baseData");
-            const decodedToken = jwtDecode(token);
-            const work = await getWorkoutData(date, decodedToken.email, token);
-
-            if (work !== undefined) {
-                setWorkoutData(work);
+            // const token = await AsyncStorage.getItem("auth_token");
+            // const data = await AsyncStorage.getItem("baseData");
+            // const decodedToken = jwtDecode(token);
+            // const work = await getWorkoutData(date, decodedToken.email, token);
+            const allRows = await getWorkoutData(date, db);
+            if (allRows !== undefined) {
+                setWorkoutData(allRows);
                 setEmptyData(false);
             } else { setEmptyData(true); }
         } catch (error) {
@@ -251,9 +253,9 @@ const Reports = () => {
                                                 <Text style={styles.title}>{item.workoutName}</Text>
                                             </View>
                                             <View style={{ justifyContent: 'space-around' }}>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: <b>{item.workoutDuration}</b></Text>
-                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: <b>{item.reps}</b></Text>
-                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: <b>{Math.round(item.calBurnPerRep * item.reps)}</b></Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="time" size={18} color="grey" /> Duration: {item.workoutDuration}</Text>
+                                                <Text style={styles.totalInnerItems}> <Ionicons name="body" size={18} color="green" /> Total Reps: {item.reps}</Text>
+                                                <Text style={styles.totalInnerItems}><Ionicons name="flame" size={18} color="red" /> Calorie Burnt: {Math.round(item.calBurnPerRep * item.reps)}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -274,30 +276,30 @@ const Reports = () => {
 
 export default Reports;
 
-const getWorkoutData = async (date, email, token) => {
-    try {
-        const response = await fetch(`${base_url}/wokout/${date}/${email}`, {
-            method: "GET",
-            headers: {
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
+// const getWorkoutData = async (date, email, token) => {
+//     try {
+//         const response = await fetch(`${base_url}/wokout/${date}/${email}`, {
+//             method: "GET",
+//             headers: {
+//                 "Accept": "application/json",
+//                 "Authorization": `Bearer ${token}`
+//             }
+//         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
 
-        const data = await response.json();
-        if (data?.message) {
-            throw new Error(data.message);
-        }
-        console.log("Workout data:", data);
-        return data
-    } catch (error) {
-        console.error("Error fetching workout:", error);
-    }
-};
+//         const data = await response.json();
+//         if (data?.message) {
+//             throw new Error(data.message);
+//         }
+//         console.log("Workout data:", data);
+//         return data
+//     } catch (error) {
+//         console.error("Error fetching workout:", error);
+//     }
+// };
 
 const styles = StyleSheet.create({
     container: {

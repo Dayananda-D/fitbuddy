@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import Counter from "../components/Counter";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSQLiteContext } from 'expo-sqlite';
+import { insertUserWorkout } from '../database/database';
 
-const { base_url } = require("../../config");
+// const { base_url } = require("../../config");
 
 const InstructionText = ({ instructions, title }) => {
     return (
@@ -26,6 +28,7 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Workouts = ({ navigation, route }) => {
+    const db = useSQLiteContext();
     const { allExercises, currentExercise, currentIndex } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
@@ -121,8 +124,8 @@ const Workouts = ({ navigation, route }) => {
             calBurnPerRep: calBurnPerRep,
             reps: reps,
         };
-        updateExercises(data, token);
-
+        // updateExercises(data, token);
+        insertUserWorkout(data, db);
 
         // Update workoutCompleted in AsyncStorage
         try {
@@ -149,17 +152,17 @@ const Workouts = ({ navigation, route }) => {
         }
     };
 
-    const updateExercises = (data, token) => {
-        fetch(`${base_url}/wokout`, {
-            method: "POST",
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-    }
+    // const updateExercises = (data, token) => {
+    //     fetch(`${base_url}/wokout`, {
+    //         method: "POST",
+    //         headers: {
+    //             accept: "application/json",
+    //             Authorization: `Bearer ${token}`,
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(data),
+    //     })
+    // }
     const handleCountChange = (newCount) => {
         setReps(newCount);
         console.log("Current Count:", newCount); // Handle count changes as needed

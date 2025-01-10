@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from "expo-av";
+import { useSQLiteContext } from 'expo-sqlite';
 
-const { base_url } = require("../../config");
+// const { base_url } = require("../../config");
 const InstructionText = ({ instructions, title }) => {
     return (
         <View>
@@ -27,6 +28,7 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
+    const db = useSQLiteContext();
     const { allExercises, currentExercise, currentIndex } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
@@ -73,6 +75,7 @@ const Warmups = ({ navigation, route }) => {
             "calBurnPerRep": calBurnPerRep,
         }
         updateExercises(data, token);
+        // insertUserWorkout(data);
 
         // Update warmupCompleted in AsyncStorage
         try {
@@ -143,17 +146,17 @@ const Warmups = ({ navigation, route }) => {
     );
 };
 
-const updateExercises = (data, token) => {
-    fetch(`${base_url}/wokout`, {
-        method: "POST",
-        headers: {
-            accept: "application/json",
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-}
+// const updateExercises = (data, token) => {
+//     fetch(`${base_url}/wokout`, {
+//         method: "POST",
+//         headers: {
+//             accept: "application/json",
+//             Authorization: `Bearer ${token}`,
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(data),
+//     })
+// }
 
 const TimerButton = ({ duration, onComplete, isLast }) => {
     const numericDuration = parseInt(duration.match(/\d+/)[0]);

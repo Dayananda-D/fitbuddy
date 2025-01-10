@@ -23,6 +23,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
 import ActivitiesScreen from "./src/screens/ActivitiesScreen";
 import ToastMessage, { ToastService } from './src/components/ToastMessage';
+import { SQLiteProvider } from 'expo-sqlite';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,6 +64,38 @@ function MyTabs() {
 
 const Stack = createNativeStackNavigator();
 
+async function initializeDatabase(db) {
+  try {
+    await db.execAsync(`
+      PRAGMA journal_mode = WAL;
+      CREATE TABLE IF NOT EXISTS user_workout (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        type TEXT,
+        title TEXT,
+        gender TEXT,
+        email TEXT,
+        workoutName TEXT,
+        workoutGIF TEXT,
+        workoutDuration TEXT,
+        targettedBodyPart TEXT,
+        equipment TEXT,
+        level TEXT,
+        suitableFor TEXT,
+        isCompleted BOOLEAN,
+        isSkipped BOOLEAN,
+        totalCalBurnt TEXT,
+        calBurnPerRep TEXT,
+        reps INTEGER,
+        date DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    console.log('Database initialized successfully');
+  } catch (error) {
+    console.log('Error during database initialization:', error);
+  }
+}
+
 export default function App() {
   const [token, setToken] = useState();
   const [workoutFlag, setWorkoutFlag] = useState();
@@ -101,33 +134,35 @@ export default function App() {
   const landingPage = token ? (workoutFlag ? "Main" : "Welcome") : "Welcome";
 
   return (
-    <NavigationContainer>
-      <ToastMessage ref={toastRef} />
-      <Stack.Navigator
-        initialRouteName={landingPage}
-        screenOptions={{
-          headerShown: false, // Hide the header for a fullscreen experience
-        }}
-      >
-        <Stack.Screen name="Welcome" component={WelcomeScreen} />
-        <Stack.Screen name="Gender" component={GenderScreen} />
-        <Stack.Screen name="Goal" component={GoalScreen} />
-        <Stack.Screen name="TargetAreaScreen" component={TargetAreaScreen} />
-        <Stack.Screen name="Main" component={MyTabs} />
-        {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
-        <Stack.Screen name="Warmups" component={Warmups} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Login" component={Login} />
-        {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
-        {/* <Stack.Screen name="Reports" component={Reports} /> */}
-        <Stack.Screen name="Workouts" component={Workouts} />
-        {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
-        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-        {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
-        <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
-        <Stack.Screen name="Activities" component={ActivitiesScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SQLiteProvider databaseName="fitbuddy" onInit={initializeDatabase}>
+      <NavigationContainer>
+        <ToastMessage ref={toastRef} />
+        <Stack.Navigator
+          initialRouteName={landingPage}
+          screenOptions={{
+            headerShown: false, // Hide the header for a fullscreen experience
+          }}
+        >
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Gender" component={GenderScreen} />
+          <Stack.Screen name="Goal" component={GoalScreen} />
+          <Stack.Screen name="TargetAreaScreen" component={TargetAreaScreen} />
+          <Stack.Screen name="Main" component={MyTabs} />
+          {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
+          <Stack.Screen name="Warmups" component={Warmups} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Login" component={Login} />
+          {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
+          {/* <Stack.Screen name="Reports" component={Reports} /> */}
+          <Stack.Screen name="Workouts" component={Workouts} />
+          {/* <Stack.Screen name="ProfileScreen" component={ProfileScreen} /> */}
+          <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+          {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
+          <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
+          <Stack.Screen name="Activities" component={ActivitiesScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+     </SQLiteProvider>
   );
 }
 

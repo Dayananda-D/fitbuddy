@@ -31,6 +31,9 @@
         "projectId": "5387b039-794e-4a16-881c-eff8113a6d88"
       }
     },
-    "owner": "dayadeepu"
+    "owner": "dayadeepu",
+    "plugins": [
+      "expo-sqlite"
+    ]
   }
 }
