@@ -8,6 +8,7 @@ import LoadingScreen from './LoadingScreen';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getWorkoutData } from '../database/database';
 import { useSQLiteContext } from 'expo-sqlite';
+import { ExerciseImage } from "../components/workoutImage";
 
 const { width } = Dimensions.get('window');
 // const { base_url } = require("../../config");
@@ -246,10 +247,11 @@ const Reports = () => {
                                     <View key={index}>
                                         <View style={styles.card}>
                                             <View>
-                                                <Image
+                                                {/* <Image
                                                     source={{ uri: item.workoutGIF }}
                                                     style={styles.image}
-                                                />
+                                                /> */}
+                                                <ExerciseImage imageName={item.workoutGIF} style={styles.image}></ExerciseImage>
                                                 <Text style={styles.title}>{item.workoutName}</Text>
                                             </View>
                                             <View style={{ justifyContent: 'space-around' }}>

@@ -18,7 +18,7 @@ import { jwtDecode } from 'jwt-decode';
 const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
 import { ToastService } from '../components/ToastMessage';
-import WorkoutImage from "../components/workoutImage";
+import {WorkoutImage, ExerciseDashboardCard} from "../components/workoutImage";
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
@@ -255,22 +255,7 @@ const VideoPlay = (data) => {
                     backgroundColor: '#fff',
                 }}>
                 <View style={{ borderRadius: 10, overflow: 'hidden' }}>
-                    <ImageBackground
-                        source={{ uri: currentExercise.image }}
-                        style={{
-                            height: 150,
-                            width: 300,
-                        }}>
-                        <LinearGradient
-                            locations={[0, 1.0]}
-                            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.60)']}
-                            style={{
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        ></LinearGradient>
-                    </ImageBackground>
+                <ExerciseDashboardCard imageName={currentExercise.image}></ExerciseDashboardCard>
                     <Text
                         style={{
                             position: 'absolute',
@@ -375,22 +360,7 @@ const VideoPlayWarmup = (data) => {
                     backgroundColor: '#fff',
                 }}>
                 <View style={{ borderRadius: 10, overflow: 'hidden' }}>
-                    <ImageBackground
-                        source={{ uri: currentExercise.image }}
-                        style={{
-                            height: 150,
-                            width: 300,
-                        }}>
-                        <LinearGradient
-                            locations={[0, 1.0]}
-                            colors={['rgba(0,0,0,0.00)', 'rgba(0,0,0,0.60)']}
-                            style={{
-                                position: 'absolute',
-                                width: '100%',
-                                height: '100%',
-                            }}
-                        ></LinearGradient>
-                    </ImageBackground>
+                    <ExerciseDashboardCard imageName={currentExercise.image}></ExerciseDashboardCard>
                     <Text
                         style={{
                             position: 'absolute',

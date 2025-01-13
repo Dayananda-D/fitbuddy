@@ -13,7 +13,8 @@
                         "Alternate between the two positions in a slow and controlled manner",
                         "Repeat for the specified duration."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1158/210712-cow-stretch.gif",
+                    "image": "cow-stretch",
+                    "url": "https://svc.heygainz.com/storage/exercises/1158/210712-cow-stretch.gif",
                     "caloriesBurnedPerRepMen": "0.2",
                     "caloriesBurnedPerRepWomen": "0.1"
                 },
@@ -27,7 +28,8 @@
                         "Return to the starting position and alternate sides",
                         "Repeat for the specified duration."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/196/027612-dead-bug.gif",
+                    "url": "https://svc.heygainz.com/storage/exercises/196/027612-dead-bug.gif",
+                    "image": "dead-bug",
                     "caloriesBurnedPerRepMen": "0.3",
                     "caloriesBurnedPerRepWomen": "0.2"
                 }
@@ -44,7 +46,8 @@
                         "Lower back down slowly",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/188/026712-crunch-hands-overhead.gif",
+                    "image": "crunch-hands-overhead",
+                    "url": "https://svc.heygainz.com/storage/exercises/188/026712-crunch-hands-overhead.gif",
                     "caloriesBurnedPerRepMen": "0.5",
                     "caloriesBurnedPerRepWomen": "0.3"
                 },
@@ -59,7 +62,8 @@
                         "Avoid letting your hips sag or rise too high",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/344/046312-front-plank-male.gif",
+                    "url": "https://svc.heygainz.com/storage/exercises/344/046312-front-plank-male.gif",
+                    "image": "front-plank-male",
                     "caloriesBurnedPerRepMen": "1.0",
                     "caloriesBurnedPerRepWomen": "0.8"
                 }
@@ -75,7 +79,8 @@
                         "Switch sides, mimicking a pedaling motion",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/5374/bicycles-crunches.gif",
+                    "image": "bicycles-crunches",
+                    "url": "https://svc.heygainz.com/storage/exercises/5374/bicycles-crunches.gif",
                     "caloriesBurnedPerRepMen": "0.7",
                     "caloriesBurnedPerRepWomen": "0.5"
                 },
@@ -89,7 +94,8 @@
                         "Keep your core engaged and back straight",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/459/063012-mountain-climber.gif",
+                    "url": "https://svc.heygainz.com/storage/exercises/459/063012-mountain-climber.gif",
+                    "image": "mountain-climber",
                     "caloriesBurnedPerRepMen": "0.8",
                     "caloriesBurnedPerRepWomen": "0.6"
                 }
@@ -105,7 +111,8 @@
                         "Hold for a while, then slowly return to the starting position.",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/5394/crunch-straight-leg-up.gif",
+                    "image": "crunch-straight-leg-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/5394/crunch-straight-leg-up.gif",
                     "caloriesBurnedPerRepMen": "1.2",
                     "caloriesBurnedPerRepWomen": "1.0"
                 },
@@ -120,7 +127,8 @@
                         "Maintain control throughout the movement",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2259/405812-leg-raise-dragon-flag.gif",
+                    "image": "leg-raise-dragon-flag",
+                    "url": "https://svc.heygainz.com/storage/exercises/2259/405812-leg-raise-dragon-flag.gif",
                     "caloriesBurnedPerRepMen": "2.0",
                     "caloriesBurnedPerRepWomen": "1.6"
                 }
@@ -139,7 +147,8 @@
                         "Breathe in and return to the starting position",
                         "Repeat for the specified duration."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2502/458012-cat-cow-stretch.gif"
+                    "image": "cat-cow-stretch",
+                    "url": "https://svc.heygainz.com/storage/exercises/2502/458012-cat-cow-stretch.gif"
                 },
                 {
                     "title": "Push-up (wall)",
@@ -152,7 +161,8 @@
                         "Keep your body in a straight line throughout the movement",
                         "Repeat for the specified duration."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/474/065812-push-up-wall.gif"
+                    "image": "push-up-wall",
+                    "url": "https://svc.heygainz.com/storage/exercises/474/065812-push-up-wall.gif"
                 },
                 {
                     "title": "Roll Pec Foam Rolling",
@@ -164,7 +174,8 @@
                         "Roll up and down from your lower sternum to your armpits",
                         "Repeat the motions for a specified period"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1640/294812-roll-pec-foam-rolling.gif"
+                    "image": "roll-pec-foam-rolling",
+                    "url": "https://svc.heygainz.com/storage/exercises/1640/294812-roll-pec-foam-rolling.gif"
                 }
             ],
             "beginner": [
@@ -179,7 +190,8 @@
                         "Hold briefly, then return to the starting position.",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1638/294412-seal-push-up.gif",
+                    "image": "seal-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/1638/294412-seal-push-up.gif",
                     "caloriesBurnedPerRepMen": "0.3",
                     "caloriesBurnedPerRepWomen": "0.2"
                 },
@@ -194,7 +206,8 @@
                         "Push yourself back up to the starting position.",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1762/321112-kneeling-push-up-male.gif",
+                    "image":"kneeling-push-up-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/1762/321112-kneeling-push-up-male.gif",
                     "caloriesBurnedPerRepMen": "0.3",
                     "caloriesBurnedPerRepWomen": "0.2"
                 },
@@ -208,7 +221,8 @@
                         "Push back up to the starting position.",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+                    "image": "push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
                     "caloriesBurnedPerRepMen": "0.8",
                     "caloriesBurnedPerRepWomen": "0.5"
                 }
@@ -224,7 +238,8 @@
                         "Push back up to the starting position",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
+                    "image": "push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/475/066212-push-up.gif",
                     "caloriesBurnedPerRepMen": "0.8",
                     "caloriesBurnedPerRepWomen": "0.5"
                 },
@@ -238,7 +253,8 @@
                         "Push yourself back to the starting position",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif",
+                    "image": "incline-push-up-with-chair",
+                    "url": "https://svc.heygainz.com/storage/exercises/4687/713412-incline-push-up-with-chair.gif",
                     "caloriesBurnedPerRepMen": "0.5",
                     "caloriesBurnedPerRepWomen": "0.3"
                 },
@@ -252,7 +268,8 @@
                         "Push back up to the starting position",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif",
+                    "image": "decline-push-up-with-chair-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/4733/718312-decline-push-up-with-chair-male.gif",
                     "caloriesBurnedPerRepMen": "1.0",
                     "caloriesBurnedPerRepWomen": "0.7"
                 },
@@ -266,7 +283,8 @@
                         "Push back up and alternate sides",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif",
+                    "image": "spider-crawl-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/557/077812-spider-crawl-push-up.gif",
                     "caloriesBurnedPerRepMen": "1.2",
                     "caloriesBurnedPerRepWomen": "0.9"
                 }
@@ -282,7 +300,8 @@
                         "Alternate hand positions, moving clockwise after each push-up",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/183/025812-clock-push-up.gif",
+                    "image": "clock-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/183/025812-clock-push-up.gif",
                     "caloriesBurnedPerRepMen": "1.4",
                     "caloriesBurnedPerRepWomen": "1.1"
                 },
@@ -296,7 +315,8 @@
                         "Clap your hands together before landing back into the starting position",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/845/127312-clap-push-up.gif",
+                    "image": "clap-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/845/127312-clap-push-up.gif",
                     "caloriesBurnedPerRepMen": "1.8",
                     "caloriesBurnedPerRepWomen": "1.3"
                 },
@@ -310,7 +330,8 @@
                         "Push back up to the starting position and alternate sides",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
+                    "image": "archer-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
                     "caloriesBurnedPerRepMen": "1.5",
                     "caloriesBurnedPerRepWomen": "1.2"
                 },
@@ -324,7 +345,8 @@
                         "Lower your chest toward the floor and push back up",
                         "Switch sides after the specified sets and repetitions"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1677/300212-single-arm-push-up-on-knees.gif",
+                    "image": "single-arm-push-up-on-knees",
+                    "url": "https://svc.heygainz.com/storage/exercises/1677/300212-single-arm-push-up-on-knees.gif",
                     "caloriesBurnedPerRepMen": "1.6",
                     "caloriesBurnedPerRepWomen": "1.3"
                 }
@@ -343,7 +365,8 @@
                         "Pump your arms to maintain balance and rhythm",
                         "Repeat for the set duration"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1719/309112-high-knee-skips-male.gif"
+                    "image": "high-knee-skips-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/1719/309112-high-knee-skips-male.gif"
                 },
                 {
                     "title": "Butt Kicks",
@@ -356,7 +379,8 @@
                         "Maintain a steady pace throughout the movement",
                         "Repeat for the set duration"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2534/463412-high-knee-to-butt-kick.gif"
+                    "image": "high-knee-to-butt-kick",
+                    "url": "https://svc.heygainz.com/storage/exercises/2534/463412-high-knee-to-butt-kick.gif"
                 },
                 {
                     "title": "Jogging in Place",
@@ -369,7 +393,8 @@
                         "Focus on warming up your legs and increasing your heart rate",
                         "Repeat for the set duration"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2227/400412-place-jog-male.gif"
+                    "image": "place-jog-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/2227/400412-place-jog-male.gif"
                 },
                 {
                     "title": "Side Lunges",
@@ -383,7 +408,8 @@
                         "Push off your right foot to return to the starting position.",
                         "Alternate sides and Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/6021/side-lunges-bodyweight.gif"
+                    "image": "side-lunges-bodyweight",
+                    "url": "https://svc.heygainz.com/storage/exercises/6021/side-lunges-bodyweight.gif"
                 }
             ],
             "beginner": [
@@ -398,7 +424,8 @@
                         "Push through your heels to stand back up",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif",
+                    "image": "bodyweight-squats",
+                    "url": "https://svc.heygainz.com/storage/exercises/5922/bodyweight-squats.gif",
                     "caloriesBurnedPerRepMen": "0.3",
                     "caloriesBurnedPerRepWomen": "0.2"
                 },
@@ -413,7 +440,8 @@
                         "Push through your heels to stand back up",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif",
+                    "image": "bodyweight-wall-squat",
+                    "url": "https://svc.heygainz.com/storage/exercises/991/154612-bodyweight-wall-squat.gif",
                     "caloriesBurnedPerRepMen": "0.4",
                     "caloriesBurnedPerRepWomen": "0.3"
                 },
@@ -428,7 +456,8 @@
                         "Squeeze your glutes at the top of the movement",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif",
+                    "image": "sumo-squat-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/705/106412-sumo-squat-male.gif",
                     "caloriesBurnedPerRepMen": "0.5",
                     "caloriesBurnedPerRepWomen": "0.4"
                 }
@@ -445,7 +474,8 @@
                         "Keep your core engaged throughout the movement",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/5992/jump-squats-bodyweight.gif",
+                    "image": "jump-squats-bodyweight",
+                    "url": "https://svc.heygainz.com/storage/exercises/5992/jump-squats-bodyweight.gif",
                     "caloriesBurnedPerRepMen": "1.2",
                     "caloriesBurnedPerRepWomen": "0.9"
                 },
@@ -460,7 +490,8 @@
                         "Push through your heels to return to standing",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/3921/633712-bodyweight-pulse-squat-male.gif",
+                    "image": "bodyweight-pulse-squat-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/3921/633712-bodyweight-pulse-squat-male.gif",
                     "caloriesBurnedPerRepMen": "0.7",
                     "caloriesBurnedPerRepWomen": "0.5"
                 },
@@ -475,7 +506,8 @@
                         "Push through the front heel to return to standing",
                         "Switch legs and repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+                    "image": "bulgarian-split-squat-with-chair",
+                    "url": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
                     "caloriesBurnedPerRepMen": "1.0",
                     "caloriesBurnedPerRepWomen": "0.8"
                 },
@@ -490,7 +522,8 @@
                         "Push through your heels to stand back up",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+                    "image": "bodyweight-paused-goblet-squat-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
                     "caloriesBurnedPerRepMen": "1.5",
                     "caloriesBurnedPerRepWomen": "1.2"
                 }
@@ -507,7 +540,8 @@
                         "Push through the front heel to return to standing",
                         "Switch legs and repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
+                    "image": "bulgarian-split-squat-with-chair",
+                    "url": "https://svc.heygainz.com/storage/exercises/4688/713512-bulgarian-split-squat-with-chair.gif",
                     "caloriesBurnedPerRepMen": "1.0",
                     "caloriesBurnedPerRepWomen": "0.8"
                 },
@@ -522,7 +556,8 @@
                         "Push through your heels to stand back up",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
+                    "image": "bodyweight-paused-goblet-squat-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/4440/688412-bodyweight-paused-goblet-squat-male.gif",
                     "caloriesBurnedPerRepMen": "1.5",
                     "caloriesBurnedPerRepWomen": "1.2"
                 },
@@ -537,7 +572,8 @@
                         "Push through your heel to stand back up",
                         "Repeat on the other leg"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1080/175912-single-leg-squat-pistol.gif",
+                    "image": "single-leg-squat-pistol",
+                    "url": "https://svc.heygainz.com/storage/exercises/1080/175912-single-leg-squat-pistol.gif",
                     "caloriesBurnedPerRepMen": "2.0",
                     "caloriesBurnedPerRepWomen": "1.6"
                 },
@@ -552,7 +588,8 @@
                         "Push through the bent leg to return to standing",
                         "Alternate sides and repeat"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2532/463212-cossack-squat.gif",
+                    "image": "cossack-squat",
+                    "url": "https://svc.heygainz.com/storage/exercises/2532/463212-cossack-squat.gif",
                     "caloriesBurnedPerRepMen": "1.8",
                     "caloriesBurnedPerRepWomen": "1.4"
                 }
@@ -570,7 +607,8 @@
                         "Rotate your arms forward in small circles for 30 seconds",
                         "Reverse the direction and rotate backward for another 30 seconds"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2166/390512-arm-circles.gif",
+                    "image": "arm-circles",
+                    "url": "https://svc.heygainz.com/storage/exercises/2166/390512-arm-circles.gif",
                     "caloriesBurnedPerRepMen": "0.2",
                     "caloriesBurnedPerRepWomen": "0.1"
                 },
@@ -585,7 +623,8 @@
                         "Hold the stretch for 15–30 seconds, then switch sides",
                         "Breathe deeply and avoid overstretching"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/844/127112-chest-and-front-of-shoulder-stretch.gif",
+                    "image": "chest-and-front-of-shoulder-stretch",
+                    "url": "https://svc.heygainz.com/storage/exercises/844/127112-chest-and-front-of-shoulder-stretch.gif",
                     "caloriesBurnedPerRepMen": "0.2",
                     "caloriesBurnedPerRepWomen": "0.1"
                 }
@@ -602,7 +641,8 @@
                         "Lower them back down slowly",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2174/391312-dumbbell-one-arm-front-raise.gif",
+                    "image": "dumbbell-one-arm-front-raise",
+                    "url": "https://svc.heygainz.com/storage/exercises/2174/391312-dumbbell-one-arm-front-raise.gif",
                     "caloriesBurnedPerRepMen": "0.4",
                     "caloriesBurnedPerRepWomen": "0.3"
                 },
@@ -617,7 +657,8 @@
                         "Lower them back down slowly",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/2122/382512-mid-air-lateral-raises-with-switching-palms.gif",
+                    "image": "mid-air-lateral-raises-with-switching-palms",
+                    "url": "https://svc.heygainz.com/storage/exercises/2122/382512-mid-air-lateral-raises-with-switching-palms.gif",
                     "caloriesBurnedPerRepMen": "0.4",
                     "caloriesBurnedPerRepWomen": "0.3"
                 }
@@ -634,7 +675,8 @@
                         "Keep your core engaged throughout the movement",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/6169/pike-push-up.gif",
+                    "image": "pike-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/6169/pike-push-up.gif",
                     "caloriesBurnedPerRepMen": "0.8",
                     "caloriesBurnedPerRepWomen": "0.6"
                 },
@@ -649,7 +691,8 @@
                         "Push your body away from the wall until your arms are fully extended",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/4456/690012-forearms-to-wide-grip-wall-push-up-male.gif",
+                    "image": "forearms-to-wide-grip-wall-push-up-male",
+                    "url": "https://svc.heygainz.com/storage/exercises/4456/690012-forearms-to-wide-grip-wall-push-up-male.gif",
                     "caloriesBurnedPerRepMen": "0.5",
                     "caloriesBurnedPerRepWomen": "0.4"
                 }
@@ -665,7 +708,8 @@
                         "Engage your shoulders and core to hold the position",
                         "Hold for the desired duration, then lower your legs carefully"
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/3399/576212-handstand-against-the-wall.gif",
+                    "image": "handstand-against-the-wall",
+                    "url": "https://svc.heygainz.com/storage/exercises/3399/576212-handstand-against-the-wall.gif",
                     "caloriesBurnedPerRepMen": "1.5",
                     "caloriesBurnedPerRepWomen": "1.2"
                 },
@@ -679,7 +723,8 @@
                         "Push back up to the starting position and alternate sides",
                         "Repeat for the specified sets and reps."
                     ],
-                    "image": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
+                    "image": "archer-push-up",
+                    "url": "https://svc.heygainz.com/storage/exercises/1816/329412-archer-push-up.gif",
                     "caloriesBurnedPerRepMen": "1.2",
                     "caloriesBurnedPerRepWomen": "1.0"
                 }

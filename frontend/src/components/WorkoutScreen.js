@@ -10,6 +10,7 @@ import Counter from "../components/Counter";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSQLiteContext } from 'expo-sqlite';
 import { insertUserWorkout } from '../database/database';
+import { ExerciseImage } from "./workoutImage";
 
 // const { base_url } = require("../../config");
 
@@ -183,10 +184,7 @@ const Workouts = ({ navigation, route }) => {
 
             {/* Gif Image */}
             <View style={styles.gifContainer}>
-                <ImageBackground
-                    source={{ uri: currentExerciseData.image }}
-                    style={styles.gifPlayer}
-                ></ImageBackground>
+            <ExerciseImage imageName={currentExerciseData.image} style={styles.gifPlayer}></ExerciseImage>
                 <View style={styles.gifDesc}>
                     <Text style={{ fontWeight: "bold" }}>{currentExerciseData.title}</Text>
                     <Text style={{ fontSize: 14 }} >Recommended 2 to 3 sets</Text>

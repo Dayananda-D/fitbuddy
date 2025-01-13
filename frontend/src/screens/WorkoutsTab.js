@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ExerciseImage } from "../components/workoutImage";
 
 const workout = require('../data/workoutData.json');
 const verify = require('../../assets/images/verify.png');
@@ -62,7 +63,7 @@ const WarmupTab = () => {
                 <View style={styles.scene} key={index}>
                     <View style={styles.card}>
                         <View>
-                            <Image source={{ uri: item.image }} style={styles.image} />
+                            <ExerciseImage imageName={item.image} style={styles.image}></ExerciseImage>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.time}>Duration: {item.duration}</Text>
                         </View>
@@ -185,7 +186,7 @@ const WorkoutTab = () => {
                     <View style={styles.card}>
                         <View>
                             <Text style={{ textAlign: "center", fontSize: 14, fontWeight: "bold" }}>Recommended 2 to 3 sets</Text>
-                            <Image source={{ uri: item.image }} style={styles.image} />
+                            <ExerciseImage imageName={item.image} style={styles.image}></ExerciseImage>
                             <Text style={styles.title}>{item.title}</Text>
                             <Text style={styles.time}>8-10 Reps</Text>
                         </View>

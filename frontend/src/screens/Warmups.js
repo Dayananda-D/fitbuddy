@@ -11,6 +11,8 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from "expo-av";
 import { useSQLiteContext } from 'expo-sqlite';
+import { ExerciseImage } from "../components/workoutImage";
+import { insertUserWorkout } from '../database/database';
 
 // const { base_url } = require("../../config");
 const InstructionText = ({ instructions, title }) => {
@@ -74,8 +76,8 @@ const Warmups = ({ navigation, route }) => {
             "totalCalBurnt": "0",
             "calBurnPerRep": calBurnPerRep,
         }
-        updateExercises(data, token);
-        // insertUserWorkout(data);
+        // updateExercises(data, token);
+        insertUserWorkout(data, db);
 
         // Update warmupCompleted in AsyncStorage
         try {
@@ -117,10 +119,7 @@ const Warmups = ({ navigation, route }) => {
 
             {/* Gif Image */}
             <View style={styles.gifContainer}>
-                <ImageBackground
-                    source={{ uri: currentExerciseData.image }}
-                    style={styles.gifPlayer}
-                ></ImageBackground>
+                <ExerciseImage imageName={currentExerciseData.image} style={styles.gifPlayer}></ExerciseImage>
                 <View style={styles.gifDesc}>
                     <Text style={{ fontWeight: "bold" }}>{currentExerciseData.title}</Text>
                     <Text style={{ fontSize: 14, color: "#8860a2" }}>

@@ -33,7 +33,8 @@
     },
     "owner": "dayadeepu",
     "plugins": [
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-asset"
     ]
   }
 }
