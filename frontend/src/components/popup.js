@@ -11,13 +11,14 @@ import {
   ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import FeatherIcons from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Popup = ({ visible, onClose, data }) => {
   const [selectedWorkouts, setSelectedWorkouts] = useState([]);
+  const [bookmarkedStatuses, setBookmarkedStatuses] = useState({});
+  const [bookmarkedExercises, setBookmarkedExercises] = useState([]);
 
-  // Load selected workouts from AsyncStorage on component mount
+
   useEffect(() => {
     const loadSelectedWorkouts = async () => {
       const storedWorkouts = await AsyncStorage.getItem("selectedWorkouts");
@@ -28,7 +29,6 @@ const Popup = ({ visible, onClose, data }) => {
     loadSelectedWorkouts();
   }, []);
 
-  // Save selected workouts to AsyncStorage whenever they change
   useEffect(() => {
     const saveSelectedWorkouts = async () => {
       await AsyncStorage.setItem(
@@ -39,21 +39,51 @@ const Popup = ({ visible, onClose, data }) => {
     saveSelectedWorkouts();
   }, [selectedWorkouts]);
 
-  // Handle workout selection or unselection
+  useEffect(() => {
+    const updateBookmarkStatuses = async () => {
+      const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+      const bookmarks = bookmarkedExercises ? JSON.parse(bookmarkedExercises) : [];
+      const newStatuses = {};
+      data?.forEach(item => {
+        newStatuses[item.title] = bookmarks.includes(item.title);
+      });
+      setBookmarkedStatuses(newStatuses);
+    };
+    updateBookmarkStatuses();
+  }, [data]);
+
   const handleWorkoutSelectionChange = (title) => {
-    if (selectedWorkouts.includes(title)) {
-      // Unselect workout
-      setSelectedWorkouts((prev) =>
-        prev.filter((workout) => workout !== title)
-      );
-    } else {
-      // Select workout
-      setSelectedWorkouts((prev) => [...prev, title]);
+    setSelectedWorkouts((prev) =>
+      prev.includes(title)
+        ? prev.filter((workout) => workout !== title)
+        : [...prev, title]
+    );
+  };
+
+  const toggleBookmark = async (title) => {
+    try {
+      const storedBookmarks = await AsyncStorage.getItem("bookmarkedExercises");
+      const existingBookmarks = storedBookmarks ? JSON.parse(storedBookmarks) : [];
+
+      const updatedBookmarks = existingBookmarks.includes(title)
+        ? existingBookmarks.filter(exercise => exercise !== title)
+        : [...existingBookmarks, title];
+
+      setBookmarkedExercises(updatedBookmarks);
+
+      // Update bookmarkedStatuses state synchronously
+      setBookmarkedStatuses(prevStatuses => ({
+        ...prevStatuses,
+        [title]: !prevStatuses[title]
+      }));
+
+      await AsyncStorage.setItem("bookmarkedExercises", JSON.stringify(updatedBookmarks));
+    } catch (error) {
+      console.error("Error updating bookmarked exercises", error);
     }
   };
 
-  // Check if a workout is selected
-  const isWorkoutSelected = (title) => selectedWorkouts?.includes(title);
+  const isWorkoutSelected = (title) => selectedWorkouts.includes(title);
 
   return (
     <Modal
@@ -85,29 +115,20 @@ const Popup = ({ visible, onClose, data }) => {
                           style={[
                             styles.itemTitle,
                             isWorkoutSelected(item.title) &&
-                              styles.selectedText,
+                            styles.selectedText,
                           ]}
                         >
                           {item.title}
                         </Text>
-
-                        <FeatherIcons
-                          name="bookmark"
-                          size={24}
-                          color={
-                            isWorkoutSelected(item.title) ? "#fff" : "#000"
-                          }
-                        />
-
-                        {/* {isWorkoutSelected(item.title) ? (
-                          <FeatherIcons
-                            name="bookmark"
-                            size={24}
-                            color="#000"
-                          />
-                        ) : (
-                          <Icon name="bookmark" size={26} color="#f7a000" />
-                        )} */}
+                        <TouchableOpacity onPress={() => toggleBookmark(item.title)} style={styles.bookMarkIcon}>
+                          <View style={styles.saveIcon}>
+                            <Icon
+                              name={bookmarkedStatuses[item.title] ? "bookmark" : "bookmark-border"}
+                              size={24}
+                              color="red"
+                            />
+                          </View>
+                        </TouchableOpacity>
                       </View>
                     </TouchableOpacity>
                   </ScrollView>

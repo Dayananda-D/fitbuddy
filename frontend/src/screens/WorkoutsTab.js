@@ -102,6 +102,20 @@ const WorkoutTab = () => {
     const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
     const [workoutCompleted, setWorkoutCompleted] = useState([]);
     const [warmupCompleted, setWarmupCompleted] = useState([]);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    // Add this function to check bookmark status
+    const checkBookmarkStatus = async () => {
+        try {
+            const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+            if (bookmarkedExercises !== null) {
+                const bookmarks = JSON.parse(bookmarkedExercises);
+                setIsBookmarked(bookmarks.includes(currentExercise.title));
+            }
+        } catch (error) {
+            console.error('Error checking bookmark status:', error);
+        }
+    };
 
     const fetchUserDetails = useCallback(async () => {
         try {
@@ -129,6 +143,7 @@ const WorkoutTab = () => {
         useCallback(() => {
             fetchUserDetails();
             fetchWarmupWorkoutCompleted();
+            checkBookmarkStatus();
         }, [fetchUserDetails, fetchWarmupWorkoutCompleted])
     );
 
@@ -210,6 +225,7 @@ const WorkoutTab = () => {
                             </TouchableOpacity>
                             <Text>Calorie Burn/Rep: {item.caloriesBurnedPerRepMen}</Text>
                         </View>
+                        {isBookmarked && <Icon name="bookmark" size={24} color="red" />}
                     </View>
                 </View>
             ))}

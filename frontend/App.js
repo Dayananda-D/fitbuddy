@@ -22,6 +22,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet } from "react-native";
 import ActivitiesScreen from "./src/screens/ActivitiesScreen";
+import Saved from "./src/screens/Saved";
+import Profile from "./src/screens/Profile";
 import ToastMessage, { ToastService } from './src/components/ToastMessage';
 
 const Tab = createBottomTabNavigator();
@@ -126,6 +128,8 @@ export default function App() {
         {/* <Stack.Screen name="EnterCode" component={EnterCodeScreen} /> */}
         <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
         <Stack.Screen name="Activities" component={ActivitiesScreen} />
+        <Stack.Screen name="Saved" component={Saved} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
