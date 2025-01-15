@@ -30,9 +30,11 @@ export default function ProfileScreen() {
       try {
         const token = await AsyncStorage.getItem("auth_token");
         const userData = await AsyncStorage.getItem("baseData");
+        const savedImage = await AsyncStorage.getItem("profile_image");
 
         if (token) setToken(token);
         if (userData) setUserData(JSON.parse(userData));
+        if (savedImage) setProfileImage(savedImage);
 
       } catch (error) {
         console.error("Error fetching user details", error);
@@ -52,7 +54,9 @@ export default function ProfileScreen() {
     });
 
     if (!result.canceled) {
-      setProfileImage(result.assets[0].uri);
+      const imageUri = result.assets[0].uri;
+      setProfileImage(imageUri);
+      await AsyncStorage.setItem("profile_image", imageUri);
     }
   };
 
@@ -98,7 +102,7 @@ export default function ProfileScreen() {
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profile')}>
             <View style={styles.menuItemLeft}>
               <Icon name="person" size={24} color="#fff" />
               <Text style={styles.menuText}>My Profile</Text>
@@ -106,10 +110,10 @@ export default function ProfileScreen() {
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Saved')}>
             <View style={styles.menuItemLeft}>
               <Icon name="bookmark" size={24} color="#fff" />
-              <Text style={styles.menuText}>My Workouts</Text>
+              <Text style={styles.menuText}>Saved</Text>
             </View>
             <Icon name="chevron-right" size={24} color="#999" />
           </TouchableOpacity>

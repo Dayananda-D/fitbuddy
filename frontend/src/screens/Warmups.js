@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from "expo-av";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const { base_url } = require("../../config");
 const InstructionText = ({ instructions, title }) => {
@@ -27,13 +28,63 @@ const InstructionText = ({ instructions, title }) => {
 };
 
 const Warmups = ({ navigation, route }) => {
-    const { allExercises, currentExercise, currentIndex } = route.params;
+    const { allExercises, currentExercise, currentIndex, isButtonRequired } = route.params;
 
     const [currentExerciseIndex, setCurrentExerciseIndex] = useState(currentIndex);
     const [currentExerciseData, setCurrentExerciseData] = useState(currentExercise);
     const [isLast, setIsLast] = useState(false);
     const [userData, setUserData] = useState({});
     const [token, setToken] = useState();
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    // Load bookmark status when component mounts
+    useEffect(() => {
+        const loadBookmarkStatus = async () => {
+            try {
+                const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+                if (bookmarkedExercises !== null) {
+                    const bookmarks = JSON.parse(bookmarkedExercises);
+                    setIsBookmarked(bookmarks.includes(currentExerciseData.title)); // Using title instead of id
+                }
+            } catch (error) {
+                console.error('Error loading bookmark status:', error);
+            }
+        };
+        loadBookmarkStatus();
+    }, [currentExerciseData.title]);
+
+    // Toggle bookmark function
+    const toggleBookmark = async () => {
+        try {
+            let bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+            let bookmarks = [];
+
+            // If bookmarkedExercises exists, parse it
+            if (bookmarkedExercises !== null) {
+                bookmarks = JSON.parse(bookmarkedExercises);
+            }
+
+            // Make sure bookmarks is an array
+            if (!Array.isArray(bookmarks)) {
+                bookmarks = [];
+            }
+
+            // Update bookmarks array using title as identifier
+            if (isBookmarked) {
+                bookmarks = bookmarks.filter(title => title !== currentExerciseData.title);
+            } else {
+                bookmarks.push(currentExerciseData.title);
+            }
+
+            // Save updated bookmarks
+            await AsyncStorage.setItem('bookmarkedExercises', JSON.stringify(bookmarks));
+            setIsBookmarked(!isBookmarked);
+
+            console.log('Saved bookmarks:', bookmarks); // Debug log
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -124,6 +175,15 @@ const Warmups = ({ navigation, route }) => {
                         {currentExerciseData.duration}
                     </Text>
                 </View>
+                <View style={styles.saveIcon}>
+                    <TouchableOpacity onPress={toggleBookmark}>
+                        <Icon
+                            name={isBookmarked ? "bookmark" : "bookmark-border"}
+                            size={24}
+                            color="red"
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* Instructions */}
@@ -133,12 +193,14 @@ const Warmups = ({ navigation, route }) => {
             </View>
 
             {/* Animated Progress Bar */}
-            <TimerButton
-                key={currentExerciseIndex} // Reset TimerButton when exercise changes
-                duration={currentExerciseData.duration}
-                onComplete={moveToNextExercise} // Callback when timer completes
-                isLast={isLast}
-            />
+            {isButtonRequired || !null && (
+                <TimerButton
+                    key={currentExerciseIndex} // Reset TimerButton when exercise changes
+                    duration={currentExerciseData.duration}
+                    onComplete={moveToNextExercise} // Callback when timer completes
+                    isLast={isLast}
+                />
+            )}
         </ImageBackground>
     );
 };
@@ -375,6 +437,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: "bold",
     },
+    saveIcon: {
+        position: "absolute",
+        right: 16,
+        bottom: "10%"
+    }
 });
 
 export default Warmups;

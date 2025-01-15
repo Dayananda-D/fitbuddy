@@ -19,6 +19,7 @@ const { base_url } = require("../../config");
 import LoadingScreen from './LoadingScreen';
 import { ToastService } from '../components/ToastMessage';
 import WorkoutImage from "../components/workoutImage";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const headerImage = require('../../assets/images/header.jpg');
 const notification = require('../../assets/images/Notification.png');
@@ -42,6 +43,7 @@ const Dashboard = () => {
     const [token, setToken] = useState();
     const [workoutData, setWorkoutData] = useState({});
     const [loading, setLoading] = useState(true);
+    const [selectedWorkouts, setSelectedWorkouts] = useState([]);
 
     useEffect(() => {
         const fetchUserDetails = async () => {
@@ -109,6 +111,37 @@ const Dashboard = () => {
         fetchUserDetails();
     }, []);
 
+    // Filter the exercises based on selectedWorkouts
+    const filteredExercises = workout.exercises[category][level].filter(exercise =>
+        selectedWorkouts.includes(exercise.title)
+    );
+
+    // If no exercises match, use all exercises
+    const exercisesToRender = filteredExercises.length > 0 ? filteredExercises : workout.exercises[category][level];
+
+    useEffect(() => {
+        // If `selectedWorkouts` is updated, you can handle the update here.
+        const fetchSelectedWorkouts = async () => {
+            const workoutTitles = workout.exercises[category][level].map(item => item.title);
+
+            if (selectedWorkouts !== undefined) {
+                console.log("Selected Workouts Updated:", selectedWorkouts);
+                try {
+                    const storedWorkouts = await AsyncStorage.getItem("selectedWorkouts");
+                    if (storedWorkouts) {
+                        console.log("Fetched selected workouts from AsyncStorage:", storedWorkouts);
+                        setSelectedWorkouts(storedWorkouts);
+                        // Handle any logic you want to perform with the fetched workouts
+                    }
+                } catch (error) {
+                    console.error("Error fetching selected workouts from AsyncStorage", error);
+                }
+            }
+        };
+
+        fetchSelectedWorkouts();
+    }, [selectedWorkouts]); // Dependency array ensures this effect runs when `selectedWorkouts` changes
+
     if (loading) {
         // Display a loading indicator while fetching user details
         return <LoadingScreen message="Loading your activities..." />;
@@ -139,16 +172,18 @@ const Dashboard = () => {
                     </View>
                     <ScrollView horizontal={true}>
                         <View style={{ flexDirection: 'row', overflow: 'scroll' }}>
-                            {workout.exercises[category].warmup.map((item, index) => (
-                                <VideoPlayWarmup
-                                    category={category}
-                                    level={level}
-                                    userData={userData}
-                                    index={index}
-                                    key={index}
-                                    data={workout}
-                                />
-                            ))}
+                            {workout.exercises[category].warmup.map((item, index) => {
+                                return (
+                                    <VideoPlayWarmup
+                                        category={category}
+                                        level={level}
+                                        userData={userData}
+                                        index={index}
+                                        key={index}
+                                        data={workout}
+                                    />
+                                )
+                            })}
                         </View>
                     </ScrollView>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
@@ -157,16 +192,22 @@ const Dashboard = () => {
                     </View>
                     <ScrollView horizontal={true}>
                         <View style={{ paddingBottom: 80, flexDirection: 'row', overflow: 'scroll' }}>
-                            {workout.exercises[category][level].map((item, index) => (
-                                <VideoPlay
-                                    category={category}
-                                    level={level}
-                                    userdata={userData}
-                                    index={index}
-                                    key={index}
-                                    data={workout}
-                                />
-                            ))}
+                            {exercisesToRender.map((item, index) => {
+                                const recWithOriginalIndex = workout.exercises[category][level]
+                                    .map((exercise, index) => ({ ...exercise, originalIndex: index }))
+                                    .filter(exercise => exercise.title.includes(item.title));
+                                return (
+                                    <VideoPlay
+                                        category={category}
+                                        level={level}
+                                        originalIndex={recWithOriginalIndex[0].originalIndex}
+                                        userdata={userData}
+                                        index={index}
+                                        key={index}
+                                        data={workout}
+                                    />
+                                )
+                            })}
                         </View>
                     </ScrollView>
                 </View>
@@ -180,7 +221,7 @@ export default Dashboard;
 
 const VideoPlay = (data) => {
     const navigation = useNavigation();
-    const currentIndex = data.index;
+    const currentIndex = data.originalIndex;
     const category = data.category;
     const level = data.level;
     const isLastExercise = currentIndex === data.data.exercises[category][level].length - 1;
@@ -191,6 +232,20 @@ const VideoPlay = (data) => {
     const [warmupCompleted, setWarmupCompleted] = useState([]);
     const [workoutCompleted, setWorkoutCompleted] = useState([]);
     const [allWarmupsCompleted, setAllWarmupsCompleted] = useState(false);
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    // Add this function to check bookmark status
+    const checkBookmarkStatus = async () => {
+        try {
+            const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+            if (bookmarkedExercises !== null) {
+                const bookmarks = JSON.parse(bookmarkedExercises);
+                setIsBookmarked(bookmarks.includes(currentExercise.title));
+            }
+        } catch (error) {
+            console.error('Error checking bookmark status:', error);
+        }
+    };
 
     const fetchWarmupCompleted = async () => {
         try {
@@ -213,6 +268,7 @@ const VideoPlay = (data) => {
     useFocusEffect(
         useCallback(() => {
             fetchWarmupCompleted();
+            checkBookmarkStatus();
         }, [])
     );
 
@@ -311,9 +367,12 @@ const VideoPlay = (data) => {
                         }}>
                         <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
-                    <Text>
-                        {currentExercise.title}
-                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 10 }}>
+                        <Text>
+                            {currentExercise.title}
+                        </Text>
+                        {isBookmarked && <Icon name="bookmark" size={24} color="red" />}
+                    </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{
                             // fontFamily: 'Poppins-Regular',
@@ -344,7 +403,20 @@ const VideoPlayWarmup = (data) => {
     const allExercises = data.data.exercises[category].warmup;
     const currentExercise = data.data.exercises[category].warmup[currentIndex];
     const [warmupCompleted, setWarmupCompleted] = useState([]);
+    const [isBookmarked, setIsBookmarked] = useState(false);
 
+    // Add this function to check bookmark status
+    const checkBookmarkStatus = async () => {
+        try {
+            const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+            if (bookmarkedExercises !== null) {
+                const bookmarks = JSON.parse(bookmarkedExercises);
+                setIsBookmarked(bookmarks.includes(currentExercise.title));
+            }
+        } catch (error) {
+            console.error('Error checking bookmark status:', error);
+        }
+    };
 
     const fetchWarmupCompleted = async () => {
         try {
@@ -359,6 +431,7 @@ const VideoPlayWarmup = (data) => {
     useFocusEffect(
         useCallback(() => {
             fetchWarmupCompleted();
+            checkBookmarkStatus();
         }, [])
     );
 
@@ -431,9 +504,12 @@ const VideoPlayWarmup = (data) => {
                         }}>
                         <Image source={play} style={{ height: 10, width: 10 }} />
                     </View>
-                    <Text>
-                        {currentExercise.title}
-                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, marginBottom: 10 }}>
+                        <Text>
+                            {currentExercise.title}
+                        </Text>
+                        {isBookmarked && <Icon name="bookmark" size={24} color="red" />}
+                    </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ fontSize: 12 }}>
                             <Image source={book} style={{ height: 25, width: 25 }} />

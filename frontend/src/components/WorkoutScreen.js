@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
     View,
     Text,
@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Counter from "../components/Counter";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 const { base_url } = require("../../config");
 
@@ -37,6 +38,57 @@ const Workouts = ({ navigation, route }) => {
     const [elapsedTimes, setElapsedTimes] = useState(Array(allExercises.length).fill(0));
     const timerRef = useRef(null);
 
+    const [isBookmarked, setIsBookmarked] = useState(false);
+
+    // Load bookmark status when component mounts
+    useEffect(() => {
+        const loadBookmarkStatus = async () => {
+            try {
+                const bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+                if (bookmarkedExercises !== null) {
+                    const bookmarks = JSON.parse(bookmarkedExercises);
+                    setIsBookmarked(bookmarks.includes(currentExerciseData.title)); // Using title instead of id
+                }
+            } catch (error) {
+                console.error('Error loading bookmark status:', error);
+            }
+        };
+
+        loadBookmarkStatus();
+    }, [currentExerciseData.title]); // Changed dependency to title
+
+    // Toggle bookmark function
+    const toggleBookmark = async () => {
+        try {
+            let bookmarkedExercises = await AsyncStorage.getItem('bookmarkedExercises');
+            let bookmarks = [];
+
+            // If bookmarkedExercises exists, parse it
+            if (bookmarkedExercises !== null) {
+                bookmarks = JSON.parse(bookmarkedExercises);
+            }
+
+            // Make sure bookmarks is an array
+            if (!Array.isArray(bookmarks)) {
+                bookmarks = [];
+            }
+
+            // Update bookmarks array using title as identifier
+            if (isBookmarked) {
+                bookmarks = bookmarks.filter(title => title !== currentExerciseData.title);
+            } else {
+                bookmarks.push(currentExerciseData.title);
+            }
+
+            // Save updated bookmarks
+            await AsyncStorage.setItem('bookmarkedExercises', JSON.stringify(bookmarks));
+            setIsBookmarked(!isBookmarked);
+
+            console.log('Saved bookmarks:', bookmarks); // Debug log
+        } catch (error) {
+            console.error('Error toggling bookmark:', error);
+        }
+    };
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
@@ -189,6 +241,15 @@ const Workouts = ({ navigation, route }) => {
                     <Text style={{ fontSize: 14 }} >Recommended 2 to 3 sets</Text>
                     <Text style={{ fontSize: 14, color: "#8860a2", paddingTop: 5 }} >Duration: {formatTime(elapsedTimes[currentExerciseIndex])}</Text>
                 </View>
+                <View style={styles.saveIcon}>
+                    <TouchableOpacity onPress={toggleBookmark}>
+                        <Icon
+                            name={isBookmarked ? "bookmark" : "bookmark-border"}
+                            size={24}
+                            color="red"
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             {/* Instructions */}
@@ -320,6 +381,11 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center'
+    },
+    saveIcon: {
+        position: "absolute",
+        right: 16,
+        bottom: "10%"
     }
 });
 

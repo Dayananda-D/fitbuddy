@@ -123,7 +123,7 @@ const TargetAreaScreen = ({ navigation, route }) => {
                 <Popup
                     visible={isPopupVisible}
                     onClose={() => setPopupVisible(false)}
-                    data={workout.exercises[selectedIds[0]]?.["advanced"]}
+                    data={workout.exercises[selectedIds[0]]?.[baseData.level]}
                 />
 
                 <View style={styles.buttonContainer}>
