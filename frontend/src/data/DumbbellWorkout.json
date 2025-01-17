@@ -1,0 +1,530 @@
+{
+    "exercises": {
+        "shoulders": {
+            "beginner": [
+                {
+                    "title": "Dumbbell Shoulder Press",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand tall with your feet about shoulder-width apart, holding a dumbbell in each hand at shoulder height.",
+                        "Slowly press the dumbbells upward until your arms are fully extended above your head.",
+                        "Take a brief pause at the top, then gently bring the weights back down to shoulder level.",
+                        "Keep your core engaged and your back straight the entire time to maintain good form.",
+                        "Repeat the movement for the desired number of repetitions, keeping it steady and controlled."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-shoulder-press.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Dumbbell Front Raise",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand upright, holding a dumbbell in each hand with your arms hanging naturally at your sides and palms facing your torso.",
+                        "Slowly lift one dumbbell up to shoulder height, keeping a slight bend in your elbow as you move.",
+                        "Lower the dumbbell back down to your starting position with control.",
+                        "Switch to the other hand and repeat the same movement.",
+                        "Continue alternating arms until you've completed your desired number of repetitions, keeping the motion smooth and steady."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-front-raise.gif",
+                    "caloriesBurnedPerRepMen": "0.6",
+                    "caloriesBurnedPerRepWomen": "0.4"
+                },
+                {
+                    "title": "Dumbbell Lateral to Front Raise",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand tall with a dumbbell in each hand, arms relaxed by your sides, and palms facing your torso.",
+                        "Without moving your torso, lift the dumbbells out to your sides, keeping a slight bend in your elbows.",
+                        "Raise the weights until your arms are just above parallel to the floor.",
+                        "Slowly lower the dumbbells back to your starting position in a controlled motion.",
+                        "Repeat the movement for the recommended number of repetitions, maintaining smooth and steady form throughout."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-side-lateral-raise.gif",
+                    "caloriesBurnedPerRepMen": "0.7",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Arnold Press",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Sit comfortably on a bench with back support, holding a dumbbell in each hand at chest level with your palms facing your body.",
+                        "Slowly lift the dumbbells in a smooth arc, extending your arms outward and upward until they’re straight above your head.",
+                        "Pause for a moment at the top of the movement, feeling the stretch.",
+                        "Lower the dumbbells back down along the same arc, bringing your forearms inward so your palms face you again.",
+                        "Return to the starting position and repeat for your desired number of repetitions, keeping your movements controlled and steady."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/arnold-press.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                },
+                {
+                    "title": "Dumbbell Upright Row",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Stand tall with your feet shoulder-width apart, holding a dumbbell in each hand in front of your thighs.",
+                        "Slowly lift the dumbbells straight up towards your collarbone, keeping your elbows pointed upward.",
+                        "Pause briefly at the top to feel the movement.",
+                        "Lower the dumbbells back down smoothly and in a controlled way to the starting position.",
+                        "Repeat for the desired number of reps, keeping your movements steady and your posture strong."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-upright-row.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Dumbbell Push Press",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold dumbbells at shoulder height with palms facing forward.",
+                        "Slightly bend your knees and push the dumbbells overhead as you straighten your legs.",
+                        "Lower the dumbbells and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-push-press.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "0.9"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Dumbbell Lateral Raise Hold",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold dumbbells in each hand and raise your arms out to the sides.",
+                        "Hold this position for a few seconds.",
+                        "Lower the dumbbells and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-lateral-hold.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                },
+                {
+                    "title": "Dumbbell Clean and Press",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold a dumbbell in each hand at your sides.",
+                        "Lift the dumbbells to shoulder height, then press them overhead.",
+                        "Lower the dumbbells back to your sides and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-clean-and-press.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.4"
+                },
+                {
+                    "title": "Dumbbell One-Arm Snatch",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Start in a squat position holding a dumbbell with one hand.",
+                        "Explosively lift the dumbbell overhead in one motion while straightening your legs.",
+                        "Lower the dumbbell back to the starting position.",
+                        "Switch sides after desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-one-arm-snatch.gif",
+                    "caloriesBurnedPerRepMen": "2.0",
+                    "caloriesBurnedPerRepWomen": "1.5"
+                }
+            ]
+        },
+        "chest": {
+            "beginner": [
+                {
+                    "title": "Dumbbell Chest Press",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Lie on a flat surface holding a dumbbell in each hand at chest level.",
+                        "Press the dumbbells upward until your arms are fully extended.",
+                        "Lower them back down to chest level.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-chest-press.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Dumbbell Fly",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Lie on a flat surface holding a dumbbell in each hand with arms extended above your chest.",
+                        "Lower your arms out to the sides in a wide arc.",
+                        "Bring them back together above your chest.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-fly.gif",
+                    "caloriesBurnedPerRepMen": "0.7",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Incline Dumbbell Press",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Set up an incline surface and lie back holding dumbbells at chest height.",
+                        "Press the dumbbells upward until your arms are fully extended.",
+                        "Lower them back down to chest height.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/incline-dumbbell-press.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Dumbbell Squeeze Press",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Lie on a flat surface holding dumbbells at chest level, pressed together.",
+                        "Push the dumbbells upward while maintaining the squeeze.",
+                        "Lower them back down to chest level.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-squeeze-press.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                },
+                {
+                    "title": "Incline Dumbbell Fly",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Set up an incline bench and hold dumbbells above your chest.",
+                        "Lower your arms out to the sides in a wide arc.",
+                        "Bring them back together above your chest.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/incline-dumbbell-fly.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                },
+                {
+                    "title": "Push-Up with Dumbbells",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold dumbbells and get into a push-up position.",
+                        "Perform a push-up, keeping your body straight.",
+                        "Push back up and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/push-up-with-dumbbells.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Dumbbell Pullover",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on a flat surface holding one dumbbell with both hands above your chest.",
+                        "Lower the dumbbell back over your head in a controlled motion.",
+                        "Bring it back above your chest.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-pullover.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.2"
+                },
+                {
+                    "title": "Dumbbell Deficit Push-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Place dumbbells on the floor and grip them while in a push-up position.",
+                        "Lower your chest below the level of the dumbbells.",
+                        "Push back up to the starting position.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-deficit-push-up.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.4"
+                },
+                {
+                    "title": "Single-Arm Dumbbell Press",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on a flat surface holding a dumbbell in one hand at chest height.",
+                        "Press the dumbbell upward until your arm is fully extended.",
+                        "Lower it back down and repeat before switching sides.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/single-arm-dumbbell-press.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.5"
+                }
+            ]
+        },
+        "quads": {
+            "beginner": [
+                {
+                    "title": "Dumbbell Goblet Squat",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Hold a dumbbell close to your chest with both hands.",
+                        "Squat down until your thighs are parallel to the floor.",
+                        "Stand back up and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-goblet-squat.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                },
+                {
+                    "title": "Dumbbell Step-Up",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Hold dumbbells in each hand and step onto a sturdy surface with one leg.",
+                        "Step back down and repeat with the other leg.",
+                        "Alternate legs for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-step-up.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Dumbbell Split Squat",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Hold dumbbells in each hand and step one foot back.",
+                        "Lower your back knee towards the floor, keeping your front knee over your toes.",
+                        "Push back up and repeat before switching legs.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-split-squat.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Bulgarian Split Squat with Dumbbell",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold a dumbbell in each hand and place one foot on a bench behind you.",
+                        "Lower your body into a squat with the front leg.",
+                        "Push back up and repeat before switching legs.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/bulgarian-split-squat.gif",
+                    "caloriesBurnedPerRepMen": "1.1",
+                    "caloriesBurnedPerRepWomen": "0.9"
+                },
+                {
+                    "title": "Dumbbell Front Squat",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold dumbbells at shoulder height and perform a squat.",
+                        "Keep your torso upright and thighs parallel to the floor.",
+                        "Return to standing and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-front-squat.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                },
+                {
+                    "title": "Dumbbell Lateral Lunge",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold dumbbells and step to the side, bending the leading leg.",
+                        "Push back to the starting position.",
+                        "Repeat for the desired repetitions on each side."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-lateral-lunge.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Dumbbell Squat Jump",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold dumbbells at your sides and perform a squat.",
+                        "Explode upward into a jump, landing softly.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-squat-jump.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.5"
+                },
+                {
+                    "title": "Dumbbell Reverse Lunge with Knee Drive",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold dumbbells and step back into a lunge.",
+                        "Drive the back knee forward and upward explosively.",
+                        "Return to the lunge position and repeat.",
+                        "Repeat for the desired repetitions on each leg."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-reverse-lunge-with-knee-drive.gif",
+                    "caloriesBurnedPerRepMen": "1.6",
+                    "caloriesBurnedPerRepWomen": "1.3"
+                },
+                {
+                    "title": "Dumbbell Pistol Squat",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold a dumbbell in front of you and balance on one leg.",
+                        "Lower your body into a squat, keeping the other leg extended.",
+                        "Push back up to the starting position.",
+                        "Repeat for the desired repetitions on each leg."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-pistol-squat.gif",
+                    "caloriesBurnedPerRepMen": "2.0",
+                    "caloriesBurnedPerRepWomen": "1.7"
+                }
+            ]
+        },
+        "abdominal": {
+            "beginner": [
+                {
+                    "title": "Dumbbell Russian Twist",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Sit on the floor holding a dumbbell with both hands.",
+                        "Twist your torso to one side, then to the other.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-russian-twist.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Dumbbell Side Bend",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Hold a dumbbell in one hand and stand upright.",
+                        "Bend sideways towards the dumbbell, then return to standing.",
+                        "Switch sides after the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-side-bend.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                },
+                {
+                    "title": "Weighted Leg Raise",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Lie on your back holding a dumbbell between your feet.",
+                        "Lift your legs upward, keeping them straight.",
+                        "Lower them back down without touching the floor.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/weighted-leg-raise.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Dumbbell Toe Touch",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Lie on your back holding a dumbbell in both hands above your chest.",
+                        "Raise your legs and reach the dumbbell towards your toes.",
+                        "Lower back down and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-toe-touch.gif",
+                    "caloriesBurnedPerRepMen": "1.0",
+                    "caloriesBurnedPerRepWomen": "0.8"
+                },
+                {
+                    "title": "Dumbbell Weighted Sit-Up",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Hold a dumbbell across your chest and lie on your back.",
+                        "Perform a sit-up, bringing your torso towards your thighs.",
+                        "Lower back down and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-weighted-sit-up.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                },
+                {
+                    "title": "Dumbbell Plank Row",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Get into a plank position holding dumbbells.",
+                        "Row one dumbbell towards your torso, keeping your core tight.",
+                        "Lower it back down and repeat with the other side.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-plank-row.gif",
+                    "caloriesBurnedPerRepMen": "1.3",
+                    "caloriesBurnedPerRepWomen": "1.1"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Dumbbell V-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on your back holding a dumbbell in both hands.",
+                        "Raise your legs and torso to meet in the middle, forming a 'V' shape.",
+                        "Lower back down and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-v-up.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.3"
+                },
+                {
+                    "title": "Dumbbell Side Plank with Reach Under",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Get into a side plank position holding a dumbbell.",
+                        "Reach the dumbbell under your torso and extend it back upward.",
+                        "Repeat for the desired repetitions before switching sides."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-side-plank-with-reach-under.gif",
+                    "caloriesBurnedPerRepMen": "1.6",
+                    "caloriesBurnedPerRepWomen": "1.4"
+                },
+                {
+                    "title": "Dumbbell Windshield Wiper",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on your back holding a dumbbell above your chest.",
+                        "Lift your legs and move them side to side like a windshield wiper.",
+                        "Return to the center and repeat.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-windshield-wiper.gif",
+                    "caloriesBurnedPerRepMen": "1.8",
+                    "caloriesBurnedPerRepWomen": "1.5"
+                }
+            ]
+        }
+    }
+}
