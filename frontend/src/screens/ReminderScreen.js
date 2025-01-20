@@ -7,11 +7,20 @@ import {
   StyleSheet,
   Modal,
   Button,
-  ScrollView
+  ScrollView,
+  ImageBackground
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function ReminderScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -82,16 +91,23 @@ export default function ReminderScreen() {
   };
 
   const toggleModal = (reminder) => {
-    if (reminder) {
-      setSelectedReminder(reminder);
-      setNotificationTime({ hour: reminder.hour, minute: reminder.minute });
-      setRepeatDays(reminder.repeatDays);
-    } else {
-      setSelectedReminder(null);
-      setNotificationTime({ hour: 20, minute: 0 });
-      setRepeatDays([]);
-    }
-    setIsModalVisible(!isModalVisible);
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Look at that notification',
+        body: "I'm so proud of myself!",
+      },
+      trigger: null,
+    });
+    // if (reminder) {
+    //   setSelectedReminder(reminder);
+    //   setNotificationTime({ hour: reminder.hour, minute: reminder.minute });
+    //   setRepeatDays(reminder.repeatDays);
+    // } else {
+    //   setSelectedReminder(null);
+    //   setNotificationTime({ hour: 20, minute: 0 });
+    //   setRepeatDays([]);
+    // }
+    // setIsModalVisible(!isModalVisible);
   };
 
   const toggleReminderEnabled = async (id) => {
@@ -108,10 +124,15 @@ export default function ReminderScreen() {
   };
 
   return (
+    <ImageBackground
+    source={require("../../assets/images/background.png")}
+    style={{ width: '100%', height: '100%' }}
+  >
     <View style={styles.container}>
       <Text style={styles.title}>Reminder</Text>
       {reminders.map((reminder, index) => (
         <View key={index} style={styles.reminder}>
+          <TouchableOpacity  onPress={() => toggleModal(reminder)}>
           <Text style={styles.reminderText}>
             {`Time: ${reminder.hour}:${reminder.minute} - Repeat: ${reminder.repeatDays.join(', ')}`}
           </Text>
@@ -119,7 +140,7 @@ export default function ReminderScreen() {
             value={reminder.enabled}
             onValueChange={() => toggleReminderEnabled(reminder.id)}
           />
-          <Button title="Edit" onPress={() => toggleModal(reminder)} />
+          </TouchableOpacity>
         </View>
       ))}
       
@@ -180,6 +201,7 @@ export default function ReminderScreen() {
         </View>
       </Modal>
     </View>
+    </ImageBackground>
   );
 }
 
@@ -187,7 +209,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
