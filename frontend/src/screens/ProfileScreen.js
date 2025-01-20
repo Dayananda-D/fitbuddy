@@ -90,7 +90,7 @@ export default function ProfileScreen() {
 
         {/* Menu Items */}
         <View style={styles.menu}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Activities')}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Reminder')}>
             <View style={styles.menuItemLeft}>
               <Icon name="settings" size={24} color="#fff" />
               <Text style={styles.menuText}>Settings</Text>

@@ -14,6 +14,7 @@ import LoadingScreen from "./src/screens/LoadingScreen";
 import Workouts from "./src/components/WorkoutScreen";
 import Reports from "./src/screens/Reports";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import ReminderScreen from "./src/screens/ReminderScreen";
 import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
 // import EnterCodeScreen from './src/screens/EnterCodeScreen';
 import NewPasswordScreen from './src/screens/NewPasswordScreen';
@@ -116,6 +117,7 @@ export default function App() {
         <Stack.Screen name="Main" component={MyTabs} />
         {/* <Stack.Screen name="Dashboard" component={Dashboard} /> */}
         <Stack.Screen name="Warmups" component={Warmups} />
+        <Stack.Screen name="Reminder" component={ReminderScreen} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Login" component={Login} />
         {/* <Stack.Screen name="WorkoutsTab" component={WorkoutsTab} /> */}
