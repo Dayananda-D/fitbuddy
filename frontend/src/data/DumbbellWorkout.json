@@ -525,6 +525,128 @@
                     "caloriesBurnedPerRepWomen": "1.5"
                 }
             ]
+        },
+        "obliques": {
+            "beginner": [
+                {
+                    "title": "Side Plank",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Lie on your side with your feet stacked one on top of the other.",
+                        "Rest on your forearm, keeping your elbow directly under your shoulder.",
+                        "Engage your core and lift your hips off the ground, forming a straight line from your shoulders to your ankles.",
+                        "Hold this position, keeping your body steady and your core tight.",
+                        "Once you've held the position for the desired time, switch sides and repeat."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/side-plank.gif",
+                    "caloriesBurnedPerRepMen": "0.7",
+                    "caloriesBurnedPerRepWomen": "0.5"
+                },
+                {
+                    "title": "Standing Side Crunch",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand tall with your feet hip-width apart."
+                        ,"Lift your right knee and bring your right elbow down towards it, crunching your right side."
+                        ,"Lower your arm and leg back to the starting position."
+                        ,"Repeat the movement on the left side, bringing your left knee and elbow together."
+                        ,"Keep alternating sides until you complete your desired number of reps."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/standing-side-crunch.gif",
+                    "caloriesBurnedPerRepMen": "0.8",
+                    "caloriesBurnedPerRepWomen": "0.6"
+                },
+                {
+                    "title": "Dumbbell Side Bend",
+                    "duration": "2Min",
+                    "type": "Beginner",
+                    "instruction": [
+                        "Stand tall with your feet shoulder-width apart, holding a dumbbell in one hand."
+                        ,"Keep your back straight as you bend sideways toward the dumbbell, lowering it slightly along your leg."
+                        ,"Return to the upright position, feeling the stretch on the opposite side of your body."
+                        ,"Repeat this movement for your desired number of reps."
+                        ,"Switch the dumbbell to the other hand and repeat on the opposite side."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/kneeling-side-bend.gif",
+                    "caloriesBurnedPerRepMen": "0.9",
+                    "caloriesBurnedPerRepWomen": "0.7"
+                }
+            ],
+            "intermediate": [
+                {
+                    "title": "Dumbbell Oblique Twist",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Sit on the floor holding a dumbbell with both hands.",
+                        "Lean back slightly and lift your feet off the floor.",
+                        "Twist the dumbbell to one side, then to the other.",
+                        "Repeat for the desired repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-oblique-twist.gif",
+                    "caloriesBurnedPerRepMen": "1.1",
+                    "caloriesBurnedPerRepWomen": "0.9"
+                },
+                {
+                    "title": "Side Plank Lift against Wall",
+                    "duration": "2Min",
+                    "type": "Intermediate",
+                    "instruction": [
+                        "Position yourself sideways near a wall and rest on your elbow, making sure it’s directly under your shoulder for support."
+                        ,"Extend your legs fully, stacking one foot on top of the other."
+                        ,"Lift your body upward, creating a straight line from your head to your feet."
+                        ,"Lower your body back down slowly, but don’t let it touch the ground."
+                        ,"Repeat this movement for your desired number of repetitions."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/side-plank-hip-dips.gif",
+                    "caloriesBurnedPerRepMen": "1.2",
+                    "caloriesBurnedPerRepWomen": "1.0"
+                }
+            ],
+            "advanced": [
+                {
+                    "title": "Dumbbell Woodchopper",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Hold a dumbbell with both hands at one side of your body.",
+                        "Twist your torso as you lift the dumbbell diagonally across your body.",
+                        "Lower back to the starting position and repeat, then switch sides."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/dumbbell-woodchopper.gif",
+                    "caloriesBurnedPerRepMen": "1.5",
+                    "caloriesBurnedPerRepWomen": "1.3"
+                },
+                {
+                    "title": "Oblique V-Up",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Lie on your side with your legs stacked and arms extended.",
+                        "Lift your legs and upper body simultaneously to form a 'V' shape.",
+                        "Lower back down and repeat before switching sides."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/oblique-v-up.gif",
+                    "caloriesBurnedPerRepMen": "1.6",
+                    "caloriesBurnedPerRepWomen": "1.4"
+                },
+                {
+                    "title": "Cable Side Bend",
+                    "duration": "2Min",
+                    "type": "Advanced",
+                    "instruction": [
+                        "Stand sideways to a cable machine, holding the handle with one hand.",
+                        "Bend your torso towards the cable, then return upright.",
+                        "Repeat for the desired repetitions before switching sides."
+                    ],
+                    "image": "https://svc.heygainz.com/storage/exercises/cable-side-bend.gif",
+                    "caloriesBurnedPerRepMen": "1.7",
+                    "caloriesBurnedPerRepWomen": "1.5"
+                }
+            ]
         }
+               
     }
 }
